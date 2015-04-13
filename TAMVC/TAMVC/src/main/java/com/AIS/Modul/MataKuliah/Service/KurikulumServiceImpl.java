@@ -67,11 +67,12 @@ public class KurikulumServiceImpl implements KurikulumService {
 	}
 
 	@Override
-	public boolean editKurikulumAction(UUID idKurikulum, UUID idSatMan, String thnMulai,
+	public boolean editKurikulumAction(UUID idKurikulum, UUID idSatMan, String nmKurikulum, String thnMulai,
 			String thnAkhir, Boolean aStatusKurikulum) {
 		if(idSatMan != null && thnMulai != null 
 				&& thnAkhir != null && aStatusKurikulum != null){
 			Kurikulum kurikulum = kurikulumRepo.findById(idKurikulum);
+			kurikulum.setNmKurikulum(nmKurikulum);
 			kurikulum.setSatMan(satManServ.findById(idSatMan));
 			kurikulum.setThnMulai(thnMulai);
 			kurikulum.setThnAkhir(thnAkhir);
@@ -86,6 +87,26 @@ public class KurikulumServiceImpl implements KurikulumService {
 	@Override
 	public UUID convertToUUID(String source) {
 		return UUID.fromString(source);
+	}
+
+	@Override
+	public void activateKurikulum(UUID idKurikulum) {
+		Kurikulum kurikulum = kurikulumRepo.findById(idKurikulum);
+		kurikulum.setNmKurikulum(kurikulum.getNmKurikulum());
+		kurikulum.setThnMulai(kurikulum.getThnMulai());
+		kurikulum.setThnAkhir(kurikulum.getThnAkhir());
+		kurikulum.setaStatusKurikulum(true);
+		this.editKurikulum(kurikulum, idKurikulum);
+	}
+
+	@Override
+	public void deleteKurikulum(UUID idKurikulum) {
+		Kurikulum kurikulum = kurikulumRepo.findById(idKurikulum);
+		kurikulum.setNmKurikulum(kurikulum.getNmKurikulum());
+		kurikulum.setThnMulai(kurikulum.getThnMulai());
+		kurikulum.setThnAkhir(kurikulum.getThnAkhir());
+		kurikulum.setaStatusKurikulum(false);
+		this.editKurikulum(kurikulum, idKurikulum);
 	}
 	
 	

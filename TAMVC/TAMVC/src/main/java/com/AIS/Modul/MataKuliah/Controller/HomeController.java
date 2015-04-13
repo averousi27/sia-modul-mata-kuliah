@@ -25,4 +25,17 @@ public class HomeController {
 		mav.setViewName("Kurikulum");
 		return mav;
 	}
+	
+	@RequestMapping(value="/masterpagetabel", method=RequestMethod.GET)
+	public ModelAndView showTabel(){
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("datatable");
+		return mav;
+	}
+	@RequestMapping(value="/masterpage", method=RequestMethod.GET)
+	public ModelAndView showKomponen(){
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("formcomponent");
+		return mav;
+	}
 }

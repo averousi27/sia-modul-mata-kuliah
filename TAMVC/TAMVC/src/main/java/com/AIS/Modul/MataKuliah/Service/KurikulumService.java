@@ -13,6 +13,8 @@ public interface KurikulumService {
     public void addKurikulum(Kurikulum kurikulum);
     public void editKurikulum(Kurikulum kurikulum, UUID idKurikulum);
 	boolean addKurikulumAction(UUID idSatMan, String nmKurikulum, String tahunMulai, String tahunAkhir, Boolean statusKurikulum);
-    boolean editKurikulumAction(UUID idKurikulum, UUID idSatMan, String tahunMulai, String tahunAkhir, Boolean statusKurikulum);
+    boolean editKurikulumAction(UUID idKurikulum, UUID idSatMan, String nmKurikulum, String tahunMulai, String tahunAkhir, Boolean statusKurikulum);
     public UUID convertToUUID(String source);
+    public void activateKurikulum(UUID idKurikulum);
+    public void deleteKurikulum(UUID idKurikulum);
 }
