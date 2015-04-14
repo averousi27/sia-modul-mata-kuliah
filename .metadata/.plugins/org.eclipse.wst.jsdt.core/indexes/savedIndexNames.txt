@@ -1,9 +1,7 @@
 INDEX VERSION 1.3+D:\AMANDA\COLLEGES\BISMILLAH\TA READY\TA TA TA 112\PROGRAM\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-4162353957.index
 1445877674.index
 1522260680.index
 686074192.index
 3747112589.index
 1606667031.index
-4162353957.index
 3131810968.index

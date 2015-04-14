@@ -27,85 +27,7 @@
 	<body style="background:url(${pageContext.servletContext.contextPath}/resources/img/wild_flowers.png) repeat 0 0">
 		<div class="container">
 			<div class="wrapper">
-				<div class="row">
-					<div class="col-md-12">
-						<img class="img-responsive" src="${pageContext.servletContext.contextPath}/resources/img/logo.png"></img>
-					</div>
-				</div>
-				<nav class="navbar navbar-default navbar-sia" role="navigation" style="background-color: #3bafda;border-radius:0;border-color:#3bafda;">
-					<div class="container">
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-								<span class="sr-only">Toggle navigation</span> 
-								<span class="icon-bar"></span> 
-								<span class="icon-bar"></span> 
-								<span class="icon-bar"></span>
-							</button> 
-							<a class="navbar-brand" href="index.html">
-								Beranda
-							</a>
-						</div>
-						<div class="collapse navbar-collapse">
-							<ul class="nav navbar-nav">
-								<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Mata Kuliah <b class="caret">
-								</b>
-								</a>
-									<ul class="dropdown-menu" role="menu">
-										<li>
-											<a href="#">Kelola Kurikulum</a>
-										</li>
-										<li class="dropdown-submenu">
-											<a href="#">Kelola Capaian Pembelajaran</a>
-											<ul class="dropdown-menu">
-												<li><a href="#">Kelola Capaian Pembelajaran Kurikulum</a></li>
-												<li><a href="#">Kelola Capaian Pembelajaran Satuan Manajemen</a></li>
-												<li><a href="#">Kelola Capaian Pembelajaran Mata Kuliah</a></li>
-											</ul>
-										</li>
-										<li class="dropdown-submenu">
-											<a href="#">Kelola Mata Kuliah</a>
-											<ul class="dropdown-menu">
-												<li><a href="#">Kelola Mata Kuliah Prasyarat</a></li>
-												<li><a href="#">Kelola Hubungan Mata Kuliah</a></li>
-											</ul>
-										</li>
-										<li>
-											<a href="#">Kelola Rencana Pembelajaran</a>
-										</li>
-										<li class="dropdown-submenu">
-											<a href="#">Laporan</a>
-											<ul class="dropdown-menu">
-												<li><a href="#">Prasyarat Mata Kuliah</a></li>
-												<li><a href="#">Kurikulum Tiap Periode</a></li>
-												<li><a href="#"></a></li>
-											</ul>
-										</li>
-									</ul>
-								</li>	
-							</ul>
-							<ul  class="nav navbar-nav navbar-right">				
-								<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Akun <b class="caret">
-								</b>
-								</a>
-									<ul class="dropdown-menu" role="menu">
-										<li>
-											<a href="#">Profil</a>
-										</li>
-										<li>
-											<a href="#">Pilih hak akses</a>
-										</li>
-										<li>
-											<a href="#">Keluar</a>
-										</li>
-									</ul>
-								</li>	
-							</ul>
-						</div>
-					</div>
-				</nav>
-			<!-- akhir dari header -->
+				 <%@include file="header.jsp" %>
 			<!-- Content -->
 			
 			<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/jquery.datatables/media/css/jquery.dataTables.min.css">
@@ -128,7 +50,7 @@
 							<li class="active">Kelola Tahun Ajaran</li>
 						</ol>
 						<p>Menu pengelolaan kurikulum (tambah dan ubah kurikulum)</p>
-						<a href="tambahkurikulum" class="btn btn-success" action="tambahkurikulum">Tambah Kurikulum</a>
+						<a href="tambah" class="btn btn-success" action="tambah">Tambah Kurikulum</a>
 						<table class="table table-striped table-hovertable table-striped table-bordered table-hover table-checkable table-colvis datatable ">
 							  <thead>
 							    <tr>
@@ -165,15 +87,15 @@
 								      </c:if>
 									      <c:if test="${kurikulum.aStatusKurikulum == 'true'}">
 									      		<td>
-									      			<a href="ubahkurikulum/${kurikulum.idKurikulum}" class="btn btn-warning">Ubah</a>
-													<a href="ubahkurikulum/hapus/${kurikulum.idKurikulum}" class="btn btn-danger">Hapus</a>
+									      			<a href="ubah/${kurikulum.idKurikulum}" class="btn btn-warning">Ubah</a>
+													<a href="ubah/hapus/${kurikulum.idKurikulum}" class="btn btn-danger">Hapus</a>
 									      			
 												</td>
 									      </c:if>
 									      <c:if test="${kurikulum.aStatusKurikulum == 'false' }">
 									      		<td>
-									      			<a href="ubahkurikulum/${kurikulum.idKurikulum}" class="btn btn-warning">Ubah</a>
-													<a href="ubahkurikulum/aktif/${kurikulum.idKurikulum}" class="btn btn-primary">Aktifkan</a>
+									      			<a href="ubah/${kurikulum.idKurikulum}" class="btn btn-warning">Ubah</a>
+													<a href="ubah/aktif/${kurikulum.idKurikulum}" class="btn btn-primary">Aktifkan</a>
 												</td>
 									      </c:if>
 								     </tr>
@@ -196,6 +118,9 @@
 					},
 					"sScrollX": "100%",
 					"aoColumns":[
+
+									/* nama satuanmanajemen */
+									{ "bVisible":    true },
 						/* namakurikulum */
 						{ 
 							"bVisible":    true,
@@ -222,14 +147,7 @@
 			<!-- akhir script custom pada halaman -->
 			<!-- akhir dari content content -->
 			
-			<!-- footer -->
-			<div class="site-footer">
-					<div class="container">		
-						<div class="copyright clearfix">
-						<p>&copy; 2015 <b>SIA UNIVERSITAS X</b> | Powered By <a href="#" target="_blank">SE ITS</a></p>
-						</div>
-					</div>
-			</div>
+			<%@include file="footer.jsp" %>
 			</div>
 		</div>
 	</body>

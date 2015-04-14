@@ -1,0 +1,38 @@
+package com.AIS.Modul.MataKuliah.Repository;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.stereotype.Repository;
+
+import com.AIS.Modul.MataKuliah.Model.CapPemb;
+
+
+@Repository
+public class CapPembRepositoryImpl implements CapPembRepository{
+
+	@Override
+	public List<CapPemb> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CapPemb findById(UUID idCapPemb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addCapPemb(CapPemb capPemb) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editCapPemb(CapPemb capPemb, UUID idCapPemb) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

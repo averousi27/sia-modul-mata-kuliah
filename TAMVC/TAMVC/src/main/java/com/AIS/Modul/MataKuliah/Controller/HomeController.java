@@ -17,14 +17,13 @@ public class HomeController {
 	@Autowired
 	private KurikulumService kurikulumServ;
 	
-	@RequestMapping(value="/kurikulum", method=RequestMethod.GET)
-	public ModelAndView showKurikulum(){
-		ModelAndView mav = new ModelAndView(); 
-		List<Kurikulum> kurikulumList = kurikulumServ.findAll();
-		mav.addObject("kurikulums", kurikulumList);
-		mav.setViewName("Kurikulum");
+	
+	/*@RequestMapping(value="matakuliah/satuanmanajemen", method=RequestMethod.GET)
+	public ModelAndView showMKSatMan(){
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("MataKuliah");
 		return mav;
-	}
+	}*/
 	
 	@RequestMapping(value="/masterpagetabel", method=RequestMethod.GET)
 	public ModelAndView showTabel(){

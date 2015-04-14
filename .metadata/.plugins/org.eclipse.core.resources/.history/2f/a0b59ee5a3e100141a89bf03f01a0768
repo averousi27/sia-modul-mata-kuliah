@@ -1,0 +1,9 @@
+package com.AIS.Modul.MataKuliah.Model;
+
+import javax.persistence.Entity;
+
+@Entity
+@Table(name="cap_pemb")
+public CapPemb{
+	
+}

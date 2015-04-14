@@ -67,8 +67,8 @@ public class KurikulumServiceImpl implements KurikulumService {
 	}
 
 	@Override
-	public boolean editKurikulumAction(UUID idKurikulum, UUID idSatMan, String nmKurikulum, String thnMulai,
-			String thnAkhir, Boolean aStatusKurikulum) {
+	public boolean editKurikulumAction(UUID idKurikulum, UUID idSatMan, String nmKurikulum, 
+			String thnMulai,String thnAkhir, Boolean aStatusKurikulum) {
 		if(idSatMan != null && thnMulai != null 
 				&& thnAkhir != null && aStatusKurikulum != null){
 			Kurikulum kurikulum = kurikulumRepo.findById(idKurikulum);
