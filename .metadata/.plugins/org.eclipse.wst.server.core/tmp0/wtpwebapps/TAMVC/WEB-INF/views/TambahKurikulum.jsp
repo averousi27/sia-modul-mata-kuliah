@@ -27,13 +27,7 @@
 	<body style="background:url(${pageContext.servletContext.contextPath}/resources/img/wild_flowers.png) repeat 0 0">
 		<div class="container">
 			<div class="wrapper">
-				 <%@include file="header.jsp" %>
-		<!-- Content -->
-		<link href="${pageContext.servletContext.contextPath}/resources/datepicker/bootstrap-datepicker-master/css/datepicker.css" rel="stylesheet" type="text/css"/>
-		<link href="${pageContext.servletContext.contextPath}/resources/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
-	
-		<link href="${pageContext.servletContext.contextPath}/resources/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css" />
-		
+				 <%@include file="header.jsp" %> 
 		
 		<div class="row">
 			<div class="container">
@@ -59,40 +53,40 @@
 						        <select class="form-control" id="select" name="idSatManTxt" required>
 						        <c:forEach items="${satMans}" var="satman">
 						        	<c:if test="${selectedSatMan == satman.idSatMan}">
-						        		<option selected="selected" value="${satman.idSatMan}">${satman.nmSatMan}</option>
+						        		<option selected="selected" value="${satman.idSatMan}" required>${satman.nmSatMan}</option>
 						        	</c:if>
 						          	<c:if test="${selectedSatMan != satman.idSatMan}">
-						        		<option value="${satman.idSatMan}">${satman.nmSatMan}</option>
+						        		<option value="${satman.idSatMan}" required>${satman.nmSatMan}</option>
 						        	</c:if>
 						        </c:forEach>
 						        </select>
 						     </div>
 							 <div class="form-group">
 							      <label>Tahun Mulai</label> 
-							        <input type="text" class="form-control" id="inputDefault" name="tahunMulaiTxt" placeholder="Tahun Mulai Kurikulum">
+							        <input type="text" class="form-control" id="inputDefault" name="tahunMulaiTxt" placeholder="Tahun Mulai Kurikulum" required>
 							 </div>
 							    <div class="form-group">
 							      <label>Tahun Akhir</label>
-							        <input type="text" class="form-control" id="inputDefault" name="tahunAkhirTxt" placeholder="Tahun Akhir Kurikulum"	>
+							        <input type="text" class="form-control" id="inputDefault" name="tahunAkhirTxt" placeholder="Tahun Akhir Kurikulum"	required>
 							      
 							    </div>
 							    <div class="form-group">
 							      <label>Status Kurikulum</label> 
 							        <div class="radio">
 							          <label>
-							            <input type="radio" name="statusKurikulumOpt" id="optionsRadios1" value="1">
+							            <input type="radio" name="statusKurikulumOpt" id="optionsRadios1" value="1"  required>
 							           Aktif
 							          </label>
 							        </div>
 							        <div class="radio">
 							          <label>
-							            <input type="radio" name="statusKurikulumOpt" id="optionsRadios1" value="0">
+							            <input type="radio" name="statusKurikulumOpt" id="optionsRadios1" value="0" required>
 							           Non-Aktif
 							          </label>
 							        </div> 
 							    </div>
 							    <div class="form-group"> 
-							        <a href="kurikulum" class="btn btn-default">Cancel</a>
+							        <a type="reset" class="btn btn-default" href="kurikulum">Cancel</a>
 							        <button type="submit" class="btn btn-primary">Submit</button>
 							      
 							    </div>  
@@ -101,10 +95,7 @@
 			</div>
 		</div>
 			<script src="${pageContext.servletContext.contextPath}/resources/jquery-validation/jquery.validate.min.js" rel="stylesheet" type="text/javascript"></script>
-			<script src="${pageContext.servletContext.contextPath}/resources/gritter/js/jquery.gritter.js" rel="stylesheet" type="text/javascript"></script>
-			 <script src="${pageContext.servletContext.contextPath}/resources/ckeditor/ckeditor.js" type="text/javascript" ></script>
-		<script src="${pageContext.servletContext.contextPath}/resources/ckeditor/adapters/jquery.js" type="text/javascript"></script>
-		
+			
 		<!-- footer -->
 		 <%@include file="footer.jsp" %>
 			</div>

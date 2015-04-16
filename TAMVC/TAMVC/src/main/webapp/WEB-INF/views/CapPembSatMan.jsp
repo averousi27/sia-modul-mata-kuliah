@@ -22,6 +22,34 @@
 		<script>
 			var context_path = "${pageContext.servletContext.contextPath}";
 		</script>
+		<script type="text/javascript">
+		   function getIdKurikulum(){
+		     var valKurikulum = $('#selectKurikulum').val();
+		   }
+		   function getIdSatMan(){
+			     var valSatMan = $('#selectSatMan').val();
+			}
+		   function getCapPemb(){
+			   $.ajax({
+				   url : 'satuanmanajemen/view',
+				   method : 'get',
+				   ContentType : 'json',
+				   data : {
+					   valKurikulum : val,
+					   valSatMan : val 
+				   }
+			   },
+			   success : function(response){
+				   var result="";
+				   if(response!=null){
+					   $(response).each(function(index, value){
+						   result = result + '<tr><td>' + value + '</td><td>' + value + '</td></tr>';
+					   });
+					   $('#tabelCapPemb').html(options);
+				   }
+			   }));
+		   }
+		 </script>
 		<title>Kelola Capaian Pembelajaran Satuan Manajemen</title>
 	</head>
 	<body style="background:url(${pageContext.servletContext.contextPath}/resources/img/wild_flowers.png) repeat 0 0">
@@ -49,22 +77,22 @@
 								<li class="active">Kelola Tahun Ajaran</li>
 							</ol>
 							<p>Menu pengelolaan capaian pembelajaran untuk satuan manajemen akademik</p> 
-							<form role="form" id="formdetail" action="view/${kurikulum.idKurikulum}-${idSatMan}}" method="get"> 
+							<!--<form role="form" id="formdetail" action="satuanmanajemen/view" method="post"> -->
 							  <div class="form-group">
 							  	 <label>Pilih Tahun Kurikulum</label>
-							  	 <select class="form-control" id="select" name="thnKurikulum" required>
+							  	 <select class="form-control" id="selectKurikulum" name="idKurikulumTxt" required onchange="getIdKurikulum();">
 							        <c:forEach items="${kurikulums}" var="kurikulum">
 							        	<c:if test="${selectedKurikulum == kurikulum.idKurikulum}">
-							        		<option selected="selected" value="${kurikulum.idKurikulum}">${kurikulum.thnKurikulum}</option>
+							        		<option selected="selected" value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.nmKurikulum }</option>
 							        	</c:if>
 							          	<c:if test="${selectedKurikulum != kurikulum.idKurikulum}">
-							        		<option value="${kurikulum.idKurikulum}">${kurikulum.thnKurikulum}</option>
+							        		<option value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.nmKurikulum }</option>
 							        	</c:if>
 							        </c:forEach>
 							      </select>
 							      <label>Pilih Satuan Manajemen</label>
-								  	 <select class="form-control" id="select" name="satMan">
-								        <c:forEach items="${satMans}" var="satman">
+								  	 <select class="form-control" id="selectSatMan" name="idSatManTxt" onchange="getIdSatMan();">
+								        <c:forEach items="${satmans}" var="satman">
 								        	<c:if test="${selectedSatMan == satman.idSatMan}">
 								        		<option selected="selected" value="${satman.idSatMan}">${satman.nmSatMan}</option>
 								        	</c:if>
@@ -72,11 +100,13 @@
 								        		<option value="${satman.idSatMan}">${satman.nmSatMan}</option>
 								        	</c:if>
 								        </c:forEach>
-								      </select>
-									<button type="submit" class="btn btn-primary">Tampilkan</button>
+								      </select><br />
+									<button type="submit" class="btn btn-primary" onclick="getCapPemb">Tampilkan</button>
 							  </div>
-							</form>
-							<table class="table table-striped table-hovertable table-striped table-bordered table-hover table-checkable table-colvis datatable ">
+							<!--</form>-->
+							<br /> 
+						 <!-- <a href="satuanmanajemen/tambah/${kurikulumObj.idKurikulum }/${satManObj.idSatMan}" class="btn btn-success">Tambah Capaian Belajar</a>-->
+							<table id="tabelCapPemb" class="table table-striped table-hovertable table-striped table-bordered table-hover table-checkable table-colvis datatable">
 							  <thead>
 							    <tr>
 								    <td>
@@ -84,12 +114,32 @@
 											<input type="checkbox" id="flat-checkbox-1">
 										</div>
 									</td>
+									  <td>Tahun Kurikulum</td>
+									  <td>Nama Satuan Manajemen</td>
 								      <td>Nama Capaian Pembelajaran</td>
 								      <td>Deskripsi Capaian Pembelajaran</td>
 								      <td>Aksi</td>
 							    </tr>
 							  </thead>
-							  </table>
+							   <tbody>	
+								  <c:forEach items="${cappembs}" var="capPembObj">
+								    <tr>
+								      <td>
+										<div class="checkbox">
+											<input type="checkbox" id="flat-checkbox-1">
+										</div>
+									  </td>
+									  <td>${capPembObj.kurikulum.nmKurikulum}</td>
+									  <td>${capPembObj.satMan.nmSatMan}</td>
+									  <td>${capPembObj.nmCapPemb}</td>
+									  <td>${capPembObj.deskripsiCapPemb}</td>
+									  <td>
+						      			<a href="ubah/${capPembObj.idCapPemb}" class="btn btn-warning">Ubah</a>
+									  </td>
+									</tr>
+								</c:forEach>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>

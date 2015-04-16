@@ -37,7 +37,7 @@ public class KurikulumController {
 		mav.setViewName("Kurikulum");
 		return mav;
 	}
-	@RequestMapping(value="/tambah", method=RequestMethod.GET)
+	@RequestMapping(value="/kurikulum/tambah", method=RequestMethod.GET)
 	public ModelAndView showSatManOption(){
 		ModelAndView mav = new ModelAndView();
 		List<SatMan> satManList = satManServ.findAll();
@@ -47,25 +47,23 @@ public class KurikulumController {
 	}
 	
 	//tambah kurikulum
-	@RequestMapping(value="/tambah/aksi", method=RequestMethod.POST)
+	@RequestMapping(value="/kurikulum/tambah/aksi", method=RequestMethod.POST)
 	public ModelAndView addKurikulumAction(String nmKurikulumTxt, String idSatManTxt, String tahunMulaiTxt, 
 			String tahunAkhirTxt, Boolean statusKurikulumOpt){
 		ModelAndView mav = new ModelAndView();
-		System.out.println(nmKurikulumTxt + " " + idSatManTxt + " " + tahunMulaiTxt + ""
-				 + tahunAkhirTxt + "" + statusKurikulumOpt);
 		Boolean flag = kurikulumServ.addKurikulumAction(satManServ.convertToUUID(idSatManTxt), nmKurikulumTxt, 
 				tahunMulaiTxt, tahunAkhirTxt, statusKurikulumOpt);
 		if(flag){
 			mav.setViewName("redirect:/kurikulum");
 		}
 		else{
-			mav.setViewName("redirect:/tambah");
+		mav.setViewName("redirect:/kurikulum/tambah");
 		}
 		return mav;
 	}
 	//end of tambah kurikulum
 	
-	@RequestMapping(value="/ubah/{idKurikulum}", method=RequestMethod.GET)
+	@RequestMapping(value="kurikulum/ubah/{idKurikulum}", method=RequestMethod.GET)
 	public ModelAndView getKurikulumData(@PathVariable UUID idKurikulum){
 		ModelAndView mav = new ModelAndView();
 		Kurikulum kurikulumUbah = kurikulumServ.findById(idKurikulum);
@@ -76,7 +74,7 @@ public class KurikulumController {
 		return mav;
 	}
 	//ubah kurikulum
-		@RequestMapping(value="/ubah/aksi/{idKurikulum}", method=RequestMethod.POST)
+		@RequestMapping(value="kurikulum/ubah/aksi/{idKurikulum}", method=RequestMethod.POST)
 		public ModelAndView changeKurikulumAction(@PathVariable String idKurikulum, String idSatManTxt, String nmKurikulumTxt, String tahunMulaiTxt, 
 				String tahunAkhirTxt, Boolean statusKurikulumOpt){
 			ModelAndView mav = new ModelAndView();
@@ -86,14 +84,14 @@ public class KurikulumController {
 				mav.setViewName("redirect:/kurikulum");
 			}
 			else{
-				mav.setViewName("redirect:/ubah/" + kurikulumServ.convertToUUID(idKurikulum));
+				mav.setViewName("redirect:kurikulum/ubah/" + kurikulumServ.convertToUUID(idKurikulum));
 			}
 			return mav;
 		}
 	//end of ubah kurikulum
 		
 	//aktifkan kurikulum
-		@RequestMapping(value="/ubah/aktif/{idKurikulum}", method=RequestMethod.GET)
+		@RequestMapping(value="kurikulum/ubah/aktif/{idKurikulum}", method=RequestMethod.GET)
 		public ModelAndView changeStatus(@PathVariable String idKurikulum){
 			ModelAndView mav = new ModelAndView(); 
 			kurikulumServ.activateKurikulum(kurikulumServ.convertToUUID(idKurikulum));
@@ -103,7 +101,7 @@ public class KurikulumController {
 	//end of aktif kurikulum
 		
 	//hapus kurikulum
-		@RequestMapping(value="/ubah/hapus/{idKurikulum}", method=RequestMethod.GET)
+		@RequestMapping(value="kurikulum/ubah/hapus/{idKurikulum}", method=RequestMethod.GET)
 		public ModelAndView deactivateKurikulum(@PathVariable String idKurikulum){
 			ModelAndView mav = new ModelAndView();
 			kurikulumServ.deleteKurikulum(kurikulumServ.convertToUUID(idKurikulum));

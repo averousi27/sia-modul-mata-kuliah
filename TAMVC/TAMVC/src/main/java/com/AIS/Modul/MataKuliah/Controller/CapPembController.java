@@ -10,40 +10,55 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.AIS.Modul.MataKuliah.Model.CapPemb;
 import com.AIS.Modul.MataKuliah.Model.Kurikulum;
 import com.AIS.Modul.MataKuliah.Model.SatMan;
+import com.AIS.Modul.MataKuliah.Service.CapPembService;
 import com.AIS.Modul.MataKuliah.Service.KurikulumService;
 import com.AIS.Modul.MataKuliah.Service.SatManService;
 
 @Controller
 public class CapPembController {
-
+		
 	@Autowired
 	private KurikulumService kurikulumServ;
 	
-	@Autowired
+	@Autowired 
 	private SatManService satManServ;
+
+	@Autowired 
+	private CapPembService capPembServ;
 	
 	@RequestMapping(value="capaianbelajar/satuanmanajemen", method=RequestMethod.GET)
 	public ModelAndView showCapPembSatMan(){
-		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = new ModelAndView(); 
 		List<Kurikulum> kurikulumList = kurikulumServ.findAll();
+		List<SatMan> satManList	= satManServ.findAll();
 		mav.addObject("kurikulums", kurikulumList);
-		List<SatMan> satManList = satManServ.findAll();
-		mav.addObject("satMans", satManList);
+		mav.addObject("satmans", satManList);
 		mav.setViewName("CapPembSatMan");
 		return mav;
 	}
 	
-	@RequestMapping(value="view/{idKurikulum}-{idSatMan}", method=RequestMethod.GET)
-	public ModelAndView showCapPemb(@PathVariable String idKurikulum, String idSatMan){
+	@RequestMapping(value="capaianbelajar/satuanmanajemen/view", method=RequestMethod.POST)
+	public ModelAndView showCapPemb(String idKurikulumTxt, String idSatManTxt){
 		ModelAndView mav = new ModelAndView();
-		UUID UUIDKurikulum = kurikulumServ.convertToUUID(idKurikulum);
-		UUID UUIDSatMan = satManServ.convertToUUID(idSatMan);
-		mav.addObject(kurikulumServ.findById(UUIDKurikulum));
-		mav.addObject(satManServ.findById(UUIDSatMan));
-		mav.setViewName("CapPembSatMan");
+		System.out.println(idKurikulumTxt + " " +idSatManTxt);
+		List<CapPemb> capPembList = capPembServ.findByTahunAndSatMan(capPembServ.convertToUUID(idKurikulumTxt), 
+				capPembServ.convertToUUID(idSatManTxt));
+		mav.addObject("cappembs", capPembList);
+		mav.setViewName("redirect:/capaianbelajar/satuanmanajemen");
 		return mav;
-		
+	}
+	
+	@RequestMapping(value="capaianbelajar/satuanmanajemen/tambah/{idKurikulum}/{idSatMan}", method=RequestMethod.GET)
+	public ModelAndView getData(@PathVariable String idKurikulum, @PathVariable String idSatMan){
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("kurikulumObj",kurikulumServ.findById(kurikulumServ.convertToUUID(idKurikulum)));
+		mav.addObject("satManObj", satManServ.findById(satManServ.convertToUUID(idSatMan)));
+		List<SatMan> satManList	= satManServ.findAll();
+		mav.addObject("satmans", satManList);
+		mav.setViewName("TambahCapaianBelajar");
+		return mav;
 	}
 }

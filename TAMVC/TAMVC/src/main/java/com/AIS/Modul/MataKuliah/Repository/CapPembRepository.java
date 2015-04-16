@@ -12,4 +12,5 @@ public interface CapPembRepository {
 	public CapPemb findById(UUID idCapPemb);
 	public void addCapPemb(CapPemb capPemb);
 	public void editCapPemb(CapPemb capPemb, UUID idCapPemb);
+	//public List<CapPemb> findByTahunSatMan(UUID idKurikulum, UUID idSatMan);
 }

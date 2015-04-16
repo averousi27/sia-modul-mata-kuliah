@@ -30,7 +30,6 @@
 							<li class="dropdown-submenu">
 								<a href="#">Kelola Capaian Pembelajaran</a>
 								<ul class="dropdown-menu">
-									<li><a href="capaianbelajar/kurikulum">Kelola Capaian Pembelajaran Kurikulum</a></li>
 									<li><a href="capaianbelajar/satuanmanajemen">Kelola Capaian Pembelajaran Satuan Manajemen</a></li>
 									<li><a href="capaianbelajar/matakuliah">Kelola Capaian Pembelajaran Mata Kuliah</a></li>
 								</ul>

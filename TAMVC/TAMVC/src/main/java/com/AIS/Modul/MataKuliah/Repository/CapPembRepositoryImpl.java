@@ -17,6 +17,7 @@ public class CapPembRepositoryImpl implements CapPembRepository{
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<CapPemb> findAll() {
 		// TODO Auto-generated method stub
@@ -41,5 +42,15 @@ public class CapPembRepositoryImpl implements CapPembRepository{
 	public void editCapPemb(CapPemb capPemb, UUID idCapPemb) {
 		
 	}
+
+	/*@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<CapPemb> findByTahunSatMan(UUID idKurikulum, UUID idSatMan) {
+		// TODO Auto-generated method stub
+		//return sessionFactory.getCurrentSession().createQuery("FROM CapPemb CP WHERE CP.Kurikulum.idKurikulum=:idKurikulum AND CP.idSatMan=:idSatMan").list(); 
+		return sessionFactory.getCurrentSession().createQuery("FROM CapPemb CP WHERE CP.Kurikulum.idKurikulum=:idKurikulum AND CP.idSatMan=:idSatMan").list(); 
+		
+	}*/
 
 }

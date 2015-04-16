@@ -50,7 +50,7 @@
 							<li class="active">Kelola Tahun Ajaran</li>
 						</ol>
 						<p>Menu pengelolaan kurikulum (tambah dan ubah kurikulum)</p>
-						<a href="tambah" class="btn btn-success" action="tambah">Tambah Kurikulum</a>
+						<a href="kurikulum/tambah" class="btn btn-success">Tambah Kurikulum</a>
 						<table class="table table-striped table-hovertable table-striped table-bordered table-hover table-checkable table-colvis datatable ">
 							  <thead>
 							    <tr>
@@ -87,15 +87,15 @@
 								      </c:if>
 									      <c:if test="${kurikulum.aStatusKurikulum == 'true'}">
 									      		<td>
-									      			<a href="ubah/${kurikulum.idKurikulum}" class="btn btn-warning">Ubah</a>
-													<a href="ubah/hapus/${kurikulum.idKurikulum}" class="btn btn-danger">Hapus</a>
+									      			<a href="kurikulum/ubah/${kurikulum.idKurikulum}" class="btn btn-warning">Ubah</a>
+													<a href="kurikulum/ubah/hapus/${kurikulum.idKurikulum}" class="btn btn-danger">Hapus</a>
 									      			
 												</td>
 									      </c:if>
 									      <c:if test="${kurikulum.aStatusKurikulum == 'false' }">
 									      		<td>
-									      			<a href="ubah/${kurikulum.idKurikulum}" class="btn btn-warning">Ubah</a>
-													<a href="ubah/aktif/${kurikulum.idKurikulum}" class="btn btn-primary">Aktifkan</a>
+									      			<a href="kurikulum/ubah/${kurikulum.idKurikulum}" class="btn btn-warning">Ubah</a>
+													<a href="kurikulum/ubah/aktif/${kurikulum.idKurikulum}" class="btn btn-primary">Aktifkan</a>
 												</td>
 									      </c:if>
 								     </tr>

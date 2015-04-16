@@ -50,7 +50,7 @@ public class Kurikulum{
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="kurikulum")
 	private List<MK> MKs;
 
-	
+
 	public UUID getIdKurikulum() {
 		return idKurikulum;
 	}

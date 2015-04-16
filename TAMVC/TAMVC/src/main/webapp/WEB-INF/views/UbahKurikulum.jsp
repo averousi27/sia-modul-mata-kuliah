@@ -29,13 +29,8 @@
     <body style="background:url(${pageContext.servletContext.contextPath}/resources/img/wild_flowers.png) repeat 0 0"> 
 		<div class="container">
 			<div class="wrapper">
-				 <%@include file="header.jsp" %>
-		<!-- Content -->
-		<link href="${pageContext.servletContext.contextPath}/resources/datepicker/bootstrap-datepicker-master/css/datepicker.css" rel="stylesheet" type="text/css"/>
-		<link href="${pageContext.servletContext.contextPath}/resources/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
-	
-		<link href="${pageContext.servletContext.contextPath}/resources/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css" />
-		<div class="row">
+				 <%@include file="header.jsp" %> 
+			<div class="row">
 			<div class="container">
     			<div class="col-md-12" style="margin-bottom:10px;">
 					<ol class="breadcrumb">
@@ -52,16 +47,16 @@
 					<form role="form" id="formdetail" action="aksi/${kurikulumObj.idKurikulum }" method="post"> 
 			    		<div class=form-group">
 			    			<label>Nama Kurikulum</label>
-			    			<input type="text" class="form-control" id="inputDefault" name="nmKurikulumTxt" value="${kurikulumObj.nmKurikulum}">
+			    			<input type="text" class="form-control" id="inputDefault" name="nmKurikulumTxt" value="${kurikulumObj.nmKurikulum}" required>
 			    		</div>
 					    <div class="form-group">
 					      <label>Satuan Manajemen</label>
-					        <select class="form-control" id="select" name="idSatManTxt">
+					        <select class="form-control" id="select" name="idSatManTxt" required>
 					        <c:forEach items="${satMans}" var="satman">
 					        	<c:if test="${selectedSatMan == kurikulumObj.satMan.idSatMan}">
-					        		<option selected="selected" value="${kurikulumObj.satMan.idSatMan}">${kurikulumObj.satMan.nmSatMan}</option>
+					        		<option selected="selected" value="${kurikulumObj.satMan.idSatMan}" required>${kurikulumObj.satMan.nmSatMan}</option>
 					        	</c:if>
-					          	<c:if test="${selectedSatMan != kurikulumObj.satMan.idSatMan}">
+					          	<c:if test="${selectedSatMan != kurikulumObj.satMan.idSatMan}" required>
 					        		<option value="${satman.idSatMan}">${satman.nmSatMan}</option>
 					        	</c:if>
 					        </c:forEach>
@@ -69,24 +64,24 @@
 					    </div>
 					    <div class="form-group">
 					      <label>Tahun Mulai</label>
-					        <input type="text" class="form-control" id="inputDefault" name="tahunMulaiTxt" value="${kurikulumObj.thnMulai}">
+					        <input type="text" class="form-control" id="inputDefault" name="tahunMulaiTxt" value="${kurikulumObj.thnMulai}" required>
 					    </div>
 					    <div class="form-group">
 					      <label>Tahun Akhir</label> 
-					        <input type="text" class="form-control" id="inputDefault" name="tahunAkhirTxt" value="${kurikulumObj.thnAkhir }">
+					        <input type="text" class="form-control" id="inputDefault" name="tahunAkhirTxt" value="${kurikulumObj.thnAkhir }" required>
  					    </div>
 					    <div class="form-group">
 					      <label>Status Kurikulum</label> 
 					        	<c:if test="${kurikulumObj.aStatusKurikulum == 'true'}"> 
 							        <div class="radio">
 							        	<label>
-								            <input type="radio" name="statusKurikulumOpt" id="optionsRadios1" value="1" checked="">
+								            <input type="radio" name="statusKurikulumOpt" id="optionsRadios1" value="1" checked="" required>
 								           Aktif
 								        </label>
 								    </div>
 								    <div class="radio">
 								        <label>
-								           <input type="radio" name="statusKurikulumOpt" id="optionsRadios1" value="0">
+								           <input type="radio" name="statusKurikulumOpt" id="optionsRadios1" value="0" required>
 								           Non-Aktif
 								        </label>
 								    </div>
@@ -94,13 +89,13 @@
 						        <c:if test="${kurikulumObj.aStatusKurikulum == 'false' }">
 						        	<div class="radio">
 						        		<label>
-							        		<input type="radio" name="statusKurikulumOpt" id="optionsRadios1" value="1">
+							        		<input type="radio" name="statusKurikulumOpt" id="optionsRadios1" value="1" required>
 							           			Aktif
 							           	</label>
 							        </div>
 							        <div class="radio">
 							        	<label>
-							            	<input type="radio" name="statusKurikulumOpt" id="optionsRadios1" value="0" checked="">
+							            	<input type="radio" name="statusKurikulumOpt" id="optionsRadios1" value="0" checked="" required>
 							           			Non-Aktif
 							           	</label>
 							        </div>
@@ -108,7 +103,7 @@
 					        </div>
 					    <div class="form-group">
 					      <div class="col-lg-10 col-lg-offset-2">
-					        <button type="reset" class="btn btn-default" a href="kurikulum">Cancel</button>
+					        <a type="reset" class="btn btn-default" href="kurikulum">Cancel</a>
 					        <button type="submit" class="btn btn-primary">Submit</button>
 					      </div>
 					    </div>
