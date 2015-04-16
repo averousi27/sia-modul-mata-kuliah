@@ -23,32 +23,28 @@
 			var context_path = "${pageContext.servletContext.contextPath}";
 		</script>
 		<script type="text/javascript">
-		   function getIdKurikulum(){
-		     var valKurikulum = $('#selectKurikulum').val();
-		   }
-		   function getIdSatMan(){
-			     var valSatMan = $('#selectSatMan').val();
-			}
-		   function getCapPemb(){
-			   $.ajax({
-				   url : 'satuanmanajemen/view',
-				   method : 'get',
-				   ContentType : 'json',
-				   data : {
-					   valKurikulum : val,
-					   valSatMan : val 
-				   }
-			   },
-			   success : function(response){
-				   var result="";
-				   if(response!=null){
-					   $(response).each(function(index, value){
-						   result = result + '<tr><td>' + value + '</td><td>' + value + '</td></tr>';
-					   });
-					   $('#tabelCapPemb').html(options);
-				   }
-			   }));
-		   }
+		   $(document).ready(function(){ 
+			   var kurikulum=null;
+			   var satMan=null;
+			   var result=null;
+				$('#selectKurikulum').change(function(){
+					kurikulum = document.getElementById('selectKurikulum').value; 
+				})
+				$('#selectSatMan').change(function(){
+					var satMan = document.getElementById('selectSatMan').value;
+				})
+				$('#showData').click(function(){
+					var url = "satuanmanajemen/view?";
+					url += "idKurikulumTxt=" + kurikulum + "&idSatManTxt=" + satMan;
+					$.getJSON( url,
+						function(data){
+						$.each(data, function(key, val){
+							var result = "<tr><td>" + data[key].nmCapPemb + "</td><td>" + data[key].dekripsiCapPemb + 
+								"</td></tr>"; 
+						}) 
+					})
+				}) 
+		   })
 		 </script>
 		<title>Kelola Capaian Pembelajaran Satuan Manajemen</title>
 	</head>
@@ -80,7 +76,7 @@
 							<!--<form role="form" id="formdetail" action="satuanmanajemen/view" method="post"> -->
 							  <div class="form-group">
 							  	 <label>Pilih Tahun Kurikulum</label>
-							  	 <select class="form-control" id="selectKurikulum" name="idKurikulumTxt" required onchange="getIdKurikulum();">
+							  	 <select class="form-control" id="selectKurikulum" name="idKurikulumTxt" required>
 							        <c:forEach items="${kurikulums}" var="kurikulum">
 							        	<c:if test="${selectedKurikulum == kurikulum.idKurikulum}">
 							        		<option selected="selected" value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.nmKurikulum }</option>
@@ -91,7 +87,7 @@
 							        </c:forEach>
 							      </select>
 							      <label>Pilih Satuan Manajemen</label>
-								  	 <select class="form-control" id="selectSatMan" name="idSatManTxt" onchange="getIdSatMan();">
+								  	 <select class="form-control" id="selectSatMan" name="idSatManTxt">
 								        <c:forEach items="${satmans}" var="satman">
 								        	<c:if test="${selectedSatMan == satman.idSatMan}">
 								        		<option selected="selected" value="${satman.idSatMan}">${satman.nmSatMan}</option>
@@ -101,7 +97,7 @@
 								        	</c:if>
 								        </c:forEach>
 								      </select><br />
-									<button type="submit" class="btn btn-primary" onclick="getCapPemb">Tampilkan</button>
+									<button type="submit" class="btn btn-primary" id="showData">Tampilkan</button>
 							  </div>
 							<!--</form>-->
 							<br /> 

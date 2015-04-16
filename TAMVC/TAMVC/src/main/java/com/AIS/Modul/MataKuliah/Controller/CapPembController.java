@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.AIS.Modul.MataKuliah.Model.CapPemb;
@@ -40,18 +41,18 @@ public class CapPembController {
 		return mav;
 	}
 	
-	@RequestMapping(value="capaianbelajar/satuanmanajemen/view", method=RequestMethod.POST)
-	public ModelAndView showCapPemb(String idKurikulumTxt, String idSatManTxt){
-		ModelAndView mav = new ModelAndView();
-		System.out.println(idKurikulumTxt + " " +idSatManTxt);
+	@RequestMapping(value="capaianbelajar/satuanmanajemen/view", method=RequestMethod.GET)
+	public @ResponseBody List<CapPemb> showCapPemb(@PathVariable String idKurikulumTxt, @PathVariable String idSatManTxt){
+		//ModelAndView mav = new ModelAndView();
+		//System.out.println(idKurikulumTxt + " " +idSatManTxt);
 		List<CapPemb> capPembList = capPembServ.findByTahunAndSatMan(capPembServ.convertToUUID(idKurikulumTxt), 
 				capPembServ.convertToUUID(idSatManTxt));
-		mav.addObject("cappembs", capPembList);
-		mav.setViewName("redirect:/capaianbelajar/satuanmanajemen");
-		return mav;
+		//mav.addObject("cappembs", capPembList);
+		//mav.setViewName("redirect:/capaianbelajar/satuanmanajemen"); 
+		return capPembList;
 	}
 	
-	@RequestMapping(value="capaianbelajar/satuanmanajemen/tambah/{idKurikulum}/{idSatMan}", method=RequestMethod.GET)
+	/*@RequestMapping(value="capaianbelajar/satuanmanajemen/tambah/{idKurikulum}/{idSatMan}", method=RequestMethod.GET)
 	public ModelAndView getData(@PathVariable String idKurikulum, @PathVariable String idSatMan){
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("kurikulumObj",kurikulumServ.findById(kurikulumServ.convertToUUID(idKurikulum)));
@@ -60,5 +61,5 @@ public class CapPembController {
 		mav.addObject("satmans", satManList);
 		mav.setViewName("TambahCapaianBelajar");
 		return mav;
-	}
+	}*/
 }

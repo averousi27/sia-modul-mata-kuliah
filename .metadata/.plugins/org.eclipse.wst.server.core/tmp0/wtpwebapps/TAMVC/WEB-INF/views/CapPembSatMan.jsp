@@ -22,6 +22,30 @@
 		<script>
 			var context_path = "${pageContext.servletContext.contextPath}";
 		</script>
+		<script type="text/javascript">
+		   $(document).ready(function(){ 
+			   var kurikulum=null;
+			   var satMan=null;
+			   var result=null;
+				$('#selectKurikulum').change(function(){
+					kurikulum = document.getElementById('selectKurikulum').value; 
+				})
+				$('#selectSatMan').change(function(){
+					var satMan = document.getElementById('selectSatMan').value;
+				})
+				$('#showData').click(function(){
+					var url = "satuanmanajemen/view?";
+					url += "idKurikulumTxt=" + kurikulum + "&idSatManTxt=" + satMan;
+					$.getJSON( url,
+						function(data){
+						$.each(data, function(key, val){
+							var result = "<tr><td>" + data[key].nmCapPemb + "</td><td>" + data[key].dekripsiCapPemb + 
+								"</td></tr>"; 
+						}) 
+					})
+				}) 
+		   })
+		 </script>
 		<title>Kelola Capaian Pembelajaran Satuan Manajemen</title>
 	</head>
 	<body style="background:url(${pageContext.servletContext.contextPath}/resources/img/wild_flowers.png) repeat 0 0">
@@ -49,10 +73,10 @@
 								<li class="active">Kelola Tahun Ajaran</li>
 							</ol>
 							<p>Menu pengelolaan capaian pembelajaran untuk satuan manajemen akademik</p> 
-							<form role="form" id="formdetail" action="satuanmanajemen/view" method="post"> 
+							<!--<form role="form" id="formdetail" action="satuanmanajemen/view" method="post"> -->
 							  <div class="form-group">
 							  	 <label>Pilih Tahun Kurikulum</label>
-							  	 <select class="form-control" id="select" name="idKurikulumTxt" required>
+							  	 <select class="form-control" id="selectKurikulum" name="idKurikulumTxt" required>
 							        <c:forEach items="${kurikulums}" var="kurikulum">
 							        	<c:if test="${selectedKurikulum == kurikulum.idKurikulum}">
 							        		<option selected="selected" value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.nmKurikulum }</option>
@@ -63,7 +87,7 @@
 							        </c:forEach>
 							      </select>
 							      <label>Pilih Satuan Manajemen</label>
-								  	 <select class="form-control" id="select" name="idSatManTxt">
+								  	 <select class="form-control" id="selectSatMan" name="idSatManTxt">
 								        <c:forEach items="${satmans}" var="satman">
 								        	<c:if test="${selectedSatMan == satman.idSatMan}">
 								        		<option selected="selected" value="${satman.idSatMan}">${satman.nmSatMan}</option>
@@ -73,12 +97,12 @@
 								        	</c:if>
 								        </c:forEach>
 								      </select><br />
-									<button type="submit" class="btn btn-primary">Tampilkan</button>
+									<button type="submit" class="btn btn-primary" id="showData">Tampilkan</button>
 							  </div>
-							</form>
+							<!--</form>-->
 							<br /> 
-						 <a href="satuanmanajemen/tambah/${kurikulumObj.idKurikulum }/${satManObj.idSatMan}" class="btn btn-success">Tambah Capaian Belajar</a>
-							<table class="table table-striped table-hovertable table-striped table-bordered table-hover table-checkable table-colvis datatable ">
+						 <!-- <a href="satuanmanajemen/tambah/${kurikulumObj.idKurikulum }/${satManObj.idSatMan}" class="btn btn-success">Tambah Capaian Belajar</a>-->
+							<table id="tabelCapPemb" class="table table-striped table-hovertable table-striped table-bordered table-hover table-checkable table-colvis datatable">
 							  <thead>
 							    <tr>
 								    <td>

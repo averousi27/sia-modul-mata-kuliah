@@ -48,8 +48,8 @@
 						<li class="active">Kelola Tahun Ajaran</li>
 					</ol>
 					
-					<p>Menambahkan matakuliah </p>
-					<form role="form" id="formdetail" action="matakuliah/satuanmanajemen/aksi" method="get"> 
+					<p>Menampilkan matakuliah satuan manajemen</p>
+					<form role="form" id="formd   etail" action="matakuliah/satuanmanajemen/aksi" method="get"> 
 						<div class="form-group">
 					      <label>Pilih Satuan Manajemen</label>
 					        <select class="form-control" id="select" name="idSatManTxt" required>

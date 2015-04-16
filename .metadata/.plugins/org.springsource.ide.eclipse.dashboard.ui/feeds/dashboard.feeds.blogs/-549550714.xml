@@ -5,7 +5,207 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2015-04-15T00:46:00Z</updated>
+  <updated>2015-04-15T15:22:58Z</updated>
+  <entry>
+    <title>Spring Social Facebook 2.0.0.RELEASE Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/04/15/spring-social-facebook-2-0-0-release-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Craig Walls</name>
+    </author>
+    <id>tag:spring.io,2015-04-15:2082</id>
+    <updated>2015-04-15T15:22:58Z</updated>
+    <content type="html">&lt;p&gt;Dear Spring Community,&lt;/p&gt;&lt;p&gt;I&amp;rsquo;m happy to announce the release of &lt;a href="http://projects.spring.io/spring-social-facebook/"&gt;Spring Social Facebook&lt;/a&gt; 2.0.0.RELEASE. This release completes the overhaul of Spring Social Facebook to target version 2.3 of Facebook&amp;rsquo;s Graph API.Facebook will be turning off version 1.0 of their Graph API on April 30th, so it is highly recommended that you upgrade to Spring Social Facebook 2.0.0.RELEASE as soon as possible. &lt;/p&gt;&lt;p&gt;As has been mentioned in last week&amp;rsquo;s release candidate and in milestone releases prior to that, Facebook&amp;rsquo;s Graph API introduced several breaking changes which resulted in many breaking changes between Spring Social Facebook 1.1.x and Spring Social Facebook 2.0.0. Also, even some operations that still work do not work as they did previously. For example, it is no longer possible to fetch a list of &lt;em&gt;all&lt;/em&gt; of a users&amp;rsquo;s Facebook friends; you can only fetch a list of their friends who have also authorized your application with Facebook.&lt;/p&gt;&lt;p&gt;Moreover, although Spring Social Facebook covers much of what&amp;rsquo;s available in the Graph API, the use of many of Facebook&amp;rsquo;s endpoints will require review and approval from Facebook. See &lt;a href="https://developers.facebook.com/docs/apps/review/"&gt;Facebook&amp;rsquo;s Review Guidelines&lt;/a&gt; for details on what you must do to get approval from Facebook.&lt;/p&gt;&lt;p&gt;I&amp;rsquo;d like to thank the many members of the Spring Social community for helping test this release and for submitting bug reports and pull requests to keep it moving forward. As with any large development effort, it&amp;rsquo;s possible that something was overlooked. If you see anything out of sorts, please &lt;a href="https://jira.spring.io/browse/SOCIALFB"&gt;file an issue&lt;/a&gt; and let us know. And, as always, we welcome &lt;a href="https://github.com/spring-projects/spring-social-facebook/pulls"&gt;pull requests&lt;/a&gt;. If you see an opportunity to fix or improve Spring Social, please go for it and send us a pull request.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring integration Java DSL 1.1 M1 is available</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/04/15/spring-integration-java-dsl-1-1-m1-is-available" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Artem Bilan</name>
+    </author>
+    <id>tag:spring.io,2015-04-15:2081</id>
+    <updated>2015-04-15T12:04:00Z</updated>
+    <content type="html">&lt;p&gt;Dear Spring community,&lt;/p&gt;&lt;p&gt;We are pleased to announce that the Spring Integration Java DSL 1.1 Milestone 1 is now available. Use the &lt;a href="https://repo.spring.io/milestone/"&gt;Milestone Repository&lt;/a&gt; with Maven or Gradle to try it in early access.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint"&gt;compile &amp;quot;org.springframework.integration:spring-integration-java-dsl:1.1.0.M1&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To be honest, many of the planned features for &lt;code&gt;1.1&lt;/code&gt; are not implemented yet, but thanks to &lt;a href="https://spring.io/blog/2015/04/15/using-apache-kafka-for-integration-and-data-processing-pipelines-with-spring"&gt;encouragement&lt;/a&gt; from our pal &lt;a href="https://spring.io/team/jlong"&gt;Josh Long&lt;/a&gt; and the recent announcement about the Apache Kafka support (&lt;a href="https://spring.io/blog/2015/03/26/spring-integration-kafka-support-1-1-ga-is-available"&gt;Spring Integration Kafka Support 1.1 Release&lt;/a&gt;, &lt;a href="https://spring.io/blog/2015/03/26/spring-xd-1-1-1-released"&gt;Spring XD 1.1.1 Release&lt;/a&gt;), we&amp;rsquo;ve released this Milestone 1 mainly to showcase the Apache Kafka support in the Java Configuration DSL.&lt;/p&gt;&lt;p&gt;We&amp;rsquo;ll look at that, and other, features from this release in this post.&lt;/p&gt;&lt;h2&gt;&lt;a href="#apache-kafka-support" class="anchor" name="apache-kafka-support"&gt;&lt;/a&gt;Apache Kafka Support&lt;/h2&gt;&lt;p&gt;Let&amp;rsquo;s start with some &amp;ldquo;trivial&amp;rdquo; sample from the &lt;code&gt;KafkaTests&lt;/code&gt; class in the Spring Integration Java DSL :&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@Bean&#xD;
+public ConnectionFactory connectionFactory(EmbeddedZookeeper zookeeper) {&#xD;
+        return new DefaultConnectionFactory(&#xD;
+                new ZookeeperConfiguration(zookeeper.connectString()));&#xD;
+}&#xD;
+&#xD;
+@Bean&#xD;
+public OffsetManager offsetManager(ConnectionFactory connectionFactory) {&#xD;
+        MetadataStoreOffsetManager offsetManager =&#xD;
+                           new MetadataStoreOffsetManager(connectionFactory);&#xD;
+        // start reading at the end of the&#xD;
+       offsetManager.setReferenceTimestamp(OffsetRequest.LatestTime());&#xD;
+       return offsetManager;&#xD;
+}&#xD;
+&#xD;
+@Bean&#xD;
+public IntegrationFlow listeningFromKafkaFlow(&#xD;
+                    ConnectionFactory connectionFactory,&#xD;
+                    OffsetManager offsetManager) {&#xD;
+     return IntegrationFlows&#xD;
+         .from(Kafka.messageDriverChannelAdapter(connectionFactory, TEST_TOPIC)&#xD;
+                  .autoCommitOffset(false)&#xD;
+		  .payloadDecoder(String::new)&#xD;
+		  .keyDecoder(b -&amp;gt; Integer.valueOf(new String(b)))&#xD;
+		  .configureListenerContainer(c -&amp;gt;&#xD;
+				c.offsetManager(offsetManager)&#xD;
+						.maxFetch(100)))&#xD;
+         .&amp;lt;String, String&amp;gt;transform(String::toUpperCase)&#xD;
+         .channel(c -&amp;gt; c.queue(&amp;quot;listeningFromKafkaResults&amp;quot;))&#xD;
+         .get();&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+  &lt;li&gt;The &lt;code&gt;EmbeddedZookeeper&lt;/code&gt; is a part of Apache Kafka &lt;code&gt;test&lt;/code&gt; artifact (&lt;code&gt;testCompile &amp;#39;org.apache.kafka:kafka_2.10:0.8.1.1:test&amp;#39;&lt;/code&gt; in our case) and, along with many other features like &lt;code&gt;kafka.utils.TestUtils&lt;/code&gt;, it is very useful for unit testing.&lt;/li&gt;
+  &lt;li&gt;Please refer to the &lt;a href="https://github.com/spring-projects/spring-integration-kafka"&gt;Spring Integration Kafka&lt;/a&gt; project for more information on &lt;code&gt;ConnectionFactory&lt;/code&gt; and &lt;code&gt;OffsetManager&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;The most important part in the config above is &lt;code&gt;IntegrationFlow&lt;/code&gt; bean definition. The Spring Integration Java DSL provides a namespace factory - &lt;code&gt;Kafka&lt;/code&gt; - which utilizes &lt;code&gt;IntegrationComponentSpec&lt;/code&gt; implementations for the Spring Integration Kafka adapters, like &lt;code&gt;KafkaMessageDrivenChannelAdapterSpec&lt;/code&gt; for the &lt;code&gt;KafkaMessageDrivenChannelAdapter&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;An example of the &lt;em&gt;builder pattern&lt;/em&gt;, the spec just delegates options from &lt;code&gt;method-chain&lt;/code&gt; to the underlying &lt;code&gt;KafkaMessageDrivenChannelAdapter&lt;/code&gt; instance.&lt;/li&gt;
+  &lt;li&gt;For those, like yours truly, who are not familiar with Scala (which is the language Apache Kafka is written in), pay attention to the &lt;code&gt;.payloadDecoder(String::new)&lt;/code&gt; line. The &lt;code&gt;kafka.serializer.Decoder&lt;/code&gt; is a Scala &lt;code&gt;trait&lt;/code&gt; that is compiled to a Java interface (not a class!) so we can represent it here as a Java 8 lambda method.&lt;/li&gt;
+  &lt;li&gt;the &lt;code&gt;.configureListenerContainer()&lt;/code&gt; is a lambda-aware method to separate concerns for the &lt;code&gt;KafkaMessageListenerContainer&lt;/code&gt;-specific options.&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;The other self-explained factory-methods from the &lt;code&gt;Kafka&lt;/code&gt; namespace factory are &lt;code&gt;.inboundChannelAdapter(...)&lt;/code&gt; for the &lt;code&gt;KafkaHighLevelConsumerMessageSource&lt;/code&gt; polling adapter and &lt;code&gt;.outboundChannelAdapter(...)&lt;/code&gt; for the &lt;code&gt;KafkaProducerMessageHandler&lt;/code&gt;. Please refer to their JavaDocs for more information.&lt;/p&gt;&lt;p&gt;For more information, check out Josh Long&amp;rsquo;s post on &lt;a href="https://spring.io/blog/2015/04/15/using-apache-kafka-for-integration-and-data-processing-pipelines-with-spring"&gt;Using Apache Kafka for Integration and Data Processing Pipelines with Spring&lt;/a&gt;!&lt;/p&gt;&lt;h2&gt;&lt;a href="#pojo-method-invocation" class="anchor" name="pojo-method-invocation"&gt;&lt;/a&gt;POJO Method invocation&lt;/h2&gt;&lt;p&gt;A lot of the great feedback from the community (&lt;a href="https://spring.io/blog/2015/02/10/webinar-replay-introducing-the-java-dsl-for-spring-integration"&gt;Webinar Replay: Introducing the Java DSL for Spring Integration&lt;/a&gt;) was around the bean method invocation components (services, transformers, routers, etc.) and we heard you loud-and-clear: component method selection has been improved. Here is a sample that is analogous to a &lt;code&gt;&amp;lt;int:service-activator input-channel=&amp;quot;greetingChannel&amp;quot; ref=&amp;quot;greetingService&amp;quot;/&amp;gt;&lt;/code&gt; in the XML configuration:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;&lt;br/&gt;@Configuration&#xD;
+@EnableIntegration&#xD;
+@ComponentScan&#xD;
+public class MyConfiguration {&#xD;
+&#xD;
+	@Autowired&#xD;
+	private GreetingService greetingService;&#xD;
+&#xD;
+	@Bean&#xD;
+	public IntegrationFlow greetingFlow() {&#xD;
+		return IntegrationFlows.from(&amp;quot;greetingChannel&amp;quot;)&#xD;
+				.handle(this.greetingService)&#xD;
+				.get();&#xD;
+	}&#xD;
+&#xD;
+}&#xD;
+&#xD;
+@Component&#xD;
+public class GreetingService {&#xD;
+&#xD;
+   public void greeting(String payload) {&#xD;
+        System.out.println(&amp;quot;Hello &amp;quot; + payload);&#xD;
+   }&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Here, the &lt;code&gt;greeting&lt;/code&gt; method will automatically be selected by the framework. There is an alternative that takes a &lt;code&gt;methodName&lt;/code&gt; argument to specify a method in the case of ambiguity. Similar POJO method invocation EIP-methods have been introduced for many other EIP implementations like &lt;code&gt;transform(Object service, String methodName)&lt;/code&gt;, &lt;code&gt;split(Object service)&lt;/code&gt;, etc.&lt;/p&gt;&lt;p&gt;The Spring Integration Java DSL also respects Spring Integration messaging annotations like &lt;code&gt;@ServiceActivator&lt;/code&gt;, &lt;code&gt;@Router&lt;/code&gt;, &lt;code&gt;@Filter&lt;/code&gt;, etc., and even &lt;code&gt;@Payload&lt;/code&gt;, &lt;code&gt;@Header&lt;/code&gt;. Please, refer to &lt;code&gt;IntegrationFlowDefinition&lt;/code&gt; JavaDocs for more information.&lt;/p&gt;&lt;h2&gt;&lt;a href="#integrationflowadapter" class="anchor" name="integrationflowadapter"&gt;&lt;/a&gt;IntegrationFlowAdapter&lt;/h2&gt;&lt;p&gt;It shouldn&amp;rsquo;t be a surprise that as &lt;code&gt;IntegrationFlow&lt;/code&gt; is an interface, we can just provide its direct implementation as a custom component and it works as-is in the Spring Integration Java DSL environment:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@Component&#xD;
+public class MyFlow implements IntegrationFlow {&#xD;
+&#xD;
+	@Override&#xD;
+	public void configure(IntegrationFlowDefinition&amp;lt;?&amp;gt; f) {&#xD;
+		f.&amp;lt;String, String&amp;gt;transform(String::toUpperCase);&#xD;
+	}&#xD;
+&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This is similar to the &lt;code&gt;@Bean&lt;/code&gt; definitions, but this approach helps our components stay more loosely coupled.&lt;/p&gt;&lt;p&gt;But, wait, there&amp;rsquo;s more! &lt;code&gt;IntegrationFlow&lt;/code&gt; implementations (like lambdas in the &lt;code&gt;@Bean&lt;/code&gt; definition case) are limited to &lt;code&gt;DirectChannel&lt;/code&gt; input channels. We went further here and introduced the &lt;code&gt;IntegrationFlowAdapter&lt;/code&gt;. Here&amp;rsquo;s my favorite sample to demonstrate how it can be used:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@Component&#xD;
+public class MyFlowAdapter extends IntegrationFlowAdapter {&#xD;
+&#xD;
+        private final AtomicBoolean invoked = new tomicBoolean();&#xD;
+&#xD;
+        public Date nextExecutionTime(TriggerContext triggerContext) {&#xD;
+              return this.invoked.getAndSet(true) ? null : new Date();&#xD;
+       }&#xD;
+&#xD;
+       @Override&#xD;
+       protected IntegrationFlowDefinition&amp;lt;?&amp;gt; buildFlow() {&#xD;
+          return from(this, &amp;quot;messageSource&amp;quot;,&#xD;
+                        e -&amp;gt; e.poller(p -&amp;gt; p.trigger(this::nextExecutionTime)))&#xD;
+                   .split(this)&#xD;
+		   .transform(this)&#xD;
+		   .aggregate(a -&amp;gt; a.processor(this, null), null)&#xD;
+		   .enrichHeaders(Collections.singletonMap(&amp;quot;foo&amp;quot;, &amp;quot;FOO&amp;quot;))&#xD;
+		   .filter(this)&#xD;
+		   .handle(this)&#xD;
+		   .channel(c -&amp;gt; c.queue(&amp;quot;myFlowAdapterOutput&amp;quot;));&#xD;
+      }&#xD;
+&#xD;
+      public String messageSource() {&#xD;
+	       return &amp;quot;B,A,R&amp;quot;;&#xD;
+      }&#xD;
+&#xD;
+      @Splitter&#xD;
+      public String[] split(String payload) {&#xD;
+           return StringUtils.commaDelimitedListToStringArray(payload);&#xD;
+      }&#xD;
+&#xD;
+      @Transformer&#xD;
+      public String transform(String payload) {&#xD;
+           return payload.toLowerCase();&#xD;
+      }&#xD;
+&#xD;
+      @Aggregator&#xD;
+      public String aggregate(List&amp;lt;String&amp;gt; payloads) {&#xD;
+             return payloads.stream().collect(Collectors.joining());&#xD;
+      }&#xD;
+&#xD;
+      @Filter&#xD;
+      public boolean filter(@Header Optional&amp;lt;String&amp;gt; foo) {&#xD;
+              return foo.isPresent();&#xD;
+      }&#xD;
+&#xD;
+      @ServiceActivator&#xD;
+      public String handle(String payload, @Header String foo) {&#xD;
+             return payload + &amp;quot;:&amp;quot; + foo;&#xD;
+      }&#xD;
+&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Of course, with the POJO method invocation support (see above) it won&amp;rsquo;t be possible to build the flow so easily.&lt;/p&gt;&lt;h2&gt;&lt;a href="#dynamic-languages-scripting-support" class="anchor" name="dynamic-languages-scripting-support"&gt;&lt;/a&gt;Dynamic Languages (Scripting) Support&lt;/h2&gt;&lt;p&gt;The &lt;a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/dynamic-language.html"&gt;Spring Framework&lt;/a&gt; and &lt;a href="http://docs.spring.io/spring-integration/docs/latest-ga/reference/html/messaging-endpoints-chapter.html#scripting"&gt;Spring Integration&lt;/a&gt; have supported Dynamic Languages for a long time now and it is, mostly, linked with XML Spring configuration. It may look strange to deal with scripts (like Groovy, Ruby, JavaScript, etc.) from Java code, but we find it a useful tool for reloading functionality at runtime, and when Java lambas aren&amp;rsquo;t dynamic enough. Let&amp;rsquo;s look at the &lt;code&gt;Scripts&lt;/code&gt; namespace factory in the Spring Integration Java DSL:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@Configuration&#xD;
+@EnableIntegration&#xD;
+public class ScriptsConfiguration {&#xD;
+&#xD;
+	@Value(&amp;quot;com/my/project/integration/scripts/splitterScript.groovy&amp;quot;)&#xD;
+	private Resource splitterScript;&#xD;
+&#xD;
+	@Bean&#xD;
+	public PollableChannel results() {&#xD;
+		return new QueueChannel();&#xD;
+	}&#xD;
+&#xD;
+	@Bean&#xD;
+	public IntegrationFlow scriptSplitter() {&#xD;
+		return f -&amp;gt; f&#xD;
+        	             .split(Scripts.script(this.splitterScript)&#xD;
+                                              .refreshCheckDelay(10000)&#xD;
+                                              .variable(&amp;quot;foo&amp;quot;, &amp;quot;bar&amp;quot;))&#xD;
+                             .channel(results());&#xD;
+	}&#xD;
+&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This Scripting support allows us to deal only with external resources, which can be changed and reloaded at runtime. The &lt;code&gt;inline&lt;/code&gt; scripts, which are supported by the Spring Integration Scripting module, don&amp;rsquo;t make sense because we have Java 8 lambdas for those cases.&lt;/p&gt;&lt;h2&gt;&lt;a href="#inline-wiretap" class="anchor" name="inline-wiretap"&gt;&lt;/a&gt;Inline WireTap&lt;/h2&gt;&lt;p&gt;The &lt;a href="http://www.enterpriseintegrationpatterns.com/WireTap.html"&gt;Wire Tap EI Pattern&lt;/a&gt; is implemented as a &lt;code&gt;ChannelInterceptor&lt;/code&gt; in &lt;a href="http://docs.spring.io/spring-integration/docs/latest-ga/reference/html/messaging-channels-section.html#channel-wiretap"&gt;Spring Integration&lt;/a&gt; and can be injected into any &lt;code&gt;MessageChannel&lt;/code&gt; as an interceptor like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@Bean&#xD;
+public MessageChannel myChannel() {&#xD;
+     return MessageChannels.direct()&#xD;
+                .interceptor(new WireTap(loggerChannel()))&#xD;
+                .get();&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The &lt;code&gt;IntegrationFlow&lt;/code&gt; definition allows us to omit &lt;code&gt;MessageChannel&lt;/code&gt; declarations between EIP components, so we&amp;rsquo;ve introduced an inline &lt;code&gt;.wireTap()&lt;/code&gt; EIP-method to allow a &lt;code&gt;WireTap&lt;/code&gt; injection for those anonymous channels. Here are some samples:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@Bean&#xD;
+public IntegrationFlow wireTapFlow1() {&#xD;
+	return IntegrationFlows.from(&amp;quot;tappedChannel1&amp;quot;)&#xD;
+		.wireTap(&amp;quot;tapChannel&amp;quot;,&#xD;
+                         wt -&amp;gt; wt.selector(m -&amp;gt; m.getPayload().equals(&amp;quot;foo&amp;quot;)))&#xD;
+		.channel(&amp;quot;nullChannel&amp;quot;)&#xD;
+		.get();&#xD;
+}&#xD;
+&#xD;
+@Bean&#xD;
+public IntegrationFlow wireTapFlow2() {&#xD;
+	return f -&amp;gt; f&#xD;
+		.wireTap(sf -&amp;gt; sf&#xD;
+			.&amp;lt;String, String&amp;gt;transform(String::toUpperCase)&#xD;
+			.channel(c -&amp;gt; c.queue(&amp;quot;wireTapSubflowResult&amp;quot;)))&#xD;
+		.channel(&amp;quot;nullChannel&amp;quot;);&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Please see the &lt;code&gt;IntegrationFlowDefinition.wireTap()&lt;/code&gt; methods JavaDocs for more information and don&amp;rsquo;t miss our test-cases from project page on GitHub.&lt;/p&gt;&lt;h2&gt;&lt;a href="#wrap-up" class="anchor" name="wrap-up"&gt;&lt;/a&gt;Wrap up&lt;/h2&gt;&lt;p&gt;There&amp;rsquo;s much to do for the 1.1 release, like further simplification of &lt;code&gt;.aggregate()&lt;/code&gt;, etc. configuration, an ability to inject external sub-flows, the ability to configure &lt;code&gt;IntegrationComponentSpec&lt;/code&gt; implementations as a separate &lt;code&gt;@Bean&lt;/code&gt; to simplify the target flow definitions, more protocol-specific Namespace Factories and more. Don&amp;rsquo;t hesitate to reach us via StackOverflow, JIRA and GitHub issues to share your thoughts and ideas!&lt;/p&gt;&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-integration-java-dsl"&gt;Project Page&lt;/a&gt; | &lt;a href="https://jira.spring.io/browse/INTEXT"&gt;JIRA&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-integration-java-dsl/issues"&gt;Issues&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-integration/blob/master/CONTRIBUTING.md"&gt;Contributions&lt;/a&gt; | &lt;a href="http://stackoverflow.com"&gt;StackOverflow&lt;/a&gt; (&lt;code&gt;spring-integration&lt;/code&gt; tag)&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Using Apache Kafka for Integration and Data Processing Pipelines with Spring</title>
     <link rel="alternate" href="https://spring.io/blog/2015/04/15/using-apache-kafka-for-integration-and-data-processing-pipelines-with-spring" />
@@ -306,8 +506,8 @@ public class DemoApplication {&#xD;
     </author>
     <id>tag:spring.io,2015-04-12:2074</id>
     <updated>2015-04-14T13:05:00Z</updated>
-    <content type="html">&lt;p&gt;&lt;a href="http://www.cfsummit.com/"&gt;&lt;img src="https://raw.githubusercontent.com/pieterhumphrey/springio_website_images/a5c325abddeefb205ea98b6dc8a3bac642f1aa7b/hero-banner-cf-summit.jpg" width="996" height="220"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Ok, so this is not just a list of cool Spring Cloud, Spring Boot, Devops, and Buildpack related sessions at Cloud Foundry Summit, it includes aspirational talks/keynotes from speakers, authors, leaders, and just plain old old-of-the-box thinkers that we believe you'll want to hear from and appreciate.  If you or your team is curious about &lt;a href="https://spring.io/blog/2015/01/13/configuring-it-all-out-or-12-factor-app-style-configuration-with-spring"&gt;12-factor applications&lt;/a&gt;, &lt;a href="http://speakerdeck.com/joshlong/building-bootiful-microservices-with-spring-boot"&gt;microservices&lt;/a&gt;, and &lt;a href="https://spring.io/blog/2015/02/11/java-doesn-t-suck-rockin-the-jvm"&gt;want the benefits of the JVM&lt;/a&gt;, then check out the show and &lt;a href="http://www.cfsummit.com/"&gt;register now&lt;/a&gt;!&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;a href="http://www.cfsummit.com/"&gt;&lt;img src="https://raw.githubusercontent.com/pieterhumphrey/springio_website_images/master/Spring-CFSummit-540x200.png" width="996" height="220"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Ok, so this is not just a list of cool Spring Cloud, Spring Boot, Devops, and Buildpack related sessions at Cloud Foundry Summit, it includes aspirational talks/keynotes from speakers, authors, leaders, and just plain old old-of-the-box thinkers that we believe you'll want to hear from and appreciate.  If you or your team is curious about &lt;a href="https://spring.io/blog/2015/01/13/configuring-it-all-out-or-12-factor-app-style-configuration-with-spring"&gt;12-factor applications&lt;/a&gt;, &lt;a href="http://speakerdeck.com/joshlong/building-bootiful-microservices-with-spring-boot"&gt;microservices&lt;/a&gt;, and &lt;a href="https://spring.io/blog/2015/02/11/java-doesn-t-suck-rockin-the-jvm"&gt;want the benefits of the JVM&lt;/a&gt;, then check out the show and &lt;a href="http://www.cfsummit.com/"&gt;register now&lt;/a&gt;!  Spring users can save 25% off registration using promo code: CFSPRING&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Monday, May 11 • 9:00am - 9:20am&lt;/strong&gt; - &lt;a href="http://cfsummit2015.sched.org/event/88c605b672874a901f827dc7e6ebf471?iframe=no&amp;w=&amp;sidebar=yes&amp;bg=no#.VSn9CfnF-bN"&gt;Keynote: Steampunk Meets Cyberpunk: The Makings of a Cloud Native Application Platform&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Speaker: &lt;a href="http://cfsummit2015.sched.org/speaker/samramji"&gt;Sam Ramji&lt;/a&gt;, CEO, Cloud Foundry Foundation&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Monday, May 11 • 9:35am - 9:55am&lt;/strong&gt; &lt;a href="http://cfsummit2015.sched.org/event/4cd1a887f7ad5508b742a8878bd97c7d?iframe=no&amp;w=&amp;sidebar=yes&amp;bg=no#.VSn9D_nF-bN"&gt;Keynote: The Oath of the Innovator &lt;/a&gt;&lt;/p&gt;
@@ -641,38 +841,6 @@ public class StreamConverter implements ConditionalGenericConverter {&#xD;
   &lt;li&gt;Spring Security 3.2.7&lt;/li&gt;
   &lt;li&gt;Spring Web Services 2.2.1&lt;/li&gt;
 &lt;/ul&gt;&lt;p&gt;The versions of many third-party dependencies have also been updated.&lt;/p&gt;&lt;p&gt;&lt;a href="http://platform.spring.io/platform"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-io/platform"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-io/platform/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/platform/docs/1.1.2.RELEASE/reference/htmlsingle"&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring IO Platform 1.0.5 released</title>
-    <link rel="alternate" href="https://spring.io/blog/2015/04/01/spring-io-platform-1-0-5-released" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Andy Wilkinson</name>
-    </author>
-    <id>tag:spring.io,2015-03-31:2055</id>
-    <updated>2015-04-01T08:52:22Z</updated>
-    <content type="html">&lt;p&gt;We are pleased to announce that &lt;a href="http://platform.spring.io/platform"&gt;Spring IO Platform&lt;/a&gt; 1.0.5.RELEASE is now available from both &lt;a href="http://repo.spring.io/release"&gt;repo.spring.io&lt;/a&gt; and &lt;a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3Aio.spring.platform"&gt;Maven Central&lt;/a&gt;. This release is intended for users who remain on the 1.0.x line; where possible, upgrading to 1.1.x is recommended.&lt;/p&gt;&lt;p&gt;This maintenance release upgrades the versions of a number of the projects in the Platform to pick up their latest maintenance releases:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Spring AMQP 1.3.7&lt;/li&gt;
-  &lt;li&gt;Spring Batch 3.0.3&lt;/li&gt;
-  &lt;li&gt;Spring Boot 1.1.12&lt;/li&gt;
-  &lt;li&gt;Spring Data Dijkstra SR5&lt;/li&gt;
-  &lt;li&gt;Spring Framework 4.0.9&lt;/li&gt;
-  &lt;li&gt;Spring Integration 4.0.6&lt;/li&gt;
-  &lt;li&gt;Spring Security 3.2.7&lt;/li&gt;
-  &lt;li&gt;Spring Web Services 2.2.1&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;The versions of many third-party dependencies have also been updated.&lt;/p&gt;&lt;p&gt;&lt;a href="http://platform.spring.io/platform"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-io/platform"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-io/platform/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/platform/docs/1.0.5.RELEASE/reference/htmlsingle"&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Boot 1.1.12 released</title>
-    <link rel="alternate" href="https://spring.io/blog/2015/03/31/spring-boot-1-1-12-released" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Phil Webb</name>
-    </author>
-    <id>tag:spring.io,2015-03-31:2048</id>
-    <updated>2015-03-31T21:26:26Z</updated>
-    <content type="html">&lt;p&gt;Spring Boot 1.1.12 has been released and is available now from &lt;a href="http://repo.spring.io/release"&gt;repo.spring.io&lt;/a&gt; and &lt;a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.springframework.boot%22"&gt;Maven Central&lt;/a&gt;. &lt;/p&gt;&lt;p&gt;This maintenance release includes a &lt;a href="https://github.com/spring-projects/spring-boot/issues?q=milestone%3A1.1.12"&gt;small number of fixes&lt;/a&gt; and is recommended for anyone still on the 1.1.x line. &lt;/p&gt;&lt;p&gt;This the last planned release from the 1.1.x branch so please consider &lt;a href="http://spring.io/blog/2015/03/31/spring-boot-1-2-3-released"&gt;upgrading to 1.2.3&lt;/a&gt; if you haven&amp;rsquo;t already.&lt;/p&gt;&lt;p&gt;&lt;a href="http://projects.spring.io/spring-boot/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-boot/docs/1.1.12.RELEASE/reference/htmlsingle"&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content>
   </entry>
 </feed>
 
