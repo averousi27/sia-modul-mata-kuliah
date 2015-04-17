@@ -52,6 +52,7 @@
 					    <div class="form-group">
 					      <label>Satuan Manajemen</label>
 					        <select class="form-control" id="select" name="idSatManTxt" required>
+					        <option>--Pilih Satuan Manajemen---</option>
 					        <c:forEach items="${satMans}" var="satman">
 					        	<c:if test="${selectedSatMan == kurikulumObj.satMan.idSatMan}">
 					        		<option selected="selected" value="${kurikulumObj.satMan.idSatMan}" required>${kurikulumObj.satMan.nmSatMan}</option>

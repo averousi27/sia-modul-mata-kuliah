@@ -1,5 +1,6 @@
 package com.AIS.Modul.MataKuliah.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,12 +42,16 @@ public class CapPembController {
 		return mav;
 	}
 	
-	@RequestMapping(value="capaianbelajar/satuanmanajemen/view", method=RequestMethod.GET)
-	public @ResponseBody List<CapPemb> showCapPemb(@PathVariable String idKurikulumTxt, @PathVariable String idSatManTxt){
+	@RequestMapping(value="capaianbelajar/satuanmanajemen/view/{idKurikulum}/{idSatMan}", method=RequestMethod.GET)
+	public @ResponseBody List<CapPemb> showCapPemb(@PathVariable String idKurikulum, @PathVariable String idSatMan){
 		//ModelAndView mav = new ModelAndView();
-		//System.out.println(idKurikulumTxt + " " +idSatManTxt);
-		List<CapPemb> capPembList = capPembServ.findByTahunAndSatMan(capPembServ.convertToUUID(idKurikulumTxt), 
-				capPembServ.convertToUUID(idSatManTxt));
+		System.out.println(idSatMan);
+		List<CapPemb> capPembList = new ArrayList<CapPemb>();
+		capPembList = capPembServ.findListByTahunAndSatMan(capPembServ.convertToUUID(idKurikulum), capPembServ.convertToUUID(idSatMan));
+		//System.out.println(capPembList.);
+		for(CapPemb cpt : capPembList){
+			System.out.println(cpt.getNmCapPemb() + "" + cpt.getDeskripsiCapPemb());
+		}
 		//mav.addObject("cappembs", capPembList);
 		//mav.setViewName("redirect:/capaianbelajar/satuanmanajemen"); 
 		return capPembList;

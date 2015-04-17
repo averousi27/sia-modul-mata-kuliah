@@ -5,7 +5,26 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2015-04-15T15:22:58Z</updated>
+  <updated>2015-04-16T14:12:57Z</updated>
+  <entry>
+    <title>Spring Session 1.0.1 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/04/16/spring-session-1-0-1-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Rob Winch</name>
+    </author>
+    <id>tag:spring.io,2015-04-15:2083</id>
+    <updated>2015-04-16T14:12:57Z</updated>
+    <content type="html">&lt;p&gt;I&amp;rsquo;m pleased to announce the release of &lt;a href="http://projects.spring.io/spring-session/"&gt;Spring Session&lt;/a&gt; 1.0.1.RELEASE. You can find the release in &lt;a href="http://repo1.maven.org/maven2/org/springframework/session/"&gt;Maven Central&lt;/a&gt;. &lt;/p&gt;&lt;p&gt;This release fixes &lt;a href="https://github.com/spring-projects/spring-session/issues?q=milestone%3A1.0.1"&gt;30+ tickets&lt;/a&gt;. You can find the highlights below:&lt;/p&gt;&lt;h2&gt;&lt;a href="#highlights" class="anchor" name="highlights"&gt;&lt;/a&gt;Highlights&lt;/h2&gt;&lt;p&gt;The highlights of Spring Session 1.0.1 are available below:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Support for AWS ElastiCache &lt;a href="https://github.com/spring-projects/spring-session/issues/124"&gt;#124&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Servlet 3.1 fixes &lt;a href="https://github.com/spring-projects/spring-session/issues/152"&gt;#152&lt;/a&gt;. This resolves issues when running Spring Security and Spring Boot 1.2&lt;/li&gt;
+  &lt;li&gt;Servlet 2.5 fixes &lt;a href="https://github.com/spring-projects/spring-session/issues/111"&gt;#111&lt;/a&gt; &lt;a href="https://github.com/spring-projects/spring-session/issues/182"&gt;#182&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Added Servlet 2.5 &amp;amp; XML based configuration &lt;a href="http://docs.spring.io/spring-session/docs/1.0.1.RELEASE/reference/html5/guides/httpsession-xml.html"&gt;sample and guide&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Embedded Redis used in Samples now works on Windows 64 bit &lt;a href="https://github.com/spring-projects/spring-session/issues/174"&gt;#174&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;New Spring Session Logo &lt;a href="https://github.com/spring-projects/spring-session/issues/130"&gt;#130&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;&lt;a href="http://projects.spring.io/spring-session/"&gt;Site&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-session/docs/current/reference/html5/"&gt;Documentation&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-session/docs/current/api/"&gt;Javadoc&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-session/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-session"&gt;Help&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-session"&gt;Source&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-session/issues?q=milestone%3A1.0.1"&gt;Changelog&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Spring Social Facebook 2.0.0.RELEASE Released</title>
     <link rel="alternate" href="https://spring.io/blog/2015/04/15/spring-social-facebook-2-0-0-release-released" />
@@ -820,27 +839,6 @@ public class StreamConverter implements ConditionalGenericConverter {&#xD;
     <id>tag:spring.io,2015-04-01:2058</id>
     <updated>2015-04-01T15:01:53Z</updated>
     <content type="html">&lt;p&gt;You might have heard about the end of public updates for Java 7, coming up in just a few days with the release of Java 7 update 80. See the following Oracle pages for a reference:&lt;/p&gt;&lt;p&gt;&lt;a href="https://blogs.oracle.com/java-platform-group/entry/future_updates_of_java_7"&gt;https://blogs.oracle.com/java-platform-group/entry/future_updates_of_java_7&lt;/a&gt;&lt;br/&gt;&lt;a href="http://www.oracle.com/technetwork/java/eol-135779.html"&gt;http://www.oracle.com/technetwork/java/eol-135779.html&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Let&amp;rsquo;s clarify what it really is: &lt;b&gt;the end of public updates&lt;/b&gt;, and by no means an end of life (EOL). With the second link above, scroll down to the &amp;ldquo;Oracle Java SE Support Roadmap&amp;rdquo; section and you&amp;rsquo;ll find the actual &lt;b&gt;EOL dates: Dec 2018 for Java 6 and Jul 2022 for Java 7.&lt;/b&gt; Yes, that&amp;rsquo;s another 3.5 years for Java 6 from now, and even another 7 years (!) for Java 7.&lt;/p&gt;&lt;p&gt;IBM&amp;rsquo;s EOL timeframes are similar, although an even longer Java 6 support timeline is to be expected there. &lt;b&gt;It&amp;rsquo;s generally worth noting that any end-of-updates statements from Oracle are completely irrelevant for IBM users:&lt;/b&gt; The IBM JDK is an independent product that just happens to be based on the same open source project (OpenJDK) in recent years.&lt;/p&gt;&lt;p&gt;So please, if you see any statements about Java 7 getting EOL&amp;rsquo;ed these days, take them with a large grain of salt. &lt;b&gt;The end of public updates is just the point of time when Oracle starts to charge for maintenance releases, that&amp;rsquo;s all.&lt;/b&gt; Java 7 remains with us for another 7 years.&lt;/p&gt;&lt;p&gt;In case you&amp;rsquo;re wondering about the Spring perspective: We designed &lt;a href="http://projects.spring.io/spring-framework/"&gt;Spring Framework 4.x&lt;/a&gt; to support Java 6, 7 and 8 in the same framework generation. &lt;b&gt;That&amp;rsquo;s a unified programming model to cover three generations of Java, allowing you to upgrade at your own pace while at the same time getting the maximum out of the JDK that you&amp;rsquo;re currently using!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;The clue is that Spring Framework 4.x feels like a Java 8 based framework, out of the box, when using it on JDK 8. With the same framework version and framework jars, you&amp;rsquo;ll also get a fine experience on JDK 6 and 7: &lt;b&gt;You&amp;rsquo;ll just be restricted by the Java language and API level but will otherwise find the same 2015-era framework features at your fingertips.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Stay tuned for a follow-up blog post on how we go about supporting multiple JDK generations in our codebase&amp;hellip;&lt;/p&gt;&lt;p&gt;Juergen&lt;/p&gt;&lt;p&gt;P.S.: Note that the &lt;a href="http://platform.spring.io/platform/"&gt;Spring IO platform&lt;/a&gt;, including its wide arrangement of dependencies, is only supported on Java 7 and 8. At the same time, many of our Spring portfolio projects are still compatible with Java 6&amp;hellip; and JDK 6 based application servers such as WebSphere 7.0 / 8.0.&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring IO Platform 1.1.2 released</title>
-    <link rel="alternate" href="https://spring.io/blog/2015/04/01/spring-io-platform-1-1-2-released" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Andy Wilkinson</name>
-    </author>
-    <id>tag:spring.io,2015-03-31:2054</id>
-    <updated>2015-04-01T08:53:14Z</updated>
-    <content type="html">&lt;p&gt;We are pleased to announce that &lt;a href="http://platform.spring.io/platform"&gt;Spring IO Platform&lt;/a&gt; 1.1.2.RELEASE is now available from both &lt;a href="http://repo.spring.io/release"&gt;repo.spring.io&lt;/a&gt; and &lt;a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3Aio.spring.platform"&gt;Maven Central&lt;/a&gt;. &lt;/p&gt;&lt;p&gt;This maintenance release upgrades the versions of a number of the projects in the Platform to pick up their latest maintenance releases:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Spring AMQP 1.4.3&lt;/li&gt;
-  &lt;li&gt;Spring Batch 3.0.3&lt;/li&gt;
-  &lt;li&gt;Spring Boot 1.2.3&lt;/li&gt;
-  &lt;li&gt;Spring Cloud Connectors 1.1.1&lt;/li&gt;
-  &lt;li&gt;Spring Data Evans SR2&lt;/li&gt;
-  &lt;li&gt;Spring Framework 4.1.6&lt;/li&gt;
-  &lt;li&gt;Spring Security 3.2.7&lt;/li&gt;
-  &lt;li&gt;Spring Web Services 2.2.1&lt;/li&gt;
-&lt;/ul&gt;&lt;p&gt;The versions of many third-party dependencies have also been updated.&lt;/p&gt;&lt;p&gt;&lt;a href="http://platform.spring.io/platform"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-io/platform"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-io/platform/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/platform/docs/1.1.2.RELEASE/reference/htmlsingle"&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content>
   </entry>
 </feed>
 

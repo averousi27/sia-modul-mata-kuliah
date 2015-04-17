@@ -41,15 +41,18 @@ public class CapPembServiceImpl implements CapPembService {
 	}
 
 	@Override
-	public List<CapPemb> findByTahunAndSatMan(UUID idKurikulum, UUID idSatMan) {
+	public List<CapPemb> findListByTahunAndSatMan(UUID idKurikulum, UUID idSatMan) {
 		// TODO Auto-generated method stub
 		List<CapPemb> capPembAll = findAll();
 		List<CapPemb> capPembTemp = new ArrayList<CapPemb>();
 		for(CapPemb cp : capPembAll){
-			if(cp.getKurikulum().getIdKurikulum()==idKurikulum && cp.getSatMan().getIdSatMan()==idSatMan){
-				capPembTemp.add(cp);
-			}
+			if(cp.getKurikulum().getIdKurikulum().equals(idKurikulum) && (cp.getSatMan().getIdSatMan().equals(idSatMan))){
+					capPembTemp.add(cp);
+				}
 		}
+		/*for(CapPemb cpt : capPembTemp){
+			System.out.println(cpt.getNmCapPemb() + "" + cpt.getDeskripsiCapPemb());
+		}*/
 		return capPembTemp;
 	}
 
@@ -57,6 +60,17 @@ public class CapPembServiceImpl implements CapPembService {
 	public UUID convertToUUID(String source) {
 		// TODO Auto-generated method stub
 		return UUID.fromString(source);
+	}
+
+	@Override
+	public CapPemb findObjByTahunAndSatMan(UUID idKurikulum, UUID idSatMan) {
+		List<CapPemb> capPembAll = findAll();
+		for(CapPemb cp : capPembAll){
+			if(cp.getKurikulum().getIdKurikulum().equals(idKurikulum) && (cp.getSatMan().getIdSatMan().equals(idSatMan))){
+					return cp;
+				}
+		}
+		return null;
 	}
 
 }

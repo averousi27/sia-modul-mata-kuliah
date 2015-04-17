@@ -48,7 +48,7 @@
 						<li class="active">Kelola Tahun Ajaran</li>
 					</ol>
 					
-					<p>Menampilkan matakuliah satuan manajemen</p>
+					<p>Menampilkan matakuliah satuan manajemen akademik</p>
 					<form role="form" id="formd   etail" action="matakuliah/satuanmanajemen/aksi" method="get"> 
 						<div class="form-group">
 					      <label>Pilih Satuan Manajemen</label>

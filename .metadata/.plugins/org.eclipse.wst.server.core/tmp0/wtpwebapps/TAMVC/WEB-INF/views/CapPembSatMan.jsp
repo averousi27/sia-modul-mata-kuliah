@@ -31,17 +31,29 @@
 					kurikulum = document.getElementById('selectKurikulum').value; 
 				})
 				$('#selectSatMan').change(function(){
-					var satMan = document.getElementById('selectSatMan').value;
+					satMan = document.getElementById('selectSatMan').value;
 				})
 				$('#showData').click(function(){
-					var url = "satuanmanajemen/view?";
-					url += "idKurikulumTxt=" + kurikulum + "&idSatManTxt=" + satMan;
+					var url = 'satuanmanajemen/view'; 
+					url += "/" + kurikulum + "/" + satMan;
 					$.getJSON( url,
 						function(data){
 						$.each(data, function(key, val){
-							var result = "<tr><td>" + data[key].nmCapPemb + "</td><td>" + data[key].dekripsiCapPemb + 
-								"</td></tr>"; 
+							
+							/*var result = "<tr><td><div class='checkbox'><input type='checkbox' id='flat-checkbox-1'></td><td>" + 
+							data[key].Kurikulum.thnKurikulum+ "</td><td>" + 
+							data[key].SatMan.nmSatMan + "</td><td>" + 
+							data[key].nmCapPemb + "</td><td>" + 
+							data[key].dekripsiCapPemb + "</td><td>" +
+							"<a href='ubah/data[key].idCapPemb' class='btn btn-warning'>Ubah</a></td></tr>";*/
+							var result = "<tr><td>" + val.Kurikulum.thnKurikulum+ "</td><td>" + 
+							val.SatMan.nmSatMan + "</td><td>" + 
+							val.nmCapPemb + "</td><td>" + 
+							val.dekripsiCapPemb + "</td><td>" +
+							"<a href='ubah/'" + val.idCapPemb + "' class='btn btn-warning'>Ubah</a></td></tr>";
+							//$('#tabelCapPemb tbody').append(result);
 						}) 
+						$('#tabelCapPemb tbody').append(result);
 					})
 				}) 
 		   })
@@ -75,8 +87,9 @@
 							<p>Menu pengelolaan capaian pembelajaran untuk satuan manajemen akademik</p> 
 							<!--<form role="form" id="formdetail" action="satuanmanajemen/view" method="post"> -->
 							  <div class="form-group">
-							  	 <label>Pilih Tahun Kurikulum</label>
+							  	 <label> Tahun Kurikulum</label>
 							  	 <select class="form-control" id="selectKurikulum" name="idKurikulumTxt" required>
+							  	 <option>---Pilih Tahun Kurikulum---</option>
 							        <c:forEach items="${kurikulums}" var="kurikulum">
 							        	<c:if test="${selectedKurikulum == kurikulum.idKurikulum}">
 							        		<option selected="selected" value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.nmKurikulum }</option>
@@ -86,8 +99,9 @@
 							        	</c:if>
 							        </c:forEach>
 							      </select>
-							      <label>Pilih Satuan Manajemen</label>
+							      <label>Satuan Manajemen</label>
 								  	 <select class="form-control" id="selectSatMan" name="idSatManTxt">
+								  	 <option>--Pilih Satuan Manajemen--</option>
 								        <c:forEach items="${satmans}" var="satman">
 								        	<c:if test="${selectedSatMan == satman.idSatMan}">
 								        		<option selected="selected" value="${satman.idSatMan}">${satman.nmSatMan}</option>
@@ -118,22 +132,16 @@
 							    </tr>
 							  </thead>
 							   <tbody>	
-								  <c:forEach items="${cappembs}" var="capPembObj">
-								    <tr>
-								      <td>
-										<div class="checkbox">
-											<input type="checkbox" id="flat-checkbox-1">
-										</div>
-									  </td>
-									  <td>${capPembObj.kurikulum.nmKurikulum}</td>
-									  <td>${capPembObj.satMan.nmSatMan}</td>
-									  <td>${capPembObj.nmCapPemb}</td>
-									  <td>${capPembObj.deskripsiCapPemb}</td>
-									  <td>
-						      			<a href="ubah/${capPembObj.idCapPemb}" class="btn btn-warning">Ubah</a>
-									  </td>
-									</tr>
-								</c:forEach>
+<!-- 								    <tr> -->
+<!-- 								      <td> -->
+<!-- 										<div class="checkbox"> -->
+<!-- 											<input type="checkbox" id="flat-checkbox-1"> -->
+<!-- 										</div> -->
+<!-- 									  </td> -->
+<!-- 									  <td> -->
+<%-- 						      			<a href="ubah/${capPembObj.idCapPemb}" class="btn btn-warning">Ubah</a> --%>
+<!-- 									  </td> -->
+<!-- 									</tr> -->
 								</tbody>
 							</table>
 						</div>

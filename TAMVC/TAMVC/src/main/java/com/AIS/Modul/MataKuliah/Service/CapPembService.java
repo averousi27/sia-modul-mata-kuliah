@@ -11,6 +11,7 @@ public interface CapPembService {
  
     public void addCapPemb(CapPemb CapPemb);
     public void editCapPemb(CapPemb capPemb, UUID idCapPemb);
-    public List<CapPemb> findByTahunAndSatMan(UUID idKurikulum, UUID idSatMan);
+    public List<CapPemb> findListByTahunAndSatMan(UUID idKurikulum, UUID idSatMan);
+    public CapPemb findObjByTahunAndSatMan(UUID idKurikulum, UUID idSatMan);
     public UUID convertToUUID(String source);
 }
