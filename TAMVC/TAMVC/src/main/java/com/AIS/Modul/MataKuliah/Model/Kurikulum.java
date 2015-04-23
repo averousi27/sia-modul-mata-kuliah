@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="kurikulum")
@@ -31,26 +32,26 @@ public class Kurikulum{
 	@Column(name="id_kurikulum")
 	private UUID idKurikulum;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@NotEmpty(message="Satuan manajemen tidak boleh kosong")
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_sat_man")
 	private SatMan satMan;
 	
 	@Column(name="nm_kurikulum")
 	private String nmKurikulum;
-	
+	 	
+	@NotEmpty(message="Tahun mulai kurikulum tidak boleh kosong")
 	@Column(name="thn_mulai")
 	private String thnMulai;
-	
+
+	@NotEmpty(message="Tahun berakhirnya kurikulum tidak boleh kosong")
 	@Column(name="thn_akhir")
 	private String thnAkhir;
-	
+	 
+	@NotEmpty(message="Status kurikulum tidak boleh kosong")
 	@Column(name="a_status_kurikulum")
 	private Boolean aStatusKurikulum;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="kurikulum")
-	private List<MK> MKs;
-
-
 	public UUID getIdKurikulum() {
 		return idKurikulum;
 	}
@@ -97,14 +98,6 @@ public class Kurikulum{
 
 	public void setaStatusKurikulum(Boolean aStatusKurikulum) {
 		this.aStatusKurikulum = aStatusKurikulum;
-	}
-
-	public List<MK> getMKs() {
-		return MKs;
-	}
-
-	public void setMKs(List<MK> mKs) {
-		MKs = mKs;
 	}
 	
 

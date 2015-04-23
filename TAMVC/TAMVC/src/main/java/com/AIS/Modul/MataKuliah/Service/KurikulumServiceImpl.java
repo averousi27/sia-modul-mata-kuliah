@@ -1,9 +1,11 @@
 package com.AIS.Modul.MataKuliah.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import com.AIS.Modul.MataKuliah.Model.Kurikulum;
+import com.AIS.Modul.MataKuliah.Model.SatMan;
 import com.AIS.Modul.MataKuliah.Repository.KurikulumRepository;
 import com.AIS.Modul.MataKuliah.Service.KurikulumService;
 
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Service
 public class KurikulumServiceImpl implements KurikulumService {
 
+	
 	@Autowired
 	private KurikulumRepository kurikulumRepo;
 	
@@ -88,7 +91,9 @@ public class KurikulumServiceImpl implements KurikulumService {
 	public UUID convertToUUID(String source) {
 		return UUID.fromString(source);
 	}
-
+	
+	
+	
 	@Override
 	public void activateKurikulum(UUID idKurikulum) {
 		Kurikulum kurikulum = kurikulumRepo.findById(idKurikulum);
@@ -108,6 +113,57 @@ public class KurikulumServiceImpl implements KurikulumService {
 		kurikulum.setaStatusKurikulum(false);
 		this.editKurikulum(kurikulum, idKurikulum);
 	}
+	private String [] column = {"k.idKurikulum","k.nmKurikulum", "satMan.nmSatMan","k.thnMulai","k.thnAkhir","k.aStatusKurikulum"};
+	private Boolean[] searchable = {false,true,true,true,true,false};
 	
+	@Override
+	public List<Kurikulum> get(String where, String order, int limit, int offset) {
+		return kurikulumRepo.get(where, order, limit, offset);
+	}
+	
+	@Override
+	public Datatable getdatatable(String sEcho, int iDisplayLength,
+			int iDisplayStart, int iSortCol_0, String sSortDir_0,
+			String sSearch, String filter) {
+		// TODO Auto-generated method stub
+		DatatableExtractParams parameter = new DatatableExtractParams(sSearch, this.column, this.searchable, iSortCol_0, sSortDir_0);
+		Datatable kurikulumDatatable= new Datatable();
+		kurikulumDatatable.setsEcho(sEcho);
+		String dbFilter = "";
+		if(filter != null && !filter.equals("")) dbFilter+=" AND "+filter; 
+		List<Kurikulum> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
+		List<String[]> aData = new ArrayList<String[]>();
+		for (Kurikulum kurikulum : queryResult) {
+			String[] kurikulumString = new String[7];
+			kurikulumString[0] = kurikulum.getIdKurikulum().toString();
+			kurikulumString[1] = String.valueOf(kurikulum.getNmKurikulum());
+			kurikulumString[2] = String.valueOf(kurikulum.getSatMan().getNmSatMan());
+			kurikulumString[3] = String.valueOf(kurikulum.getThnMulai());
+			kurikulumString[4] = String.valueOf(kurikulum.getThnAkhir());
+			kurikulumString[5] = String.valueOf(kurikulum.getaStatusKurikulum());
+			kurikulumString[6] = String.valueOf(kurikulum.getaStatusKurikulum());
+			aData.add(kurikulumString);
+		}
+		kurikulumDatatable.setAaData(aData);
+		kurikulumDatatable.setiTotalRecords(kurikulumRepo.count(""));
+		kurikulumDatatable.setiTotalDisplayRecords(kurikulumRepo.count("("+parameter.getWhere()+") AND "+filter));
+
+		return kurikulumDatatable;
+	}
+	
+	@Override
+	public List<Kurikulum> get() {
+		return get("");
+	}
+
+	@Override
+	public List<Kurikulum> get(String where) {
+		return get(where,"");
+	}
+
+	@Override
+	public List<Kurikulum> get(String where, String order) {
+		return get(where,order,-1,-1);
+	}
 	
 }

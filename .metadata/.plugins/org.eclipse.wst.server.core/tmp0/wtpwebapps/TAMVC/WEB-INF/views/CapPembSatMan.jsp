@@ -29,34 +29,31 @@
 			   var result=null;
 				$('#selectKurikulum').change(function(){
 					kurikulum = document.getElementById('selectKurikulum').value; 
-				})
+				});
 				$('#selectSatMan').change(function(){
 					satMan = document.getElementById('selectSatMan').value;
-				})
+				});
 				$('#showData').click(function(){
 					var url = 'satuanmanajemen/view'; 
 					url += "/" + kurikulum + "/" + satMan;
+					//alert('lalala');
 					$.getJSON( url,
 						function(data){
+						console.log(data);
 						$.each(data, function(key, val){
-							
-							/*var result = "<tr><td><div class='checkbox'><input type='checkbox' id='flat-checkbox-1'></td><td>" + 
+							//console.log(data);
+							var result = "<tr><td><div class='checkbox'><input type='checkbox' id='flat-checkbox-1'></td><td>" + 
 							data[key].Kurikulum.thnKurikulum+ "</td><td>" + 
 							data[key].SatMan.nmSatMan + "</td><td>" + 
 							data[key].nmCapPemb + "</td><td>" + 
-							data[key].dekripsiCapPemb + "</td><td>" +
-							"<a href='ubah/data[key].idCapPemb' class='btn btn-warning'>Ubah</a></td></tr>";*/
-							var result = "<tr><td>" + val.Kurikulum.thnKurikulum+ "</td><td>" + 
-							val.SatMan.nmSatMan + "</td><td>" + 
-							val.nmCapPemb + "</td><td>" + 
-							val.dekripsiCapPemb + "</td><td>" +
-							"<a href='ubah/'" + val.idCapPemb + "' class='btn btn-warning'>Ubah</a></td></tr>";
-							//$('#tabelCapPemb tbody').append(result);
-						}) 
-						$('#tabelCapPemb tbody').append(result);
-					})
-				}) 
-		   })
+							data[key].dekripsiCapPemb + "</td><td><a href='ubah/" 
+							+data[key].idCapPemb+ " class='btn btn-warning'>Ubah</a></td></tr>";
+							
+						}) ;
+// 						$('#tabelCapPemb tbody').append(result); 
+					}) ;
+		   		});
+			});
 		 </script>
 		<title>Kelola Capaian Pembelajaran Satuan Manajemen</title>
 	</head>

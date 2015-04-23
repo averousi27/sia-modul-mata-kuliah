@@ -49,11 +49,26 @@
 					</ol>
 					
 					<p>Menampilkan matakuliah satuan manajemen akademik</p>
-					<form role="form" id="formd   etail" action="matakuliah/satuanmanajemen/aksi" method="get"> 
+<%-- 					<form role="form" id="formd   etail" action="matakuliah/satuanmanajemen/aksi" method="get">  --%>
 						<div class="form-group">
-					      <label>Pilih Satuan Manajemen</label>
+					      <label>Tahun Kurikulum</label>
+					        <select class="form-control" id="select" name="idKurikulumTxt" required>
+					        <c:forEach items="${kurikulums}" var="kurikulum">
+					        	<option>---Pilih Kurikulum---</option>
+					        	<c:if test="${selectedKurikulum == kurikulum.idKurikulum}">
+					        		<option selected="selected" value="${kurikulum.idKurikulum}">${kurikulum.thnAwal} - ${kurikulum.nmKurikulum}</option>
+					        	</c:if>
+					          	<c:if test="${selectedKurikulum != kurikulum.idKurikulm}">
+					        		<option value="${kurikulum.idKurikulum}">${kurikulum.thnAwal} - ${kurikulum.nmKurikulum}</option>
+					        	</c:if>
+					        </c:forEach>
+					        </select>
+					     </div>
+					     <div class="form-group">
+					      <label>Satuan Manajemen</label>
 					        <select class="form-control" id="select" name="idSatManTxt" required>
 					        <c:forEach items="${satMans}" var="satman">
+					        	<option>---Pilih Satuan Manajemen---</option>
 					        	<c:if test="${selectedSatMan == satman.idSatMan}">
 					        		<option selected="selected" value="${satman.idSatMan}">${satman.nmSatMan}</option>
 					        	</c:if>
@@ -63,4 +78,5 @@
 					        </c:forEach>
 					        </select>
 					     </div>
-					
+						<br />
+						<button type="submit" class="btn btn-primary" id="showData">Tampilkan</button>

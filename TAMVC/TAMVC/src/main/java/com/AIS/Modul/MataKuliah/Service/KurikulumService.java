@@ -17,4 +17,10 @@ public interface KurikulumService {
     public UUID convertToUUID(String source);
     public void activateKurikulum(UUID idKurikulum);
     public void deleteKurikulum(UUID idKurikulum);
+    public Datatable getdatatable(String sEcho,int iDisplayLength, int iDisplayStart, int iSortCol_0, String sSortDir_0, String sSearch, String filter);
+	public List<Kurikulum> get(String where, String order, int limit, int offset);
+	public List<Kurikulum> get();
+	public List<Kurikulum> get(String where);
+	public List<Kurikulum> get(String where, String order);
+
 }

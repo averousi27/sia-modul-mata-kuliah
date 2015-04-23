@@ -43,7 +43,7 @@ public class CapPembServiceImpl implements CapPembService {
 	@Override
 	public List<CapPemb> findListByTahunAndSatMan(UUID idKurikulum, UUID idSatMan) {
 		// TODO Auto-generated method stub
-		List<CapPemb> capPembAll = findAll();
+		/*List<CapPemb> capPembAll = findAll();
 		List<CapPemb> capPembTemp = new ArrayList<CapPemb>();
 		for(CapPemb cp : capPembAll){
 			if(cp.getKurikulum().getIdKurikulum().equals(idKurikulum) && (cp.getSatMan().getIdSatMan().equals(idSatMan))){
@@ -53,7 +53,8 @@ public class CapPembServiceImpl implements CapPembService {
 		/*for(CapPemb cpt : capPembTemp){
 			System.out.println(cpt.getNmCapPemb() + "" + cpt.getDeskripsiCapPemb());
 		}*/
-		return capPembTemp;
+		//return capPembTemp;
+		return capPembRepo.findListByTahunSatMan(idKurikulum, idSatMan);
 	}
 
 	@Override

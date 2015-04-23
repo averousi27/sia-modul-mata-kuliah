@@ -137,4 +137,15 @@
 		<item value="org.springsource.sts.package:3.6.3.201501121239-SR1-e44"/>
 		<item value="org.springsource.sts:3.6.3.201501121239-SR1"/>
 	</list>
+	<section name="ExternalProjectImportWizard">
+		<item value="false" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="D:\AMANDA\COLLEGES\BISMILLAH\TA READY\TA TA TA 112\testweb"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value=""/>
+		</list>
+	</section>
 </section>

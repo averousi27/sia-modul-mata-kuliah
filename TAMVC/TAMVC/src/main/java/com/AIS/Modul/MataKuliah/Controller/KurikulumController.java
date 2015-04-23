@@ -1,26 +1,31 @@
 package com.AIS.Modul.MataKuliah.Controller;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import com.AIS.Modul.MataKuliah.Model.Kurikulum;
 import com.AIS.Modul.MataKuliah.Model.SatMan;
+import com.AIS.Modul.MataKuliah.Service.Datatable;
 import com.AIS.Modul.MataKuliah.Service.KurikulumService;
 import com.AIS.Modul.MataKuliah.Service.SatManService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping(value = "/kurikulum")
 public class KurikulumController {
 	 
 	@Autowired
@@ -29,15 +34,40 @@ public class KurikulumController {
 	@Autowired
 	private SatManService satManServ;
 	 
-	@RequestMapping(value="/kurikulum", method=RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView datatable(Locale locale, Model model) {
+		Kurikulum kurikulum = new Kurikulum();
+		List<SatMan> satManList = satManServ.findAll();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("ViewKurikulum");
+		mav.addObject("kurikulum", kurikulum);
+		mav.addObject("satManList", satManList);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/json", method = RequestMethod.POST)
+	public @ResponseBody Datatable json(
+			@RequestParam("sEcho") String sEcho, 
+			@RequestParam("iDisplayLength") int iDisplayLength,
+            @RequestParam("iSortCol_0") int iSortCol_0,
+            @RequestParam("sSortDir_0") String sSortDir_0,
+            @RequestParam("sSearch") String sSearch,
+			@RequestParam("iDisplayStart") int iDisplayStart,
+			@RequestParam("aStatusKurikulum") String aStatusKurikulum
+            ) {
+		String filter = "CAST( k.aStatusKurikulum as string) LIKE '%"+aStatusKurikulum+"%'";
+		Datatable kurikulumDatatable = kurikulumServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
+		return kurikulumDatatable;
+	}
+	/*@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView showKurikulum(){
 		ModelAndView mav = new ModelAndView(); 
 		List<Kurikulum> kurikulumList = kurikulumServ.findAll();
 		mav.addObject("kurikulums", kurikulumList);
 		mav.setViewName("Kurikulum");
 		return mav;
-	}
-	@RequestMapping(value="/kurikulum/tambah", method=RequestMethod.GET)
+	}*/
+	@RequestMapping(value="/tambah", method=RequestMethod.GET)
 	public ModelAndView showSatManOption(){
 		ModelAndView mav = new ModelAndView();
 		List<SatMan> satManList = satManServ.findAll();
@@ -47,7 +77,7 @@ public class KurikulumController {
 	}
 	
 	//tambah kurikulum
-	@RequestMapping(value="/kurikulum/tambah/aksi", method=RequestMethod.POST)
+	@RequestMapping(value="/tambah/aksi", method=RequestMethod.POST)
 	public ModelAndView addKurikulumAction(String nmKurikulumTxt, String idSatManTxt, String tahunMulaiTxt, 
 			String tahunAkhirTxt, Boolean statusKurikulumOpt){
 		ModelAndView mav = new ModelAndView();
@@ -63,7 +93,7 @@ public class KurikulumController {
 	}
 	//end of tambah kurikulum
 	
-	@RequestMapping(value="kurikulum/ubah/{idKurikulum}", method=RequestMethod.GET)
+	@RequestMapping(value="/ubah/{idKurikulum}", method=RequestMethod.GET)
 	public ModelAndView getKurikulumData(@PathVariable UUID idKurikulum){
 		ModelAndView mav = new ModelAndView();
 		Kurikulum kurikulumUbah = kurikulumServ.findById(idKurikulum);
@@ -74,7 +104,7 @@ public class KurikulumController {
 		return mav;
 	}
 	//ubah kurikulum
-		@RequestMapping(value="kurikulum/ubah/aksi/{idKurikulum}", method=RequestMethod.POST)
+		@RequestMapping(value="/ubah/aksi/{idKurikulum}", method=RequestMethod.POST)
 		public ModelAndView changeKurikulumAction(@PathVariable String idKurikulum, String idSatManTxt, String nmKurikulumTxt, String tahunMulaiTxt, 
 				String tahunAkhirTxt, Boolean statusKurikulumOpt){
 			ModelAndView mav = new ModelAndView();
@@ -91,7 +121,7 @@ public class KurikulumController {
 	//end of ubah kurikulum
 		
 	//aktifkan kurikulum
-		@RequestMapping(value="kurikulum/ubah/aktif/{idKurikulum}", method=RequestMethod.GET)
+		@RequestMapping(value="/ubah/aktif/{idKurikulum}", method=RequestMethod.GET)
 		public ModelAndView changeStatus(@PathVariable String idKurikulum){
 			ModelAndView mav = new ModelAndView(); 
 			kurikulumServ.activateKurikulum(kurikulumServ.convertToUUID(idKurikulum));
@@ -101,7 +131,7 @@ public class KurikulumController {
 	//end of aktif kurikulum
 		
 	//hapus kurikulum
-		@RequestMapping(value="kurikulum/ubah/hapus/{idKurikulum}", method=RequestMethod.GET)
+		@RequestMapping(value="/ubah/hapus/{idKurikulum}", method=RequestMethod.GET)
 		public ModelAndView deactivateKurikulum(@PathVariable String idKurikulum){
 			ModelAndView mav = new ModelAndView();
 			kurikulumServ.deleteKurikulum(kurikulumServ.convertToUUID(idKurikulum));
