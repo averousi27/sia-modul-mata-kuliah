@@ -22,5 +22,7 @@ public interface KurikulumService {
 	public List<Kurikulum> get();
 	public List<Kurikulum> get(String where);
 	public List<Kurikulum> get(String where, String order);
+	public String save(Kurikulum kurikulum);
+	public String delete(UUID uuid);
 
 }

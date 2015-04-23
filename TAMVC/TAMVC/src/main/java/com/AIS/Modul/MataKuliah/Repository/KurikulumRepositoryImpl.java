@@ -8,7 +8,9 @@ import com.AIS.Modul.MataKuliah.Model.Kurikulum;
 import com.AIS.Modul.MataKuliah.Model.SatMan;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,6 +77,25 @@ public class KurikulumRepositoryImpl implements KurikulumRepository {
 		}
 		
 		return query.list();
+	}
+
+	@Override
+	public void update(Kurikulum kurikulum) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.update(kurikulum);
+		tx.commit();
+	}
+
+	@Override
+	public UUID insert(Kurikulum kurikulum) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		UUID insertId= (UUID)session.save(kurikulum);
+		tx.commit();
+		return insertId;
 	}
 	
 }

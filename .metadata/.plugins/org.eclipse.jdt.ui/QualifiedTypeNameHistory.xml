@@ -4,4 +4,5 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="org.hibernate.Query"/>
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Model.SatMan"/>
+<fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.AjaxResponse"/>
 </qualifiedTypeNameHistroy>

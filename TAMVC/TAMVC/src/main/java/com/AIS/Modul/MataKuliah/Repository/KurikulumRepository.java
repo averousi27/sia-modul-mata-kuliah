@@ -12,5 +12,7 @@ public interface KurikulumRepository {
     public void addKurikulum(Kurikulum kurikulum);
     public void editKurikulum(Kurikulum kurikulum, UUID idKurikulum);
 	public long count(String where);
-	List<Kurikulum> get(String where, String order, int limit, int offset); 
+	List<Kurikulum> get(String where, String order, int limit, int offset);
+	public void update(Kurikulum kurikulum);
+	public Object insert(Kurikulum kurikulum); 
 }

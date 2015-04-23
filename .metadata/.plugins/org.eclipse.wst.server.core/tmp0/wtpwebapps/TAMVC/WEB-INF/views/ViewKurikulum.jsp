@@ -139,7 +139,7 @@
 							editUrl: context_path+'kurikulum/simpan',
 							deleteUrl: context_path+'kurikulum/deletemany',
 							primaryKey: 'idKurikulum',
-					        order: [[1,"desc"]],
+					        order: [[3,"desc"]],
 							editOnClick: false,
 							editOnClickRow: true,
 							cols: [
@@ -178,7 +178,7 @@
 									}
 								}
 							],
-							validationRules: {idKurikulum:{required: false},thnThnAjaran:{required: true,digits:true},persenMinimPertemuan:{required: true},persenHadirMinimPd:{required: true}},
+							validationRules: {idKurikulum:{required: false},nmKurikulum:{required: false}, SatMan:{required: true},thnMulai:{required: true, digits:true},thnAkhir:{required: true, digits: true}},
 							filters: [{id:'#filter', name:'aStatusKurikulum'}]
 						});
 					});

@@ -139,7 +139,7 @@
 							editUrl: context_path+'kurikulum/simpan',
 							deleteUrl: context_path+'kurikulum/deletemany',
 							primaryKey: 'idKurikulum',
-					        order: [[1,"desc"]],
+					        order: [[3,"desc"]],
 							editOnClick: false,
 							editOnClickRow: true,
 							cols: [

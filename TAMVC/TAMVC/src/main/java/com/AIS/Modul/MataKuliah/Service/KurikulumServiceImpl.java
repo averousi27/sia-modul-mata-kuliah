@@ -165,5 +165,34 @@ public class KurikulumServiceImpl implements KurikulumService {
 	public List<Kurikulum> get(String where, String order) {
 		return get(where,order,-1,-1);
 	}
-	
+	@Override
+	public String save(Kurikulum kurikulum) {
+		String where = "thnMulai = "+kurikulum.getThnMulai();
+		if(kurikulum.getIdKurikulum()!=null) 
+			where +=" AND idKurikulum !='"+kurikulum.getIdKurikulum().toString()+"'";
+		if(get(where).size()>0)	return null;
+		else if(kurikulum.getIdKurikulum() != null)
+		{
+			//update
+			kurikulumRepo.update(kurikulum);
+			return kurikulum.getIdKurikulum().toString();
+		}
+		else
+		{
+			//insert
+			return kurikulumRepo.insert(kurikulum).toString();
+		}
+	}
+
+	@Override
+	public String delete(UUID idKurikulum) {
+		// TODO Auto-generated method stub
+		Kurikulum kurikulum = kurikulumRepo.findById(idKurikulum);
+		if(kurikulum==null) return null;
+		else{
+			kurikulum.setaStatusKurikulum(false);
+			kurikulumRepo.update(kurikulum);
+			return "Ok";
+		}
+	}
 }
