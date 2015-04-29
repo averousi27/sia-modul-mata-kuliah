@@ -66,8 +66,7 @@ $(document).ready(function(){
 			if(typeof notSelector != 'undefined')
 				if( $(this).is(notSelector)) return;
 			if(typeof $(this).attr('no_reset') != 'undefined') return;
-			$(this).attr('checked', false);
-			$(this).removeAttr('checked');
+			$(this).prop('checked', false);
 		});
 	}
 
@@ -117,7 +116,7 @@ $(document).ready(function(){
 						 currentElement.prop('checked', true);
 					}else{ currentElement.prop('checked', false); }
 				}
-				else if(tag == 'INPUT' || tag == 'SELECT' || tag == 'TEXTAREA'){ currentElement.val(formdata[id]); }
+				else if(tag == 'INPUT' || tag == 'SELECT' || tag == 'TEXTAREA'){ currentElement.val((""+formdata[id]+"")); }
 				else { currentElement.html(formdata[id]); }
 			}
 		}
@@ -183,11 +182,11 @@ $(document).ready(function(){
 			}
 
 			//add save and cancel
-			if((base.options.editOnClick || base.options.editOnClickRow) && base.options.showDefaultControl.save){
+			if((base.options.editOnClick || base.options.editOnClickRow || base.options.showSaveButton ) && base.options.showDefaultControl.save){
 				$('.detailcontrol', base.options.formDetail).append("<button class=\"btn btn-success btnDetailSave green\" type=\"button\">" + base.options.labelDefaultControl.save + "</button>");
 				$('.detailcontrol .btnDetailSave', base.options.formDetail).click(base.saveData);
 			}
-			if((base.options.editOnClick || base.options.editOnClickRow) && base.options.showDefaultControl.cancel){
+			if((base.options.editOnClick || base.options.editOnClickRow || base.options.showCancelButton) && base.options.showDefaultControl.cancel){
 				$('.detailcontrol', base.options.formDetail).append("<button class=\"btn btnDetailCancel btn-primary\" type=\"button\" style=\"margin-left: 10px\">" + base.options.labelDefaultControl.cancel + "</button>");
 				$('.detailcontrol .btnDetailCancel', base.options.formDetail).click(base.closeFormDetail);
 			}
@@ -248,7 +247,7 @@ $(document).ready(function(){
 								"oColVis": {
 									"buttonText": "Columns <i class='icon-angle-down'></i>",
 									"iOverlayFade": 0,
-									"aiExclude": [0]
+									"aiExclude": base.options.columnExclude
 								},
 								"aoColumns": base.options.cols,
 								"oTableTools": {
@@ -315,6 +314,7 @@ $(document).ready(function(){
 									}*/
 
 									$(base.options.tableForm+' .checkbox-data input').iCheck({checkboxClass:"icheckbox_flat",increaseArea:"20%"});
+									$(base.options.tableForm+' .radio-data input').iCheck({radioClass:"iradio_flat",increaseArea:"20%"});
 
 								}
 								
@@ -603,6 +603,9 @@ $(document).ready(function(){
 		checkData:true,
 		radioData:false,
 		order:[[0,"asc"]],
+		showCancelButton:false,
+		showSaveButton:false,
+		columnExclude:[0],
 
 		//callback
 		callOnAdd: undefined,

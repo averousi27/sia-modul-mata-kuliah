@@ -40,9 +40,6 @@ public class SatMan{
 	@Column(name="a_sat_man_aktif")
 	private String aSatManAktif; 
  
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="satMan")
-	private List<Kurikulum> kurikulums;
-
 	public UUID getIdSatMan() {
 		return idSatMan;
 	}
@@ -75,12 +72,4 @@ public class SatMan{
 		this.aSatManAktif = aSatManAktif;
 	}
 
-	public List<Kurikulum> getKurikulums() {
-		return kurikulums;
-	}
-
-	public void setKurikulums(List<Kurikulum> kurikulums) {
-		this.kurikulums = kurikulums;
-	}
-	
 }

@@ -1,0 +1,13 @@
+127.0.0.1 - - [24/Apr/2015:08:19:04 +0700] "GET / HTTP/1.1" 200 1170
+0:0:0:0:0:0:0:1 - - [24/Apr/2015:08:19:06 +0700] "GET /modul/ HTTP/1.1" 404 992
+0:0:0:0:0:0:0:1 - - [24/Apr/2015:08:19:13 +0700] "GET /modul/kurikulum/ HTTP/1.1" 200 11127
+0:0:0:0:0:0:0:1 - - [24/Apr/2015:08:19:14 +0700] "GET /modul/resources/js/jquery.masterpage.sia.js HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [24/Apr/2015:08:19:24 +0700] "GET /modul/resources/bootflat/img/check_flat/default.png HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [24/Apr/2015:08:19:24 +0700] "GET /modul/resources/jquery.datatables/media/images/sort_both.png HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [24/Apr/2015:08:19:25 +0700] "POST /modul/kurikulum/json HTTP/1.1" 200 459
+0:0:0:0:0:0:0:1 - - [24/Apr/2015:08:19:26 +0700] "GET /modulresources/jquery.datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf HTTP/1.1" 404 1152
+0:0:0:0:0:0:0:1 - - [24/Apr/2015:08:19:27 +0700] "GET /modulresources/jquery.datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf HTTP/1.1" 404 1152
+0:0:0:0:0:0:0:1 - - [24/Apr/2015:08:19:27 +0700] "GET /modulresources/jquery.datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf HTTP/1.1" 404 1152
+0:0:0:0:0:0:0:1 - - [24/Apr/2015:08:19:27 +0700] "GET /modulresources/jquery.datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf HTTP/1.1" 404 1152
+0:0:0:0:0:0:0:1 - - [24/Apr/2015:08:19:56 +0700] "GET /modulresources/img/loading.gif HTTP/1.1" 404 1054
+0:0:0:0:0:0:0:1 - - [24/Apr/2015:08:19:57 +0700] "POST /modul/kurikulum/simpan HTTP/1.1" 500 5636

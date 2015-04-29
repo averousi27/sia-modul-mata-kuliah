@@ -1,0 +1,6 @@
+package com.AIS.Modul.MataKuliah.Repository;
+
+public interface RumpunMKRepository {
+
+	public long count(String string);
+}

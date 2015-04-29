@@ -210,7 +210,7 @@
 			function blockUI(el, centerY) {
 				var el = jQuery(el); 
 				el.block({
-						message: '<img src="assets/img/loading.gif" align="">',
+						message: '<img src="resources/img/loading.gif" align="">',
 						centerY: centerY != undefined ? centerY : true,
 						css: {
 							top: '10%',

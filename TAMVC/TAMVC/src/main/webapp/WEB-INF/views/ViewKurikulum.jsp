@@ -20,7 +20,7 @@
 		</script>
 		<![endif]-->
 		<script>
-			var context_path = "${pageContext.servletContext.contextPath}";
+			var context_path = "${pageContext.servletContext.contextPath}/";
 		</script>
 		<title>Kelola Kurikulum</title>
 	</head>
@@ -65,12 +65,9 @@
 										</select>
 									</div>
 								</div>
-								<div class="col-md-8">
-									<div class="button-action pull-right">
-										<button class="btn btn-success add">Tambah</button>
-										<button class="btn btn-danger delete">Hapus</button>
-									</div>
-								</div>
+								<div class="col-md-8 masteractions">
+									<div class="btn-action pull-right"> </div>
+								</div> 
 							</div>
 							<form class="tableform">
 								<table class="table table-striped table-bordered table-hover table-checkable table-colvis datatable">
@@ -103,15 +100,17 @@
 							<form:form role="form" action="login" commandName="kurikulum" class="formdetail">
 								<div class="form-group">
 									<label>Nama Kurikulum</label>
-									<form:input path="nmKurikulum" class="form-control" placeholder="Berisi kurikulum" required="false" />
+									<form:input path="nmKurikulum" class="form-control" placeholder="Berisi nama kurikulum" required="false" />
 									<form:hidden path="idKurikulum" class="form-control" />
 								</div>
 								<div class="form-group">
 									<label>Nama Satuan Manajemen</label>
-									<form:select path="SatMan" class="form-control" required="true">
-										<form:option value="" label="Berisi kurikulum untuk satuan manajemen akademik" /> 
-										<form:options value="${satman.idSatMan}" label="${satman.nmSatMan}" />
-									</form:select>
+									<select id="idSatMan" name="idSatMan" class="form-control">
+											<option value="">Pilih kurikulum untuk satuan manajemen akademik</option> 
+										<c:forEach items="${satManList}" var="satman"> 
+											<option value="${satman.idSatMan}">${satman.nmSatMan }</option>
+										</c:forEach> 
+									<select>
 								</div>
 								<div class="form-group">
 									<label>Tahun Mulai Kurikulum</label>
@@ -120,6 +119,12 @@
 								<div class="form-group">
 									<label>Tahun Akhir Kurikulum</label>
 									<form:input path="thnAkhir" class="form-control" placeholder="Berisi tahun berakhir kurikulum dengan angka" required="true" digits="true"/>
+								</div>
+								<div class="form-group">
+									<label>Tahun Akhir Kurikulum</label>
+									<select id="idSatMan" name="idSatMan" class="form-control">
+											<option value="">Pilih kurikulum untuk satuan manajemen akademik</option>  
+									<select>
 								</div>
 								<div class="form-group detailcontrol">
 								</div>
@@ -133,9 +138,9 @@
 						$('#masterpage').masterPage(
 						{
 							detailFocusId: '#idKurikulum',
-							dataUrl: context_path+'/kurikulum/json',
-							detailUrl: context_path+'/kurikulum/edit',
-							addUrl: context_path+'/kurikulum/simpan',
+							dataUrl: context_path+'kurikulum/json',
+							detailUrl: context_path+'kurikulum/edit',
+							addUrl: context_path+'kurikulum/simpan',
 							editUrl: context_path+'kurikulum/simpan',
 							deleteUrl: context_path+'kurikulum/deletemany',
 							primaryKey: 'idKurikulum',
@@ -163,8 +168,8 @@
 								{ 
 									"bVisible":    false, 
 									mRender: function(data,type,full){
-										if(full[4] == 'true') return "Terhapus";
-										else return "Aktif";
+										if(full[5] == 'true') return "Aktif";
+										else return "Non Aktif";
 									}
 								},
 								/* Aksi */
@@ -173,13 +178,19 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[4]!='true') action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>'
+										if(full[5]=='true') action += ' <button type="button" class="btn btn-danger deleterow">Non-Aktif</button>'
 										return action;
 									}
 								}
 							],
-							validationRules: {idKurikulum:{required: false},nmKurikulum:{required: false}, SatMan:{required: true},thnMulai:{required: true, digits:true},thnAkhir:{required: true, digits: true}},
-							filters: [{id:'#filter', name:'aStatusKurikulum'}]
+							validationRules: {idKurikulum:{required: false},nmKurikulum:{required: true}, SatMan:{required: true},thnMulai:{required: true, digits:true},thnAkhir:{required: true, digits: true}},
+							filters: [{id:'#filter', name:'aStatusKurikulum'}],
+							callOnFillForm : function(response,options){
+								console.log(response.data);
+								console.log(response.data.satMan);
+								console.log(response.data.satMan.idSatMan);
+								$("#idSatMan").val(response.data.satMan.idSatMan);
+							}
 						});
 					});
 				</script>

@@ -25,11 +25,11 @@ public class CapPemb{
 	@Column(name="id_cap_pemb")
 	private UUID idCapPemb;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_kurikulum")
 	private Kurikulum kurikulum;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_sat_man")
 	private SatMan satMan;
 	

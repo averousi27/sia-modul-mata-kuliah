@@ -167,19 +167,18 @@ public class KurikulumServiceImpl implements KurikulumService {
 	}
 	@Override
 	public String save(Kurikulum kurikulum) {
-		String where = "thnMulai = "+kurikulum.getThnMulai();
-		if(kurikulum.getIdKurikulum()!=null) 
-			where +=" AND idKurikulum !='"+kurikulum.getIdKurikulum().toString()+"'";
-		if(get(where).size()>0)	return null;
-		else if(kurikulum.getIdKurikulum() != null)
+		if(kurikulum.getIdKurikulum() != null)
 		{
 			//update
+			
+			kurikulum.setaStatusKurikulum(kurikulum.getaStatusKurikulum());
 			kurikulumRepo.update(kurikulum);
 			return kurikulum.getIdKurikulum().toString();
 		}
 		else
 		{
 			//insert
+	        kurikulum.setaStatusKurikulum(true);
 			return kurikulumRepo.insert(kurikulum).toString();
 		}
 	}

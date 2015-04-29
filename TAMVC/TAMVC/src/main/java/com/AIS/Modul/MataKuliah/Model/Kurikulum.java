@@ -17,6 +17,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min; 
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -32,25 +35,27 @@ public class Kurikulum{
 	@Column(name="id_kurikulum")
 	private UUID idKurikulum;
 
-	@NotEmpty(message="Satuan manajemen tidak boleh kosong")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_sat_man")
 	private SatMan satMan;
 	
 	@Column(name="nm_kurikulum")
 	private String nmKurikulum;
-	 	
+	 
 	@NotEmpty(message="Tahun mulai kurikulum tidak boleh kosong")
+	@Min(value = 0000,message = "Nilai minimal untuk Minimal Pertemuan Pembelajaran adalah 0000")
+    @Max(value = 9999,message="Nilai maksimal untuk Minimal Pertemuan Pembelajaran adalah 9999")
 	@Column(name="thn_mulai")
 	private String thnMulai;
 
-	@NotEmpty(message="Tahun berakhirnya kurikulum tidak boleh kosong")
+	@NotEmpty(message="Tahun berakhirnya kurikulum tidak boleh kosong") 
+	@Min(value = 0000,message = "Nilai minimal untuk Minimal Pertemuan Pembelajaran adalah 0000")
+    @Max(value = 9999,message="Nilai maksimal untuk Minimal Pertemuan Pembelajaran adalah 9999")
 	@Column(name="thn_akhir")
 	private String thnAkhir;
-	 
-	@NotEmpty(message="Status kurikulum tidak boleh kosong")
+	  
 	@Column(name="a_status_kurikulum")
-	private Boolean aStatusKurikulum;
+	private boolean aStatusKurikulum;
 	
 	public UUID getIdKurikulum() {
 		return idKurikulum;
@@ -92,11 +97,11 @@ public class Kurikulum{
 		this.thnAkhir = thnAkhir;
 	}
 
-	public Boolean getaStatusKurikulum() {
+	public boolean getaStatusKurikulum() {
 		return aStatusKurikulum;
 	}
 
-	public void setaStatusKurikulum(Boolean aStatusKurikulum) {
+	public void setaStatusKurikulum(boolean aStatusKurikulum) {
 		this.aStatusKurikulum = aStatusKurikulum;
 	}
 	

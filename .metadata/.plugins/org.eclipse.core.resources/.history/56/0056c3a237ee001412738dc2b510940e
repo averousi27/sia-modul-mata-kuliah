@@ -1,0 +1,6 @@
+package com.AIS.Modul.MataKuliah.Service;
+
+@Service
+public class MKServiceImpl implements MKService{
+
+}
