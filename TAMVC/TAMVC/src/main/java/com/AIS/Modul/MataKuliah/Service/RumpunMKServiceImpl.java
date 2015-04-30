@@ -7,11 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
   
 import org.springframework.stereotype.Service;
- 
-
-
-import com.AIS.Modul.MataKuliah.Model.Kurikulum;
-import com.AIS.Modul.MataKuliah.Model.RumpunMK; 
+import com.sia.main.domain.*;
 import com.AIS.Modul.MataKuliah.Repository.RumpunMKRepository;
   
 @Service
@@ -76,13 +72,6 @@ public class RumpunMKServiceImpl implements RumpunMKService {
 		if(rumpunMK.getIdRumpunMK() != null)
 		{
 			//update
-			if(rumpunMK.isaStatusRumpunMK()==true){
-				rumpunMK.setaStatusRumpunMK(true);
-			}
-			else{
-
-				rumpunMK.setaStatusRumpunMK(false);
-			}
 			rumpunMKRepo.update(rumpunMK);
 			return rumpunMK.getIdRumpunMK().toString();
 		}

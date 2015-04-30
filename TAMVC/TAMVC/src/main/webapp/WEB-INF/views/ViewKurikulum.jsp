@@ -121,10 +121,12 @@
 									<form:input path="thnAkhir" class="form-control" placeholder="Berisi tahun berakhir kurikulum dengan angka" required="true" digits="true"/>
 								</div>
 								<div class="form-group">
-									<label>Tahun Akhir Kurikulum</label>
-									<select id="idSatMan" name="idSatMan" class="form-control">
-											<option value="">Pilih kurikulum untuk satuan manajemen akademik</option>  
-									<select>
+									<label>Status Aktif Kurikulum</label>
+									<select id="aStatusKurikulum" name="aStatusKurikulum" class="form-control">
+											<option value="">Pilih status keaktifan kurikulum</option>  
+											<option value="true">Aktif</option>  
+											<option value="false">Non-Aktif</option>  
+									<select> 
 								</div>
 								<div class="form-group detailcontrol">
 								</div>

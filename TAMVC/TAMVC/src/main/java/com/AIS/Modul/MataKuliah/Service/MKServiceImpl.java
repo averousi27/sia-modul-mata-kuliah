@@ -2,17 +2,24 @@ package com.AIS.Modul.MataKuliah.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.AIS.Modul.MataKuliah.Model.MK;
 import com.AIS.Modul.MataKuliah.Repository.MKRepository;
+import com.sia.main.domain.*;
  
-
+@Service
 public class MKServiceImpl implements MKService{
 
 	@Autowired
 	private MKRepository mkRepo;
+	
+	private String [] column = {"mk.idMK", "mk.kodeMK", "mk.nmMK", "kur.thnMulai", "rumpunMK.nmRumpunMK", "mk.tingkatPemb", 
+			"mk.jmlSKSMK", "mk.aSifatMK", "mk.deskripsiMK", "mk.aStatusMK"};
+	private Boolean[] searchable = {false,true,true,true,true,true,true,true,true,false};
+	
 	
 	@Override
 	public Datatable getdatatable(String sEcho, int iDisplayLength,
@@ -27,7 +34,7 @@ public class MKServiceImpl implements MKService{
 			List<MK> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
 			List<String[]> aData = new ArrayList<String[]>();
 			for (MK mk : queryResult) {
-				String[] mkString = new String[7];
+				String[] mkString = new String[11];
 				mkString[0] = mk.getIdMK().toString();
 				mkString[1] = String.valueOf(mk.getKodeMK());
 				mkString[2] = String.valueOf(mk.getNmMK());
@@ -37,8 +44,8 @@ public class MKServiceImpl implements MKService{
 				mkString[6] = String.valueOf(mk.getJmlSKSMK());
 				mkString[7] = String.valueOf(mk.isaSifatMK());
 				mkString[8] = String.valueOf(mk.getDeskripsiMK());
-				mkString[9] = String.valueOf(mk.isaStatusRumpunMK());
-				mkString[10] = String.valueOf(mk.isaStatusRumpunMK());
+				mkString[9] = String.valueOf(mk.isaStatusMK());
+				mkString[10] = String.valueOf(mk.isaStatusMK());
 				aData.add(mkString);
 			}
 			mkDatatable.setAaData(aData);
@@ -48,10 +55,59 @@ public class MKServiceImpl implements MKService{
 			return mkDatatable;
 	}
 
-	private List<MK> get(String string, String order, int iDisplayLength,
-			int iDisplayStart) {
+	@Override
+	public List<MK> get() {
+		return get("");
+	}
+
+	@Override
+	public List<MK> get(String where) {
+		return get(where,"");
+	}
+
+	@Override
+	public List<MK> get(String where, String order) {
+		return get(where,order,-1,-1);
+	}
+
+	@Override
+	public List<MK> get(String where, String order, int limit, int offset) {
+		return mkRepo.get(where, order, limit, offset);
+	}
+
+	@Override
+	public String save(MK mk) {
 		// TODO Auto-generated method stub
-		return null;
+		if(mk.getIdMK() != null)
+		{
+			//update
+			mkRepo.update(mk);
+			return mk.getIdMK().toString();
+		}
+		else
+		{
+			//insert
+	        mk.setaStatusMK(true);
+			return mkRepo.insert(mk).toString();
+		}
+	}
+
+	@Override
+	public MK findById(UUID idMK) {
+		// TODO Auto-generated method stub
+		return mkRepo.findById(idMK);
+	}
+
+	@Override
+	public String delete(UUID idMK) {
+		// TODO Auto-generated method stub
+		MK mk = mkRepo.findById(idMK);
+		if(mk==null) return null;
+		else{
+			mk.setaStatusMK(false);
+			mkRepo.update(mk);
+			return "Ok";
+		}
 	}
 
 }

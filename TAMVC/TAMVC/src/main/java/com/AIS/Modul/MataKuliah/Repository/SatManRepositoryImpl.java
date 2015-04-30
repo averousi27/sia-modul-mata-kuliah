@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.AIS.Modul.MataKuliah.Model.Kurikulum;
-import com.AIS.Modul.MataKuliah.Model.SatMan;
+import com.sia.main.domain.*;
 
 @Repository
 public class SatManRepositoryImpl implements SatManRepository {

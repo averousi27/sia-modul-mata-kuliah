@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.AIS.Modul.MataKuliah.Model.CapPemb;
-import com.AIS.Modul.MataKuliah.Model.Kurikulum;
+import com.sia.main.domain.*;
 
 
 @Repository

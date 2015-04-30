@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.AIS.Modul.MataKuliah.Model.CapPemb;
-import com.AIS.Modul.MataKuliah.Model.Kurikulum;
-import com.AIS.Modul.MataKuliah.Model.SatMan;
+import com.sia.main.domain.*;
 import com.AIS.Modul.MataKuliah.Service.AjaxResponse;
 import com.AIS.Modul.MataKuliah.Service.CapPembService;
 import com.AIS.Modul.MataKuliah.Service.Datatable;

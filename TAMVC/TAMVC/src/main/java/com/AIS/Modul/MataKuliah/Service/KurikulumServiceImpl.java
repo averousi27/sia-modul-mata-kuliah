@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.AIS.Modul.MataKuliah.Model.Kurikulum;
-import com.AIS.Modul.MataKuliah.Model.SatMan;
+import com.sia.main.domain.*;
 import com.AIS.Modul.MataKuliah.Repository.KurikulumRepository;
 import com.AIS.Modul.MataKuliah.Service.KurikulumService;
 
@@ -140,8 +139,8 @@ public class KurikulumServiceImpl implements KurikulumService {
 			kurikulumString[2] = String.valueOf(kurikulum.getSatMan().getNmSatMan());
 			kurikulumString[3] = String.valueOf(kurikulum.getThnMulai());
 			kurikulumString[4] = String.valueOf(kurikulum.getThnAkhir());
-			kurikulumString[5] = String.valueOf(kurikulum.getaStatusKurikulum());
-			kurikulumString[6] = String.valueOf(kurikulum.getaStatusKurikulum());
+			kurikulumString[5] = String.valueOf(kurikulum.isaStatusKurikulum());
+			kurikulumString[6] = String.valueOf(kurikulum.isaStatusKurikulum());
 			aData.add(kurikulumString);
 		}
 		kurikulumDatatable.setAaData(aData);
@@ -171,14 +170,13 @@ public class KurikulumServiceImpl implements KurikulumService {
 		{
 			//update
 			
-			kurikulum.setaStatusKurikulum(kurikulum.getaStatusKurikulum());
 			kurikulumRepo.update(kurikulum);
 			return kurikulum.getIdKurikulum().toString();
 		}
 		else
 		{
 			//insert
-	        kurikulum.setaStatusKurikulum(true);
+//	        kurikulum.setaStatusKurikulum(true);
 			return kurikulumRepo.insert(kurikulum).toString();
 		}
 	}

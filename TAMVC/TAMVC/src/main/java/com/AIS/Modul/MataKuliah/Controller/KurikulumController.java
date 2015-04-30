@@ -8,8 +8,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import com.AIS.Modul.MataKuliah.Model.Kurikulum;
-import com.AIS.Modul.MataKuliah.Model.SatMan;
+import com.sia.main.domain.Kurikulum;
+import com.sia.main.domain.SatMan;
 import com.AIS.Modul.MataKuliah.Service.AjaxResponse;
 import com.AIS.Modul.MataKuliah.Service.Datatable;
 import com.AIS.Modul.MataKuliah.Service.KurikulumService;

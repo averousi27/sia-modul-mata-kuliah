@@ -3,7 +3,7 @@ package com.AIS.Modul.MataKuliah.Service;
 import java.util.List;
 import java.util.UUID;
 
-import com.AIS.Modul.MataKuliah.Model.SatMan;
+import com.sia.main.domain.*;
 
 public interface SatManService {
 

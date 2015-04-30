@@ -24,7 +24,7 @@
 	</beans:bean>
 	
 	<!-- Component Scan -->
-	<context:component-scan base-package="com.AIS.Modul.MataKuliah.Model" />
+	<context:component-scan base-package="com.sia.main.domain" />
 	<context:component-scan base-package="com.AIS.Modul.MataKuliah.Service" /> 
 	<context:component-scan base-package="com.AIS.Modul.MataKuliah.Controller" /> 
 	<context:component-scan base-package="com.AIS.Modul.MataKuliah.Repository" /> 

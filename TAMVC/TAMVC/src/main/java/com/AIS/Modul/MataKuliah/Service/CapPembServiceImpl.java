@@ -7,8 +7,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.AIS.Modul.MataKuliah.Model.CapPemb;
 import com.AIS.Modul.MataKuliah.Repository.CapPembRepository;
+import com.sia.main.domain.*;
 
 @Service
 public class CapPembServiceImpl implements CapPembService {

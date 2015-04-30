@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
-import com.AIS.Modul.MataKuliah.Model.CapPemb;
+import com.sia.main.domain.*;
 
 public interface CapPembRepository {
 	public List<CapPemb> findAll();

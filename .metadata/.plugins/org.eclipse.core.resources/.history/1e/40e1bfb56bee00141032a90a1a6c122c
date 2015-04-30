@@ -1,0 +1,62 @@
+package com.AIS.Modul.MataKuliah.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.AIS.Modul.MataKuliah.Repository.MKRepository;
+import com.sia.main.domain.*;
+ 
+@Service
+public class MKServiceImpl implements MKService{
+
+	@Autowired
+	private MKRepository mkRepo;
+	
+	private String [] column = {"k.idKurikulum","k.nmKurikulum", "satMan.nmSatMan","k.thnMulai","k.thnAkhir","k.aStatusKurikulum"};
+	private Boolean[] searchable = {false,true,true,true,true,false};
+	
+	
+	@Override
+	public Datatable getdatatable(String sEcho, int iDisplayLength,
+			int iDisplayStart, int iSortCol_0, String sSortDir_0,
+			String sSearch, String filter) {
+		// TODO Auto-generated method stub
+			DatatableExtractParams parameter = new DatatableExtractParams(sSearch, this.column, this.searchable, iSortCol_0, sSortDir_0);
+			Datatable mkDatatable= new Datatable();
+			mkDatatable.setsEcho(sEcho);
+			String dbFilter = "";
+			if(filter != null && !filter.equals("")) dbFilter+=" AND "+filter; 
+			List<MK> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
+			List<String[]> aData = new ArrayList<String[]>();
+			for (MK mk : queryResult) {
+				String[] mkString = new String[7];
+				mkString[0] = mk.getIdMK().toString();
+				mkString[1] = String.valueOf(mk.getKodeMK());
+				mkString[2] = String.valueOf(mk.ge);
+				mkString[3] = String.valueOf(mk.getKurikulum().getThnMulai());
+				mkString[4] = String.valueOf(mk.getRumpunMK().getNmRumpunMK());
+				mkString[5] = String.valueOf(mk.getTingkatPemb());
+				mkString[6] = String.valueOf(mk.getJmlSKSMK());
+				mkString[7] = String.valueOf(mk.isaSifatMK());
+				mkString[8] = String.valueOf(mk.getDeskripsiMK());
+				mkString[9] = String.valueOf(mk.isaStatusRumpunMK());
+				mkString[10] = String.valueOf(mk.isaStatusRumpunMK());
+				aData.add(mkString);
+			}
+			mkDatatable.setAaData(aData);
+			mkDatatable.setiTotalRecords(mkRepo.count(""));
+			mkDatatable.setiTotalDisplayRecords(mkRepo.count("("+parameter.getWhere()+") AND "+filter));
+
+			return mkDatatable;
+	}
+
+	private List<MK> get(String string, String order, int iDisplayLength,
+			int iDisplayStart) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,7 +1,7 @@
 package com.AIS.Modul.MataKuliah.Service;
 
-import com.AIS.Modul.MataKuliah.Model.Kurikulum;
-import com.AIS.Modul.MataKuliah.Controller.KurikulumController;
+import com.sia.main.domain.Kurikulum;
+import com.sia.main.domain.*;
 
 import java.util.List;
 import java.util.UUID;

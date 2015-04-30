@@ -1,9 +1,19 @@
 package com.AIS.Modul.MataKuliah.Repository;
 
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.UUID;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.sia.main.domain.Kurikulum;
+import com.sia.main.domain.MK;
+
+@Repository
 public class MKRepositoryImpl implements MKRepository {
 
 	@Autowired
@@ -15,10 +25,55 @@ public class MKRepositoryImpl implements MKRepository {
 		String dbWhere ="";
 		if(where != "") dbWhere = " WHERE "+where;
 		Query query = sessionFactory.getCurrentSession().createQuery(
-		        "select count(*) from MK temp join temp.kurikulum tempkur join tempkur.rumpunMK satMan rumpunMK"+dbWhere);
+		        "select count(*) from MK mk join mk.kurikulum kur join mk.rumpunMK rumpunMK"+dbWhere);
 		Long count = (Long)query.uniqueResult();
 		return count;
 	}
-	
 
+	@Override
+	public List<MK> get(String where, String order, int limit, int offset) {
+		String dbWhere ="";
+		String dbOrder ="";
+		if(where != "") dbWhere = " WHERE "+where;
+		if(order != "") dbOrder = " ORDER BY "+order;
+		 
+		Query query = sessionFactory.getCurrentSession().createQuery("select mk from MK mk join mk.kurikulum kur join mk.rumpunMK rumpunMK "+dbWhere+dbOrder);
+		
+		if(limit != -1 && limit>0) {
+			query.setFirstResult(offset);
+			if(offset < 0) offset = 0;
+			query.setMaxResults(limit);
+		}
+		
+		return query.list();
+	}
+
+	@Override
+	public void update(MK mk) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.update(mk);
+		tx.commit();
+	}
+
+	@Override
+	public UUID insert(MK mk) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		UUID insertId= (UUID)session.save(mk);
+		tx.commit();
+		return insertId;
+	}
+
+	@Override
+	public MK findById(UUID idMK) {
+		// TODO Auto-generated method stub
+		List<MK> queryResult = sessionFactory.getCurrentSession().createQuery("select mk from MK mk join mk.kurikulum kur join mk.rumpunMK rumpunMK WHERE mk.idMK='"+idMK.toString()+"'").list();
+		if(queryResult.size()==0) return null;
+		return queryResult.get(0);
+	}
+	
+	
 }

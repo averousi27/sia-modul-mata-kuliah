@@ -100,6 +100,14 @@
 									<form:input path="nmRumpunMK" class="form-control" placeholder="Berisi nama rumpun mata kuliah" required="true" />
 									<form:hidden path="idRumpunMK" class="form-control" />
 								</div>
+								<div class="form-group">
+									<label>Status Aktif Rumpun Mata Kuliah</label>
+									<select id="aStatusRumpunMK" name="aStatusRumpunMK" class="form-control">
+											<option value="">Pilih status keaktifan rumpun mata kuliah</option>  
+											<option value="true">Aktif</option>  
+											<option value="false">Non-Aktif</option>  
+									<select> 
+								</div>
 								<div class="form-group detailcontrol">
 								</div>
 					        </form:form>

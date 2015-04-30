@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.AIS.Modul.MataKuliah.Model.SatMan;
+import com.sia.main.domain.*;
 import com.AIS.Modul.MataKuliah.Repository.SatManRepository;
 
 @Service

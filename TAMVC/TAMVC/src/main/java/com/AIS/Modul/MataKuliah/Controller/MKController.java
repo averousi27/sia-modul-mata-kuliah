@@ -21,10 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
   
-import com.AIS.Modul.MataKuliah.Model.Kurikulum;
-import com.AIS.Modul.MataKuliah.Model.MK;
-import com.AIS.Modul.MataKuliah.Model.RumpunMK;
-import com.AIS.Modul.MataKuliah.Model.SatMan;
+
+
+import com.sia.main.domain.*;
 import com.AIS.Modul.MataKuliah.Service.AjaxResponse;
 import com.AIS.Modul.MataKuliah.Service.Datatable;
 import com.AIS.Modul.MataKuliah.Service.KurikulumService;
@@ -68,8 +67,59 @@ public class MKController {
 			@RequestParam("iDisplayStart") int iDisplayStart,
 			@RequestParam("aStatusMK") String aStatusMK
             ) {
-		String filter = "CAST(k.aStatusMK as string) LIKE '%"+aStatusMK+"%'";
+		String filter = "CAST(mk.aStatusMK as string) LIKE '%"+aStatusMK+"%'";
 		Datatable rumpunMKDatatable = mkServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch, filter);
 		return rumpunMKDatatable;
 	} 
+	@RequestMapping(value = "/simpan", method = RequestMethod.POST)
+    public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("MK") MK mk, 
+    		@RequestParam("idKurikulum") UUID idKurikulum, @RequestParam("idRumpunMK") UUID idRumpunMK,
+    		 BindingResult result, Map<String, Object> model) {
+		AjaxResponse response = new AjaxResponse();    
+		Kurikulum kurikulumObj = kurikulumServ.findById(idKurikulum);
+		RumpunMK rumpunMKObj = rumpunMKServ.findById(idRumpunMK);
+		mk.setKurikulum(kurikulumObj);
+		mk.setRumpunMK(rumpunMKObj);
+        if (result.hasErrors()) {
+        	response.setStatus("error");
+        	List<FieldError> fieldError = result.getFieldErrors();
+        	String message ="";
+    		if(fieldError.get(0).isBindingFailure()) message += "Salah satu input tidak valid";
+    		else message += fieldError.get(0).getDefaultMessage();
+        	for(int i=1;i<fieldError.size();i++)
+        	{
+        		if(fieldError.get(i).isBindingFailure()) message += "<br/>Salah satu input tidak valid";
+        		else message += "<br/>"+fieldError.get(i).getDefaultMessage();
+        	}
+        	response.setMessage(message);
+        	response.setData(fieldError);
+            return response;
+        }
+        response.setData(mkServ.save(mk));
+        if(response.getData()!=null) response.setMessage("Data berhasil disimpan");
+        else 
+        {
+        	response.setStatus("error");
+        	response.setMessage("Mata kuliah sudah ada");
+        }
+        return response;
+    }
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public @ResponseBody AjaxResponse edit(@RequestParam("idMK") UUID idMK) {
+		AjaxResponse response;
+		MK mk = mkServ.findById(idMK);
+		if(mk == null) response = new AjaxResponse("error","Data tidak ditemukan",null);
+		else response = new AjaxResponse("ok","Data ditemukan",mk);
+        return response;
+    }
+	
+	@RequestMapping(value = "/deletemany", method = RequestMethod.POST)
+    public @ResponseBody AjaxResponse deleteMany(@RequestParam("idMK[]") UUID[] idMK) {
+		AjaxResponse response;
+		for (UUID uuid : idMK) {
+			mkServ.delete(uuid);
+		}
+		response = new AjaxResponse("ok","Data dihapus",null);
+        return response;
+    } 
 }

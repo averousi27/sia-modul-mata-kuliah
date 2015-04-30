@@ -122,7 +122,7 @@
 								</div>
 								<div class="form-group">
 									<label>Nama Rumpun Mata Kuliah</label>
-									<select id="idSatMan" name="idSatMan" class="form-control">
+									<select id="idRumpunMK" name="idRumpunMK" class="form-control">
 											<option value="">Pilih rumpun untuk mata kuliah</option> 
 										<c:forEach items="${rumpunMKList}" var="rumpunMK"> 
 											<option value="${rumpunMK.idRumpunMK}">${rumpunMK.nmRumpunMK }</option>
@@ -139,7 +139,7 @@
 								</div>
 								<div class="form-group">
 									<label>Sifat Mata Kuliah</label>
-									<select name="sifatMataKuliah" class="form-control" required="true">
+									<select id="aSifatMK" name="aSifatMK" class="form-control" required="true">
 											<option value="">Pilih sifat untuk mata kuliah</option>
 											<option value="true">Wajib</option>
 											<option value="false">Pilihan</option>
@@ -148,6 +148,14 @@
 								<div class="form-group">
 									<label>Deskripsi Mata Kuliah</label>
 									<form:input path="deskripsiMK" class="form-control" placeholder="Berisi deskripsi mata kuliah"/>
+								</div>
+								<div class="form-group">
+									<label>Status Keaktifan Mata Kuliah</label>
+									<select id="aStatusMK" name="aStatusMK" class="form-control">
+											<option value="">Pilih status keaktifan mata kuliah</option>
+											<option value="true">Aktif</option>
+											<option value="false">Non-aktif</option>
+									<select>
 								</div>
 								<div class="form-group detailcontrol">
 								</div>
@@ -192,15 +200,20 @@
 								/* jumlah sks */
 								{ "bVisible":    true }, 
 								/* sifat MK */
-								{ "bVisible":    true }, 
+								{ "bVisible":    true, 
+									mRender: function(data,type,full){
+										if(full[8] == 'true') return "Wajib";
+										else return "Pilihan";
+									}	
+								}, 
 								/* deskripsi MK */
 								{ "bVisible":    true }, 
 								/*status kurikulum*/
 								{ 
 									"bVisible":    false, 
 									mRender: function(data,type,full){
-										if(full[2] == 'true') return "Aktif";
-										else return "Non Aktif";
+										if(full[9] == 'true') return "Aktif";
+										else return "Non-Aktif";
 									}
 								},
 								/* Aksi */
@@ -209,7 +222,7 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[2]=='true') action += ' <button type="button" class="btn btn-danger deleterow">Non-Aktif</button>'
+										if(full[9]=='true') action += ' <button type="button" class="btn btn-danger deleterow">Non-Aktif</button>'
 										return action;
 									}
 								}
@@ -219,6 +232,8 @@
 							filters: [{id:'#filter', name:'aStatusMK'}],
 							callOnFillForm : function(response,options){ 
 								$("#idMK").val(response.data.idMK);
+								$("#idKurikulum").val(response.data.kurikulum.idKurikulum);
+								$("#idRumpunMK").val(response.data.rumpunMK.idRumpunMK);
 							}
 						});
 					});

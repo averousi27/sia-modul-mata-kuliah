@@ -10,8 +10,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.AIS.Modul.MataKuliah.Model.Kurikulum;
-import com.AIS.Modul.MataKuliah.Model.RumpunMK;
+import com.sia.main.domain.*;
 
 @Repository
 public class RumpunMKRepositoryImpl implements RumpunMKRepository{
