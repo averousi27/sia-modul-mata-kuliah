@@ -17,7 +17,7 @@ public class RumpunMKServiceImpl implements RumpunMKService {
 	@Autowired
 	private RumpunMKRepository rumpunMKRepo;
 	
-	private String [] column = {"idRumpunMK","nmRumpunMK", "aStatusRumpunMK"};
+	private String [] column = {"idRumpunMK","namaRumpunMK", "statusRumpunMK"};
 	private Boolean[] searchable = {false,true,false};
 	
 	@Override
@@ -35,9 +35,9 @@ public class RumpunMKServiceImpl implements RumpunMKService {
 		for (RumpunMK rumpunMK : queryResult) {
 			String[] rumpunMKString = new String[4];
 			rumpunMKString[0] = rumpunMK.getIdRumpunMK().toString();
-			rumpunMKString[1] = String.valueOf(rumpunMK.getNmRumpunMK());
-			rumpunMKString[2] = String.valueOf(rumpunMK.isaStatusRumpunMK());
-			rumpunMKString[3] = String.valueOf(rumpunMK.isaStatusRumpunMK());
+			rumpunMKString[1] = String.valueOf(rumpunMK.getNamaRumpunMK());
+			rumpunMKString[2] = String.valueOf(rumpunMK.getStatusRumpunMK());
+			rumpunMKString[3] = String.valueOf(rumpunMK.getStatusRumpunMK());
 			aData.add(rumpunMKString);
 		}
 		rumpunMKDatatable.setAaData(aData);
@@ -78,7 +78,7 @@ public class RumpunMKServiceImpl implements RumpunMKService {
 		else
 		{
 			//insert
-	        rumpunMK.setaStatusRumpunMK(true);
+	        rumpunMK.setStatusRumpunMK(true);
 			return rumpunMKRepo.insert(rumpunMK).toString();
 		}
 	}
@@ -95,7 +95,7 @@ public class RumpunMKServiceImpl implements RumpunMKService {
 		RumpunMK rumpunMK = rumpunMKRepo.findById(idRumpunMK);
 		if(rumpunMK==null) return null;
 		else{
-			rumpunMK.setaStatusRumpunMK(false);
+			rumpunMK.setStatusRumpunMK(false);
 			rumpunMKRepo.update(rumpunMK);
 			return "Ok";
 		}

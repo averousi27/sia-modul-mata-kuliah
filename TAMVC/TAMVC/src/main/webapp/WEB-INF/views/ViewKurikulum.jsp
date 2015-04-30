@@ -100,7 +100,7 @@
 							<form:form role="form" action="login" commandName="kurikulum" class="formdetail">
 								<div class="form-group">
 									<label>Nama Kurikulum</label>
-									<form:input path="nmKurikulum" class="form-control" placeholder="Berisi nama kurikulum" required="false" />
+									<form:input path="namaKurikulum" class="form-control" placeholder="Berisi nama kurikulum" required="false" />
 									<form:hidden path="idKurikulum" class="form-control" />
 								</div>
 								<div class="form-group">
@@ -122,7 +122,7 @@
 								</div>
 								<div class="form-group">
 									<label>Status Aktif Kurikulum</label>
-									<select id="aStatusKurikulum" name="aStatusKurikulum" class="form-control">
+									<select id="statusKurikulum" name="statusKurikulum" class="form-control">
 											<option value="">Pilih status keaktifan kurikulum</option>  
 											<option value="true">Aktif</option>  
 											<option value="false">Non-Aktif</option>  
@@ -185,8 +185,8 @@
 									}
 								}
 							],
-							validationRules: {idKurikulum:{required: false},nmKurikulum:{required: true}, SatMan:{required: true},thnMulai:{required: true, digits:true},thnAkhir:{required: true, digits: true}},
-							filters: [{id:'#filter', name:'aStatusKurikulum'}],
+							validationRules: {idKurikulum:{required: false},namaKurikulum:{required: true}, SatMan:{required: true},thnMulai:{required: true, digits:true},thnAkhir:{required: true, digits: true}},
+							filters: [{id:'#filter', name:'statusKurikulum'}],
 							callOnFillForm : function(response,options){
 								console.log(response.data);
 								console.log(response.data.satMan);

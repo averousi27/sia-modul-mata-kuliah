@@ -16,8 +16,8 @@ public class MKServiceImpl implements MKService{
 	@Autowired
 	private MKRepository mkRepo;
 	
-	private String [] column = {"mk.idMK", "mk.kodeMK", "mk.nmMK", "kur.thnMulai", "rumpunMK.nmRumpunMK", "mk.tingkatPemb", 
-			"mk.jmlSKSMK", "mk.aSifatMK", "mk.deskripsiMK", "mk.aStatusMK"};
+	private String [] column = {"mk.idMK", "mk.kodeMK", "mk.namaMK", "kur.thnMulai", "rumpunMK.namaRumpunMK", "mk.tingkatPemb", 
+			"mk.jumlahSKS", "mk.sifatMK", "mk.deskripsiMK", "mk.statusMK"};
 	private Boolean[] searchable = {false,true,true,true,true,true,true,true,true,false};
 	
 	
@@ -37,15 +37,15 @@ public class MKServiceImpl implements MKService{
 				String[] mkString = new String[11];
 				mkString[0] = mk.getIdMK().toString();
 				mkString[1] = String.valueOf(mk.getKodeMK());
-				mkString[2] = String.valueOf(mk.getNmMK());
+				mkString[2] = String.valueOf(mk.getNamaMK());
 				mkString[3] = String.valueOf(mk.getKurikulum().getThnMulai());
-				mkString[4] = String.valueOf(mk.getRumpunMK().getNmRumpunMK());
+				mkString[4] = String.valueOf(mk.getRumpunMK().getNamaRumpunMK());
 				mkString[5] = String.valueOf(mk.getTingkatPemb());
-				mkString[6] = String.valueOf(mk.getJmlSKSMK());
-				mkString[7] = String.valueOf(mk.isaSifatMK());
+				mkString[6] = String.valueOf(mk.getJumlahSKS());
+				mkString[7] = String.valueOf(mk.getSifatMK());
 				mkString[8] = String.valueOf(mk.getDeskripsiMK());
-				mkString[9] = String.valueOf(mk.isaStatusMK());
-				mkString[10] = String.valueOf(mk.isaStatusMK());
+				mkString[9] = String.valueOf(mk.getStatusMK());
+				mkString[10] = String.valueOf(mk.getStatusMK());
 				aData.add(mkString);
 			}
 			mkDatatable.setAaData(aData);
@@ -87,7 +87,7 @@ public class MKServiceImpl implements MKService{
 		else
 		{
 			//insert
-	        mk.setaStatusMK(true);
+	        mk.setStatusMK(true);
 			return mkRepo.insert(mk).toString();
 		}
 	}
@@ -104,7 +104,7 @@ public class MKServiceImpl implements MKService{
 		MK mk = mkRepo.findById(idMK);
 		if(mk==null) return null;
 		else{
-			mk.setaStatusMK(false);
+			mk.setStatusMK(false);
 			mkRepo.update(mk);
 			return "Ok";
 		}

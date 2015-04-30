@@ -109,14 +109,14 @@
 								</div>
 								<div class="form-group">
 									<label>Nama Mata Kuliah</label>
-									<form:input path="nmMK" class="form-control" placeholder="Berisi nama mata kuliah" required="true" /> 
+									<form:input path="namaMK" class="form-control" placeholder="Berisi nama mata kuliah" required="true" /> 
 								</div>
 								<div class="form-group">
 									<label>Tahun Kurikulum</label>
 									<select id="idKurikulum" name="idKurikulum" class="form-control">
 											<option value="">Pilih kurikulum untuk mata kuliah</option> 
 										<c:forEach items="${kurikulumList}" var="kurikulum"> 
-											<option value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.nmKurikulum}</option>
+											<option value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.namaKurikulum}</option>
 										</c:forEach> 
 									<select>
 								</div>
@@ -125,7 +125,7 @@
 									<select id="idRumpunMK" name="idRumpunMK" class="form-control">
 											<option value="">Pilih rumpun untuk mata kuliah</option> 
 										<c:forEach items="${rumpunMKList}" var="rumpunMK"> 
-											<option value="${rumpunMK.idRumpunMK}">${rumpunMK.nmRumpunMK }</option>
+											<option value="${rumpunMK.idRumpunMK}">${rumpunMK.namaRumpunMK }</option>
 										</c:forEach> 
 									<select>
 								</div>
@@ -135,11 +135,11 @@
 								</div>
 								<div class="form-group">
 									<label>Jumlah SKS</label>
-									<form:input path="jmlSKSMK" class="form-control" placeholder="Berisi angka jumlah SKS mata kuliah" required="true" digits="true"/>
+									<form:input path="jumlahSKS" class="form-control" placeholder="Berisi angka jumlah SKS mata kuliah" required="true" digits="true"/>
 								</div>
 								<div class="form-group">
 									<label>Sifat Mata Kuliah</label>
-									<select id="aSifatMK" name="aSifatMK" class="form-control" required="true">
+									<select id="sifatMK" name="sifatMK" class="form-control" required="true">
 											<option value="">Pilih sifat untuk mata kuliah</option>
 											<option value="true">Wajib</option>
 											<option value="false">Pilihan</option>
@@ -151,7 +151,7 @@
 								</div>
 								<div class="form-group">
 									<label>Status Keaktifan Mata Kuliah</label>
-									<select id="aStatusMK" name="aStatusMK" class="form-control">
+									<select id="statusMK" name="statusMK" class="form-control">
 											<option value="">Pilih status keaktifan mata kuliah</option>
 											<option value="true">Aktif</option>
 											<option value="false">Non-aktif</option>
@@ -202,7 +202,7 @@
 								/* sifat MK */
 								{ "bVisible":    true, 
 									mRender: function(data,type,full){
-										if(full[8] == 'true') return "Wajib";
+										if(full[7] == 'true') return "Wajib";
 										else return "Pilihan";
 									}	
 								}, 
@@ -228,8 +228,8 @@
 								}
 							],
 							validationRules: {idMK:{required: false},kodeMK:{required: true}, nmMK:{required: true}, kurikulum:{required: true},
-								rumpunMK: {required:true}, tingkatPemb: {required:true}, jmlSKSMK: {required: true, digits: true}, sifatMK: {required:true}},
-							filters: [{id:'#filter', name:'aStatusMK'}],
+								rumpunMK: {required:true}, tingkatPemb: {required:true}, jumlahSKS: {required: true, digits: true}, sifatMK: {required:true}},
+							filters: [{id:'#filter', name:'statusMK'}],
 							callOnFillForm : function(response,options){ 
 								$("#idMK").val(response.data.idMK);
 								$("#idKurikulum").val(response.data.kurikulum.idKurikulum);

@@ -62,9 +62,9 @@ public class KurikulumController {
             @RequestParam("sSortDir_0") String sSortDir_0,
             @RequestParam("sSearch") String sSearch,
 			@RequestParam("iDisplayStart") int iDisplayStart,
-			@RequestParam("aStatusKurikulum") String aStatusKurikulum
+			@RequestParam("statusKurikulum") String statusKurikulum
             ) {
-		String filter = "CAST( k.aStatusKurikulum as string) LIKE '%"+aStatusKurikulum+"%'";
+		String filter = "CAST( k.statusKurikulum as string) LIKE '%"+statusKurikulum+"%'";
 		Datatable kurikulumDatatable = kurikulumServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
 		return kurikulumDatatable;
 	}

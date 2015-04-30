@@ -97,12 +97,12 @@
 							<form:form role="form" action="login" commandName="rumpunMK" class="formdetail">
 								<div class="form-group">
 									<label>Nama Rumpun Mata Kuliah</label>
-									<form:input path="nmRumpunMK" class="form-control" placeholder="Berisi nama rumpun mata kuliah" required="true" />
+									<form:input path="namaRumpunMK" class="form-control" placeholder="Berisi nama rumpun mata kuliah" required="true" />
 									<form:hidden path="idRumpunMK" class="form-control" />
 								</div>
 								<div class="form-group">
 									<label>Status Aktif Rumpun Mata Kuliah</label>
-									<select id="aStatusRumpunMK" name="aStatusRumpunMK" class="form-control">
+									<select id="statusRumpunMK" name="statusRumpunMK" class="form-control">
 											<option value="">Pilih status keaktifan rumpun mata kuliah</option>  
 											<option value="true">Aktif</option>  
 											<option value="false">Non-Aktif</option>  
@@ -159,8 +159,8 @@
 									}
 								}
 							],
-							validationRules: {idKurikulum:{required: false},nmRumpunMK:{required: true}},
-							filters: [{id:'#filter', name:'aStatusRumpunMK'}],
+							validationRules: {idKurikulum:{required: false},namaRumpunMK:{required: true}},
+							filters: [{id:'#filter', name:'statusRumpunMK'}],
 							callOnFillForm : function(response,options){ 
 								$("#idRumpunMK").val(response.data.idRumpunMK);
 							}

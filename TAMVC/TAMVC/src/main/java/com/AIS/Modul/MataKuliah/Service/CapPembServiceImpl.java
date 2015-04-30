@@ -65,6 +65,12 @@ public class CapPembServiceImpl implements CapPembService {
 
 	@Override
 	public CapPemb findObjByTahunAndSatMan(UUID idKurikulum, UUID idSatMan) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*@Override
+	public CapPemb findObjByTahunAndSatMan(UUID idKurikulum, UUID idSatMan) {
 		List<CapPemb> capPembAll = findAll();
 		for(CapPemb cp : capPembAll){
 			if(cp.getKurikulum().getIdKurikulum().equals(idKurikulum) && (cp.getSatMan().getIdSatMan().equals(idSatMan))){
@@ -72,6 +78,6 @@ public class CapPembServiceImpl implements CapPembService {
 				}
 		}
 		return null;
-	}
+	}*/
 
 }

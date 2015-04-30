@@ -53,9 +53,9 @@ public class RumpunMKController {
             @RequestParam("sSortDir_0") String sSortDir_0,
             @RequestParam("sSearch") String sSearch,
 			@RequestParam("iDisplayStart") int iDisplayStart,
-			@RequestParam("aStatusRumpunMK") String aStatusRumpunMK
+			@RequestParam("statusRumpunMK") String statusRumpunMK
             ) {
-		String filter = "CAST( aStatusRumpunMK as string) LIKE '%"+aStatusRumpunMK+"%'";
+		String filter = "CAST( statusRumpunMK as string) LIKE '%"+statusRumpunMK+"%'";
 		Datatable rumpunMKDatatable = rumpunMKServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
 		return rumpunMKDatatable;
 	}
@@ -63,7 +63,7 @@ public class RumpunMKController {
     public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("rumpunMK") RumpunMK rumpunMK, 
     		 BindingResult result, Map<String, Object> model) {
 		AjaxResponse response = new AjaxResponse();   
-		logger.info(String.valueOf(rumpunMK.getNmRumpunMK()));
+		logger.info(String.valueOf(rumpunMK.getNamaRumpunMK()));
         if (result.hasErrors()) {
         	response.setStatus("error");
         	List<FieldError> fieldError = result.getFieldErrors();
@@ -93,8 +93,8 @@ public class RumpunMKController {
     public @ResponseBody AjaxResponse edit(@RequestParam("idRumpunMK") UUID idRumpunMK) {
 		AjaxResponse response;
 		RumpunMK rumpunMK = rumpunMKServ.findById(idRumpunMK);
-		rumpunMK.setaStatusRumpunMK(rumpunMK.isaStatusRumpunMK());
-		System.out.println("ini status sblm diupdate1 "+rumpunMK.isaStatusRumpunMK());
+		rumpunMK.setStatusRumpunMK(rumpunMK.getStatusRumpunMK());
+		System.out.println("ini status sblm diupdate1 "+rumpunMK.getStatusRumpunMK());
 		if(rumpunMK == null) response = new AjaxResponse("error","Data tidak ditemukan",null);
 		else response = new AjaxResponse("ok","Data ditemukan",rumpunMK);
         return response;

@@ -65,9 +65,9 @@ public class MKController {
             @RequestParam("sSortDir_0") String sSortDir_0,
             @RequestParam("sSearch") String sSearch,
 			@RequestParam("iDisplayStart") int iDisplayStart,
-			@RequestParam("aStatusMK") String aStatusMK
+			@RequestParam("statusMK") String statusMK
             ) {
-		String filter = "CAST(mk.aStatusMK as string) LIKE '%"+aStatusMK+"%'";
+		String filter = "CAST(mk.statusMK as string) LIKE '%"+statusMK+"%'";
 		Datatable rumpunMKDatatable = mkServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch, filter);
 		return rumpunMKDatatable;
 	} 
