@@ -1,0 +1,61 @@
+package com.AIS.Modul.MataKuliah.Controller;
+
+import java.util.List;
+import java.util.Locale;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.AIS.Modul.MataKuliah.Service.Datatable;
+import com.AIS.Modul.MataKuliah.Service.MKService;
+import com.AIS.Modul.MataKuliah.Service.PrasyaratMKService;
+import com.sia.main.domain.MK;
+import com.sia.main.domain.PrasyaratMK;
+ 
+
+@Controller
+@RequestMapping("/matakuliah/prasyarat")
+public class PrasyaratMKController { 
+	
+	@Autowired
+	private MKService mkServ;
+	
+	@Autowired
+	private PrasyaratMKService prasyaratMKServ;
+	
+	private static final Logger logger = LoggerFactory.getLogger(PrasyaratMKController.class);
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView datatable(Locale locale, Model model) {
+		PrasyaratMK pMK = new PrasyaratMK();  
+		List<MK> mkList = mkServ.get();
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("mkList", mkList);
+		mav.addObject("pMK", pMK);
+		mav.setViewName("ViewPrasyaratMK"); 
+		return mav;
+	}
+	
+	@RequestMapping(value = "/json", method = RequestMethod.POST)
+	public @ResponseBody Datatable json(
+			@RequestParam("sEcho") String sEcho, 
+			@RequestParam("iDisplayLength") int iDisplayLength,
+            @RequestParam("iSortCol_0") int iSortCol_0,
+            @RequestParam("sSortDir_0") String sSortDir_0,
+            @RequestParam("sSearch") String sSearch,
+			@RequestParam("iDisplayStart") int iDisplayStart,
+			@RequestParam("statusHapusPrasyarat") String statusHapusPrasyarat
+            ) {
+		String filter = "CAST( statusHapusPrasyarat as string) LIKE '%"+statusHapusPrasyarat+"%'";
+		Datatable prasyaratMKDatatable = prasyaratMKServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
+		return prasyaratMKDatatable;
+	}
+}

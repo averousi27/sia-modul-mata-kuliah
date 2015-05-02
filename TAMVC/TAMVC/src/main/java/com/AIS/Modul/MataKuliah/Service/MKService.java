@@ -24,4 +24,6 @@ public interface MKService {
 
 	public String delete(UUID uuid);
 
+	public List<MK> findAll();
+
 }

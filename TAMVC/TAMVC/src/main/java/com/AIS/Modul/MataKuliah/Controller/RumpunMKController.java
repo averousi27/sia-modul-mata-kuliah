@@ -63,7 +63,6 @@ public class RumpunMKController {
     public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("rumpunMK") RumpunMK rumpunMK, 
     		 BindingResult result, Map<String, Object> model) {
 		AjaxResponse response = new AjaxResponse();   
-		logger.info(String.valueOf(rumpunMK.getNamaRumpunMK()));
         if (result.hasErrors()) {
         	response.setStatus("error");
         	List<FieldError> fieldError = result.getFieldErrors();

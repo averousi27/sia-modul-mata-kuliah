@@ -159,7 +159,7 @@
 									}
 								}
 							],
-							validationRules: {idKurikulum:{required: false},namaRumpunMK:{required: true}},
+							validationRules: {idKurikulum:{required: false},namaRumpunMK:{required: true}, statusRumpunMK:{required:true}},
 							filters: [{id:'#filter', name:'statusRumpunMK'}],
 							callOnFillForm : function(response,options){ 
 								$("#idRumpunMK").val(response.data.idRumpunMK);

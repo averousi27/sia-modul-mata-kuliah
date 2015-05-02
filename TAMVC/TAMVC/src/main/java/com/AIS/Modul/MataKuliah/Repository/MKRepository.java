@@ -16,5 +16,7 @@ public interface MKRepository {
 	public UUID insert(MK mk);
 
 	public MK findById(UUID idMK);
+
+	public List<MK> findAll();
 	
 }

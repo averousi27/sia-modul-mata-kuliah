@@ -110,7 +110,7 @@
 										<c:forEach items="${satManList}" var="satman"> 
 											<option value="${satman.idSatMan}">${satman.nmSatMan }</option>
 										</c:forEach> 
-									<select>
+									</select>
 								</div>
 								<div class="form-group">
 									<label>Tahun Mulai Kurikulum</label>
@@ -126,7 +126,7 @@
 											<option value="">Pilih status keaktifan kurikulum</option>  
 											<option value="true">Aktif</option>  
 											<option value="false">Non-Aktif</option>  
-									<select> 
+									</select> 
 								</div>
 								<div class="form-group detailcontrol">
 								</div>

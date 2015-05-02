@@ -60,8 +60,8 @@
 									<div class="form-group">
 										<label>Status Aktif</label>
 										<select id="filter" name="filter">
-											<option value="">Aktif</option>
-											<option value="true">Semua</option>
+											<option value="false">Aktif</option>
+											<option value="">Semua</option>
 										</select>
 									</div>
 								</div>
@@ -97,13 +97,13 @@
 					<div class="container">
 						<div class="col-md-6" style="margin-bottom:10px;">
 							<h4 id="title">Prasyarat Mata Kuliah</h4>
-							<form:form role="form" action="login" commandName="rumpunMK" class="formdetail">
+							<form:form role="form" action="login" commandName="prasyaratMK" class="formdetail"> 
 								<div class="form-group">
 									<label>Kode dan Nama Mata Kuliah</label>
 									<select id="idMK" name="idMK" class="form-control">
 											<option value="">Pilih kode dan nama mata kuliah</option> 
 										<c:forEach items="${mkList}" var="mk"> 
-											<option value="${mk.idMK}}">${mk.kodeMK} - ${mk.nmMK}</option>
+											<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
 										</c:forEach> 
 									<select>
 								</div> 
@@ -111,11 +111,9 @@
 									<label>Kode dan Nama Mata Kuliah Prasyarat</label>
 									<select id="mkIdMK" name="mkIdMK" class="form-control">
 											<option value="">Pilih kode dan nama mata kuliah prasyarat</option> 
-											
 										<c:forEach items="${mkList}" var="mk"> 
-											<option value="${mk.idMK}}">${mk.kodeMK} - ${mk.nmMK}</option>
+											<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
 										</c:forEach>  
-									<form:hidden path="idPrasyaratMK" class="form-control" />
 									<select>
 								</div>
 								<div class="form-group detailcontrol">
@@ -129,13 +127,13 @@
 					$(document).ready(function(){
 						$('#masterpage').masterPage(
 						{
-							detailFocusId: '#idRumpunMK',
-							dataUrl: context_path+'matakuliah/rumpun/json',
-							detailUrl: context_path+'matakuliah/rumpun/edit',
-							addUrl: context_path+'matakuliah/rumpun/simpan',
-							editUrl: context_path+'matakuliah/rumpun/simpan',
-							deleteUrl: context_path+'matakuliah/rumpun/deletemany',
-							primaryKey: 'idRumpunMK',
+							detailFocusId: '#idPrasyaratMK',
+							dataUrl: context_path+'matakuliah/prasyarat/json',
+							detailUrl: context_path+'matakuliah/prasyarat/edit',
+							addUrl: context_path+'matakuliah/prasyarat/simpan',
+							editUrl: context_path+'matakuliah/prasyarat/simpan',
+							deleteUrl: context_path+'matakuliah/prasyarat/deletemany',
+							primaryKey: 'idPrasyaratMK',
 					        order: [[1,"asc"]],
 							editOnClick: false,
 							editOnClickRow: true,
@@ -145,17 +143,23 @@
 									"bVisible":    true,
 									bSortable: false,
 									mRender: function(data,type,full){
-										return '<div class="checkbox-data"><input type="checkbox" name="idRumpunMK[]" value="'+data+'"></div>';
+										return '<div class="checkbox-data"><input type="checkbox" name="idPrasyaratMK[]" value="'+data+'"></div>';
 									}
 								},
-								/* Nama rumpun mata kuliah */
+								/* kode mata kuliah */
 								{ "bVisible":    true }, 
-								/*status kurikulum*/
+								/* Nama mata kuliah */
+								{ "bVisible":    true }, 
+								/* kode mata kuliah */
+								{ "bVisible":    true }, 
+								/* nama mata kuliah */
+								{ "bVisible":    true },
+								/*status hapus*/
 								{ 
 									"bVisible":    false, 
 									mRender: function(data,type,full){
-										if(full[2] == 'true') return "Aktif";
-										else return "Non Aktif";
+										if(full[5]=='false') return "Aktif";
+										return "Terhapus";
 									}
 								},
 								/* Aksi */
@@ -164,15 +168,17 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[2]=='true') action += ' <button type="button" class="btn btn-danger deleterow">Non-Aktif</button>'
+										if(full[5]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
 										return action;
 									}
 								}
 							],
-							validationRules: {idKurikulum:{required: false},nmRumpunMK:{required: true}},
-							filters: [{id:'#filter', name:'aStatusRumpunMK'}],
+							validationRules: {idMK:{required: true}, mkIdMK:{required: true}},
+							filters: [{id:'#filter', name:'statusHapusPrasyarat'}],
 							callOnFillForm : function(response,options){ 
-								$("#idRumpunMK").val(response.data.idRumpunMK);
+								$("#idPrasyaratMK").val(response.data.idPrasyaratMK); 
+								$("#idMK").val(response.data.mk.idMK);
+								$("#mkIdMK").val(response.data.mk.idMK);
 							}
 						});
 					});

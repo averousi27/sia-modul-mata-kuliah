@@ -1,0 +1,19 @@
+package com.AIS.Modul.MataKuliah.Repository;
+
+import com.sia.main.domain.SatManMK;
+
+public class SatManMKRepositoryImpl implements SatManMKRepository {
+
+	@Override
+	public void update(SatManMK satManMK) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void insert(SatManMK satManMK) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

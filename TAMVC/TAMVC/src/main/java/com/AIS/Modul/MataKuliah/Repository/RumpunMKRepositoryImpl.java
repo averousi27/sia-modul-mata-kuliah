@@ -53,6 +53,8 @@ public class RumpunMKRepositoryImpl implements RumpunMKRepository{
 		Transaction tx = session.beginTransaction();
 		session.update(rumpunMK);
 		tx.commit();
+		session.flush();
+		session.close();
 	}
 
 	@Override
@@ -62,6 +64,8 @@ public class RumpunMKRepositoryImpl implements RumpunMKRepository{
 		Transaction tx = session.beginTransaction();
 		UUID insertId= (UUID)session.save(rumpunMK);
 		tx.commit();
+		session.flush();
+		session.close();
 		return insertId;
 	}
 
@@ -76,7 +80,7 @@ public class RumpunMKRepositoryImpl implements RumpunMKRepository{
 	@Override
 	public List<RumpunMK> findAll() {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createQuery("from RumpunMK").list();
+		return sessionFactory.getCurrentSession().createQuery("from RumpunMK where statusRumpunMK = true").list();
 	}
 	
 }

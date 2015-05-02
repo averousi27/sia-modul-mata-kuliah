@@ -20,7 +20,7 @@ public class SatManRepositoryImpl implements SatManRepository {
 	@Override
 	@Transactional
 	public List<SatMan> findAll() {
-		return sessionFactory.getCurrentSession().createQuery("from SatMan").list();
+		return sessionFactory.getCurrentSession().createQuery("from SatMan where isSatManHasKurikulum = true and aSatManAktif = true").list();
 	}
 
 	@Override

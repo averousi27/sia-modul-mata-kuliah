@@ -109,5 +109,10 @@ public class MKServiceImpl implements MKService{
 			return "Ok";
 		}
 	}
+	@Override
+	public List<MK> findAll() {
+		// TODO Auto-generated method stub
+		return mkRepo.findAll();
+	}
 
 }

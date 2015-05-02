@@ -23,12 +23,16 @@ import org.springframework.web.servlet.ModelAndView;
   
 
 
+
+
 import com.sia.main.domain.*;
 import com.AIS.Modul.MataKuliah.Service.AjaxResponse;
 import com.AIS.Modul.MataKuliah.Service.Datatable;
 import com.AIS.Modul.MataKuliah.Service.KurikulumService;
 import com.AIS.Modul.MataKuliah.Service.MKService;
 import com.AIS.Modul.MataKuliah.Service.RumpunMKService;
+import com.AIS.Modul.MataKuliah.Service.SatManMKService;
+import com.AIS.Modul.MataKuliah.Service.SatManService;
 
 @Controller
 @RequestMapping(value = "/matakuliah")
@@ -43,6 +47,9 @@ public class MKController {
 	@Autowired
 	private MKService mkServ;
 	
+	@Autowired
+	private SatManService satManServ;
+	
 	private static final Logger logger = LoggerFactory.getLogger(MKController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -50,9 +57,11 @@ public class MKController {
 		MK mk = new MK(); 
 		List<Kurikulum> kurikulumList = kurikulumServ.findAll();
 		List<RumpunMK> rumpunMKList = rumpunMKServ.findAll();
+		List<SatMan> satManList = satManServ.findAll();
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("kurikulumList", kurikulumList);
 		mav.addObject("rumpunMKList", rumpunMKList);
+		mav.addObject("satManList", satManList);
 		mav.addObject("mk", mk);
 		mav.setViewName("ViewMK"); 
 		return mav;
@@ -72,14 +81,22 @@ public class MKController {
 		return rumpunMKDatatable;
 	} 
 	@RequestMapping(value = "/simpan", method = RequestMethod.POST)
-    public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("MK") MK mk, 
-    		@RequestParam("idKurikulum") UUID idKurikulum, @RequestParam("idRumpunMK") UUID idRumpunMK,
-    		 BindingResult result, Map<String, Object> model) {
+    public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("MK") MK mk, @RequestParam("idKurikulum") UUID idKurikulum, 
+    		@RequestParam("idRumpunMK") UUID idRumpunMK, @RequestParam("idSatMan") UUID idSatMan, 
+    		BindingResult result, Map<String, Object> model) {
+		
 		AjaxResponse response = new AjaxResponse();    
-		Kurikulum kurikulumObj = kurikulumServ.findById(idKurikulum);
+//		if(idRumpunMK!=null){
+//			rumpunMKObj = rumpunMKServ.findById(idRumpunMK);
+//		} 
+//		else{
+//			rumpunMKObj = null;
+//		} 
 		RumpunMK rumpunMKObj = rumpunMKServ.findById(idRumpunMK);
+		Kurikulum kurikulumObj = kurikulumServ.findById(idKurikulum);
 		mk.setKurikulum(kurikulumObj);
 		mk.setRumpunMK(rumpunMKObj);
+		
         if (result.hasErrors()) {
         	response.setStatus("error");
         	List<FieldError> fieldError = result.getFieldErrors();

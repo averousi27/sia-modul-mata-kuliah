@@ -1,0 +1,58 @@
+package com.AIS.Modul.MataKuliah.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.AIS.Modul.MataKuliah.Repository.PrasyaratMKRepository;
+import com.sia.main.domain.PrasyaratMK;
+import com.sia.main.domain.RumpunMK;
+
+@Service
+public class PrasyaratMKServiceImpl implements PrasyaratMKService {
+
+	private String [] column = {"idPrasyaratMK","kodeMK", "namaMK", "kodeMK", "namaMK"};
+	private Boolean[] searchable = {false,true,false};
+	
+	@Autowired
+	private PrasyaratMKRepository prasyaratMKRepo;
+	
+	@Override
+	public Datatable getdatatable(String sEcho, int iDisplayLength,
+			int iDisplayStart, int iSortCol_0, String sSortDir_0,
+			String sSearch, String filter) {
+		DatatableExtractParams parameter = new DatatableExtractParams(sSearch, this.column, this.searchable, iSortCol_0, sSortDir_0);
+		Datatable rumpunMKDatatable= new Datatable();
+		rumpunMKDatatable.setsEcho(sEcho);
+		String dbFilter = "";
+		if(filter != null && !filter.equals("")) dbFilter+=" AND "+filter; 
+		List<PrasyaratMK> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
+		List<String[]> aData = new ArrayList<String[]>();
+		for (PrasyaratMK prasyaratMK : queryResult) {
+			String[] prasyaratMKString = new String[7];
+			prasyaratMKString[0] = prasyaratMK.getIdPrasyaratMK().toString();
+			prasyaratMKString[1] = String.valueOf(prasyaratMK.getChildMK().getKodeMK());
+			prasyaratMKString[2] = String.valueOf(prasyaratMK.getChildMK().getNamaMK());
+			prasyaratMKString[3] = String.valueOf(prasyaratMK.getParentMK().getKodeMK());
+			prasyaratMKString[4] = String.valueOf(prasyaratMK.getParentMK().getNamaMK());
+			prasyaratMKString[5] = String.valueOf(prasyaratMK.isStatusHapusPrasyarat());
+			prasyaratMKString[6] = String.valueOf(prasyaratMK.isStatusHapusPrasyarat());
+			aData.add(prasyaratMKString);
+		}
+		prasyaratMKDatatable.setAaData(aData);
+		prasyaratMKDatatable.setiTotalRecords(prasyaratMKRepo.count(""));
+		prasyaratMKDatatable.setiTotalDisplayRecords(prasyaratMKRepo.count("("+parameter.getWhere()+") AND "+filter));
+
+		return rumpunMKDatatable;
+		
+	}
+
+	private List<PrasyaratMK> get(String string, String order,
+			int iDisplayLength, int iDisplayStart) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}

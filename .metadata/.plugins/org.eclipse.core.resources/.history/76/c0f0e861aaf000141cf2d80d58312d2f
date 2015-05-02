@@ -1,0 +1,17 @@
+package com.AIS.Modul.MataKuliah.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class SatManMKServiceImpl implements SatManMKService {
+	
+	@Autowired
+	private MKService mkServ;
+	
+	@Autowired
+	private SatManService satManServ;
+	
+	@Autowired
+	private SatManMKRepository satManRepo;
+}

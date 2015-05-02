@@ -64,6 +64,15 @@
 											<option value="">Semua</option>
 										</select>
 									</div>
+									<div class="form-group">
+										<label>Tahun Kurikulum</label>
+										<select id="filterKurikulum" name="filterKurikulum" class="form-control">
+											<option value="">Semua</option> 
+											<c:forEach items="${kurikulumList}" var="kurikulum"> 
+												<option value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.namaKurikulum}</option>
+											</c:forEach> 
+										<select>
+									</div>
 								</div>
 								<div class="col-md-8 masteractions">
 									<div class="btn-action pull-right"> </div>
@@ -194,7 +203,7 @@
 								/* tahun kurikulum */
 								{ "bVisible":    true }, 
 								/* nama rumpun mk */
-								{ "bVisible":    true }, 
+								{ "bVisible":    true}, 
 								/* tingkat pembelajaran */
 								{ "bVisible":    true }, 
 								/* jumlah sks */
@@ -227,8 +236,9 @@
 									}
 								}
 							],
-							validationRules: {idMK:{required: false},kodeMK:{required: true}, nmMK:{required: true}, kurikulum:{required: true},
-								rumpunMK: {required:true}, tingkatPemb: {required:true}, jumlahSKS: {required: true, digits: true}, sifatMK: {required:true}},
+							validationRules: {idMK:{required: false},kodeMK:{required: true}, idKurikulum:{required:true},
+								namaMK:{required: true},tingkatPemb: {required:true, digits:true}, 
+								jumlahSKS: {required: true, digits: true}, sifatMK: {required:true}, rumpunMK:{required:true}},
 							filters: [{id:'#filter', name:'statusMK'}],
 							callOnFillForm : function(response,options){ 
 								$("#idMK").val(response.data.idMK);
