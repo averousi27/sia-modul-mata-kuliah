@@ -66,10 +66,10 @@
 									</div>
 									<div class="form-group">
 										<label>Tahun Kurikulum</label>
-										<select id="filterKurikulum" name="filterKurikulum" class="form-control">
+										<select id="filterKurikulum" name="filterKurikulum">
 											<option value="">Semua</option> 
 											<c:forEach items="${kurikulumList}" var="kurikulum"> 
-												<option value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.namaKurikulum}</option>
+												<option value="${kurikulum.thnMulai}">${kurikulum.thnMulai}</option>
 											</c:forEach> 
 										<select>
 									</div>

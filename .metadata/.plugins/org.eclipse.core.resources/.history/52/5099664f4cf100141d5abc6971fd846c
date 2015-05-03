@@ -1,0 +1,20 @@
+package com.AIS.Modul.MataKuliah.Controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+@Controller
+@RequestMapping("/matakuliah/satuanmanajemen")
+public class SatManMKController {
+	
+	@Autowired
+	private MKService mkServ;
+	
+	@Autowired
+	private EkuivalensiMKService ekuivalensiMKServ;
+	
+	@Autowired
+	private KurikulumService kurikulumServ;
+}

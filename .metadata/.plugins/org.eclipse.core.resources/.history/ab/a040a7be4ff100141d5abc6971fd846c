@@ -1,0 +1,73 @@
+package com.AIS.Modul.MataKuliah.Controller;
+
+import java.util.List;
+import java.util.Locale;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.AIS.Modul.MataKuliah.Service.Datatable;
+import com.AIS.Modul.MataKuliah.Service.KurikulumService;
+import com.AIS.Modul.MataKuliah.Service.MKService;
+import com.AIS.Modul.MataKuliah.Service.SatManMKService; 
+import com.AIS.Modul.MataKuliah.Service.SatManService;
+import com.sia.main.domain.Kurikulum;
+import com.sia.main.domain.MK;
+import com.sia.main.domain.SatMan;
+import com.sia.main.domain.SatManMK;
+
+@Controller
+@RequestMapping("/matakuliah/satuanmanajemen")
+public class SatManMKController {
+	
+	@Autowired
+	private MKService mkServ;
+	
+	@Autowired
+	private KurikulumService kurikulumServ;
+	
+	@Autowired
+	private SatManService satManServ;
+	
+	@Autowired
+	private SatManMKService satManMKServ;
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView datatable(Locale locale, Model model) {
+		SatManMK satManMK = new SatManMK();  
+		List<MK> mkList = mkServ.findAll();
+		List<Kurikulum> kurikulumList = kurikulumServ.findAll();
+		List<SatMan> satManList = satManServ.findAll();
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("mkList", mkList);
+		mav.addObject("kurikulumList", kurikulumList);
+		mav.addObject("satManList", satManList);
+		mav.addObject("satManMK", satManMK);
+		mav.setViewName("ViewSatManMK"); 
+
+		return mav;
+	}
+	@RequestMapping(value = "/json", method = RequestMethod.POST)
+	public @ResponseBody Datatable json(
+			@RequestParam("sEcho") String sEcho, 
+			@RequestParam("iDisplayLength") int iDisplayLength,
+            @RequestParam("iSortCol_0") int iSortCol_0,
+            @RequestParam("sSortDir_0") String sSortDir_0,
+            @RequestParam("sSearch") String sSearch,
+			@RequestParam("iDisplayStart") int iDisplayStart,
+			@RequestParam("statusHapusSatManMK") String statusHapusEkuivalensi,
+			@RequestParam("filterKurikulum") String statusHapusEkuivalensi,
+			@RequestParam("statusHapusEkuivalensi") String statusHapusEkuivalensi
+            ) 
+	{
+		String filter = "CAST(ekMK.statusHapusEkuivalensi as string) LIKE '%"+statusHapusEkuivalensi+"%'";
+		Datatable prasyaratMKDatatable = ekuivalensiMKServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
+		return prasyaratMKDatatable;
+	}
+}
