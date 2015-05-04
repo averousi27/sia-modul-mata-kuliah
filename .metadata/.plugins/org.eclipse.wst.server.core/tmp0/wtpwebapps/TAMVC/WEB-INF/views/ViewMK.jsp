@@ -63,19 +63,12 @@
 											<option value="true">Aktif</option>
 											<option value="">Semua</option>
 										</select>
-									</div>
-									<div class="form-group">
-										<label>Tahun Kurikulum</label>
-										<select id="filterKurikulum" name="filterKurikulum">
-											<option value="">Semua</option> 
-											<c:forEach items="${kurikulumList}" var="kurikulum"> 
-												<option value="${kurikulum.thnMulai}">${kurikulum.thnMulai}</option>
-											</c:forEach> 
-										<select>
-									</div>
+									</div> 
 								</div>
 								<div class="col-md-8 masteractions">
-									<div class="btn-action pull-right"> </div>
+									<div class="btn-action pull-right">  
+									</div>
+									
 								</div> 
 							</div>
 							<form class="tableform">
@@ -127,7 +120,7 @@
 										<c:forEach items="${kurikulumList}" var="kurikulum"> 
 											<option value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.namaKurikulum}</option>
 										</c:forEach> 
-									<select>
+									</select>
 								</div>
 								<div class="form-group">
 									<label>Nama Rumpun Mata Kuliah</label>
@@ -136,7 +129,7 @@
 										<c:forEach items="${rumpunMKList}" var="rumpunMK"> 
 											<option value="${rumpunMK.idRumpunMK}">${rumpunMK.namaRumpunMK }</option>
 										</c:forEach> 
-									<select>
+									</select>
 								</div>
 								<div class="form-group">
 									<label>Tingkat Pembelajaran</label>
@@ -152,7 +145,7 @@
 											<option value="">Pilih sifat untuk mata kuliah</option>
 											<option value="true">Wajib</option>
 											<option value="false">Pilihan</option>
-									<select>
+									</select>
 								</div>
 								<div class="form-group">
 									<label>Deskripsi Mata Kuliah</label>
@@ -164,7 +157,7 @@
 											<option value="">Pilih status keaktifan mata kuliah</option>
 											<option value="true">Aktif</option>
 											<option value="false">Non-aktif</option>
-									<select>
+									</select>
 								</div>
 								<div class="form-group detailcontrol">
 								</div>
@@ -203,7 +196,7 @@
 								/* tahun kurikulum */
 								{ "bVisible":    true }, 
 								/* nama rumpun mk */
-								{ "bVisible":    true}, 
+								{ "bVisible":    true }	, 
 								/* tingkat pembelajaran */
 								{ "bVisible":    true }, 
 								/* jumlah sks */

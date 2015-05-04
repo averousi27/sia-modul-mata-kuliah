@@ -19,12 +19,12 @@ public interface SatManMKService {
 			int iDisplayStart, int iSortCol_0, String sSortDir_0,
 			String sSearch, String filter);
 
-	List<SatManMK> get();
+	public List<SatManMK> get();
 
-	List<SatManMK> get(String where);
+	public List<SatManMK> get(String where);
 
-	List<SatManMK> get(String where, String order);
+	public List<SatManMK> get(String where, String order);
 
-	List<SatManMK> get(String where, String order, int limit, int offset);
+	public List<SatManMK> get(String where, String order, int limit, int offset);
 
 }

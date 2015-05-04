@@ -39,7 +39,10 @@ public class MKServiceImpl implements MKService{
 				mkString[1] = String.valueOf(mk.getKodeMK());
 				mkString[2] = String.valueOf(mk.getNamaMK());
 				mkString[3] = String.valueOf(mk.getKurikulum().getThnMulai());
-				mkString[4] = String.valueOf(mk.getRumpunMK().getNamaRumpunMK());
+				if(mk.getRumpunMK()!=null){
+
+					mkString[4] = String.valueOf(mk.getRumpunMK().getNamaRumpunMK());
+				}
 				mkString[5] = String.valueOf(mk.getTingkatPemb());
 				mkString[6] = String.valueOf(mk.getJumlahSKS());
 				mkString[7] = String.valueOf(mk.getSifatMK());
@@ -47,7 +50,7 @@ public class MKServiceImpl implements MKService{
 				mkString[9] = String.valueOf(mk.getStatusMK());
 				mkString[10] = String.valueOf(mk.getStatusMK());
 				aData.add(mkString);
-			}
+			}                                                                        
 			mkDatatable.setAaData(aData);
 			mkDatatable.setiTotalRecords(mkRepo.count(""));
 			mkDatatable.setiTotalDisplayRecords(mkRepo.count("("+parameter.getWhere()+") AND "+filter));

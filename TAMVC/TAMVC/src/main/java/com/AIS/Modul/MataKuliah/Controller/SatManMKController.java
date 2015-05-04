@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,6 +49,8 @@ public class SatManMKController {
 	@Autowired
 	private SatManMKService satManMKServ;
 	
+	private static final Logger logger = LoggerFactory.getLogger(SatManMKController.class);
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView datatable(Locale locale, Model model) {
 		SatManMK satManMK = new SatManMK();  
@@ -70,14 +74,9 @@ public class SatManMKController {
             @RequestParam("sSortDir_0") String sSortDir_0,
             @RequestParam("sSearch") String sSearch,
 			@RequestParam("iDisplayStart") int iDisplayStart,
-			@RequestParam("statusHapusSatManMK") String statusHapusSatManMK,
-			@RequestParam("filterKurikulum") String thnMulai,
-			@RequestParam("filterSatMan") String nmSatMan
-            ) 
+			@RequestParam("statusHapusSatManMK") String statusHapusSatManMK) 
 	{
-		String filter = "CAST(sMMK.statusHapusSatManMK as string) LIKE '%"+statusHapusSatManMK+"%' "
-				+ "AND CAST (kur.thnMulai as string) LIKE '%"+thnMulai+"%' "
-				+ "AND CAST(satman.nmSatMan as string) LIKE '%"+nmSatMan+"%'";
+		String filter = "CAST(sMMK.statusHapusSatManMK as string) LIKE '%"+statusHapusSatManMK+"%' ";
 		Datatable satManMKDatatable = satManMKServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
 		
 		return satManMKDatatable;

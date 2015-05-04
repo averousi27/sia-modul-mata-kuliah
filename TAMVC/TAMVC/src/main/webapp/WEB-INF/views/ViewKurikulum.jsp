@@ -65,8 +65,15 @@
 										</select>
 									</div>
 								</div>
-								<div class="col-md-8 masteractions">
-									<div class="btn-action pull-right"> </div>
+								<div class="col-md-8 masteractions"> 
+									<div class="btn-action pull-right"> <button type="button" class="btn btn-primary btn-block">
+												Tambah Capaian Pembelajaran
+										</button>
+										<button type="button" class="btn btn-primary btn-block">
+											<a href="matakuliah/">
+												Tambah Mata Kuliah
+											</a>
+										</button></div>
 								</div> 
 							</div>
 							<form class="tableform">

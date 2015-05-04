@@ -26,9 +26,8 @@ public class SatManMKServiceImpl implements SatManMKService {
 	@Autowired
 	private SatManMKRepository satManMKRepo;
 
-	private String [] column = {"sMMK.idSatManMK", "mk.kodeMK", "mk.namMK", "kur.thnMulai", "rmk.namaRumpunMK",
-			"mk.tingkatPemb", "mk.jumlahSKS", "mk.sifatMK", "mk.deskripsiMK", "satman.nmSatMan", "sMMK.statusHapusSatManMK"};
-	private Boolean[] searchable = {false,true,true,true,true,true,true,true,true,true,false};
+	private String [] column = {"sMMK.idSatManMK", "mk.kodeMK", "mk.namaMK", "satman.nmSatMan", "sMMK.statusHapusSatManMK"};
+	private Boolean[] searchable = {false,true,true,true,false};
 	
 	@Override
 	public String save(SatManMK satManMK) {
@@ -79,20 +78,13 @@ public class SatManMKServiceImpl implements SatManMKService {
 		List<SatManMK> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
 		List<String[]> aData = new ArrayList<String[]>();
 		for (SatManMK satManMK : queryResult) {
-			String[] satManMKString = new String[12];
+			String[] satManMKString = new String[6]; 
 			satManMKString[0] = satManMK.getIdSatManMK().toString();
 			satManMKString[1] = String.valueOf(satManMK.getMk().getKodeMK());
-			satManMKString[2] = String.valueOf(satManMK.getMk().getNamaMK());
-			satManMKString[3] = String.valueOf(satManMK.getMk().getKurikulum().getThnMulai());
-			satManMKString[4] = String.valueOf(satManMK.getMk().getRumpunMK().getNamaRumpunMK());
-			satManMKString[5] = String.valueOf(satManMK.getMk().getTingkatPemb());
-			satManMKString[6] = String.valueOf(satManMK.getMk().getJumlahSKS());
-			satManMKString[7] = String.valueOf(satManMK.getMk().getSifatMK());
-			satManMKString[8] = String.valueOf(satManMK.getMk().getDeskripsiMK());
-			satManMKString[9] = String.valueOf(satManMK.getSatMan().getNmSatMan());
-			satManMKString[10] = String.valueOf(satManMK.isStatusHapusSatManMK());
-			satManMKString[11] = String.valueOf(satManMK.isStatusHapusSatManMK());
-			 
+			satManMKString[2] = String.valueOf(satManMK.getMk().getNamaMK()); 
+			satManMKString[3] = String.valueOf(satManMK.getSatMan().getNmSatMan());
+			satManMKString[4] = String.valueOf(satManMK.isStatusHapusSatManMK());
+			satManMKString[5] = String.valueOf(satManMK.isStatusHapusSatManMK()); 
 			aData.add(satManMKString);
 		}
 		satManMKDatatable.setAaData(aData);

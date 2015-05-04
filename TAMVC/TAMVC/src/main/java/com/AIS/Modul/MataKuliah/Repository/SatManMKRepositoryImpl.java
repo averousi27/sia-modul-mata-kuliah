@@ -11,7 +11,6 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.sia.main.domain.EkuivalensiMK;
 import com.sia.main.domain.SatManMK;
 
 @Repository
@@ -48,9 +47,7 @@ public class SatManMKRepositoryImpl implements SatManMKRepository {
 	public SatManMK findById(UUID idSatManMK) {
 		// TODO Auto-generated method stub
 		List<SatManMK> queryResult = sessionFactory.getCurrentSession().createQuery(
-				"select skMK from SatManMK sMMK join sMMK.mk mk "
-		        + "join mk.kurikulum kur "
-		        + "join mk.rumpunMK rmk "
+				"select sMMK from SatManMK sMMK join sMMK.mk mk "  
 		        + "join sMMK.satMan satman where sMMK.idSatManMK='"+idSatManMK.toString()+"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);
@@ -62,9 +59,7 @@ public class SatManMKRepositoryImpl implements SatManMKRepository {
 		String dbWhere ="";
 		if(where != "") dbWhere = " WHERE "+where;
 		Query query = sessionFactory.getCurrentSession().createQuery(
-		        "select count(*) from SatManMK sMMK join sMMK.mk mk "
-		        + "join mk.kurikulum kur "
-		        + "join mk.rumpunMK rmk "
+		        "select count(sMMK) from SatManMK sMMK join sMMK.mk mk "  
 		        + "join sMMK.satMan satman "+dbWhere);
 		Long count = (Long)query.uniqueResult();
 		return count;
@@ -80,9 +75,7 @@ public class SatManMKRepositoryImpl implements SatManMKRepository {
 		if(order != "") dbOrder = " ORDER BY "+order;
 		 
 		Query query = sessionFactory.getCurrentSession().createQuery(
-				"select skMK from SatManMK sMMK join sMMK.mk mk "
-				        + "join mk.kurikulum kur "
-				        + "join mk.rumpunMK rmk "
+				"select sMMK from SatManMK sMMK join sMMK.mk mk "  
 				        + "join sMMK.satMan satman" +dbWhere+dbOrder);
 		
 		if(limit != -1 && limit>0) {

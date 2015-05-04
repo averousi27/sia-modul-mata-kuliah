@@ -22,7 +22,7 @@
 		<script>
 			var context_path = "${pageContext.servletContext.contextPath}/";
 		</script>
-		<title>Kelola Penyetaraan Mata Kuliah</title>
+		<title>Kelola Satuan Manajemen Mata Kuliah</title>
 	</head>
 	<body style="background:url(${pageContext.servletContext.contextPath}/resources/img/wild_flowers.png) repeat 0 0">
 		<div class="container">
@@ -63,27 +63,7 @@
 											<option value="false">Aktif</option>
 											<option value="">Semua</option>
 										</select>
-									</div>
-									<div class="form-group">
-										<label>Satuan Manajemen</label>
-										<select id="filterSatMan" name="filterSatMan">
-											<option value="">Semua</option> 
-											<c:forEach items="${satManList}" var="satman"> 
-<%-- 												<option value="${satman.idSatMan}">${satman.nmSatMan }</option> --%>
-												<option value="${satman.nmSatMan }">${satman.nmSatMan }</option>
-											</c:forEach> 
-										</select>
-									</div>
-									<div class="form-group">
-										<label>Tahun Kurikulum</label>
-										<select id="filterKurikulum" name="filterKurikulum">
-											<option value="">Semua</option> 
-											<c:forEach items="${kurikulumList}" var="kurikulum"> 
-<%-- 												<option value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.namaKurikulum}</option> --%>
-												<option value="${kurikulum.thnMulai}">${kurikulum.thnMulai}</option> 
-											</c:forEach> 
-										</select>
-									</div>
+									</div>  
 								</div>
 								<div class="col-md-8 masteractions">
 									<div class="btn-action pull-right"> </div>
@@ -100,12 +80,6 @@
 											</td> 
 											<td>Kode MK</td>  
 											<td>Nama MK</td>  
-											<td>Tahun Kurikulum</td>
-											<td>Nama Rumpun MK</td> 
-											<td>Tingkat Pembelajaran</td> 
-											<td>Jumlah SKS</td>   
-											<td>Sifat MK</td>
-											<td>Deskripsi MK</td>  
 											<td>Nama Satuan Manajemen</td> 
 											<td>Status hapus</td>
 											<td>Aksi</td>
@@ -175,25 +149,13 @@
 								{ "bVisible":    true }, 
 								/* Nama mata kuliah */
 								{ "bVisible":    true }, 
-								/* tahun kurikulum */
-								{ "bVisible":    false }, 
-								/* nama rumpun mata kuliah */
-								{ "bVisible":    false },
-								/* tingkat pembelajaran */
-								{ "bVisible":    false },
-								/* jumlah sks */
-								{ "bVisible":    false },
-								/* sifat MK */
-								{ "bVisible":    false },
-								/* deskripsi MK */
-								{ "bVisible":    false },
 								/* nama satuan manajamen */
 								{ "bVisible":    true },
 								/*status hapus*/
 								{ 
 									"bVisible":    false, 
 									mRender: function(data,type,full){
-										if(full[9]=='false') return "Aktif";
+										if(full[4]=='false') return "Aktif";
 										return "Terhapus";
 									}
 								},
@@ -203,17 +165,17 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[9]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
+										if(full[4]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
 										return action;
 									}
 								}
 							],
 							validationRules: {idMK:{required: true}, idSatMan:{required: true}},
-							filters: [{id:'#filter', name:'statusHapusEkuivalensi'}, {id:'#filterKurikulum', name:'thnMulai'}, 
-							          {id:'#filterSatMan', name:'nmSatMan'}],
+							filters: [{id:'#filter', name:'statusHapusSatManMK'}],
 							callOnFillForm : function(response,options){ 
+								$("#idSatManMK").val(response.data.idMK);
 								$("#idMK").val(response.data.mk.idMK);
-								$("#idSatMan").val(response.data.mk.idSatMan);
+								$("#idSatMan").val(response.data.satMan.idSatMan);
 							}
 						});
 					});

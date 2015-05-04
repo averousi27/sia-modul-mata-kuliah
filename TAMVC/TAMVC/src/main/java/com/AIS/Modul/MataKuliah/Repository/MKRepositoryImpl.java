@@ -26,11 +26,12 @@ public class MKRepositoryImpl implements MKRepository {
 		String dbWhere ="";
 		if(where != "") dbWhere = " WHERE "+where;
 		Query query = sessionFactory.getCurrentSession().createQuery(
-		        "select count(*) from MK mk join mk.kurikulum kur join mk.rumpunMK rumpunMK"+dbWhere);
+		        "select count(*) from MK mk inner join mk.kurikulum kur left join mk.rumpunMK rumpunMK"+dbWhere);
 		Long count = (Long)query.uniqueResult();
 		return count;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MK> get(String where, String order, int limit, int offset) {
 		String dbWhere ="";
@@ -38,8 +39,7 @@ public class MKRepositoryImpl implements MKRepository {
 		if(where != "") dbWhere = " WHERE "+where;
 		if(order != "") dbOrder = " ORDER BY "+order;
 		 
-		Query query = sessionFactory.getCurrentSession().createQuery("select mk from MK mk join mk.kurikulum kur join mk.rumpunMK rumpunMK "+dbWhere+dbOrder);
-		
+		Query query = sessionFactory.getCurrentSession().createQuery("select mk from MK mk inner join mk.kurikulum kur left join mk.rumpunMK rumpunMK "+dbWhere+dbOrder); 
 		if(limit != -1 && limit>0) {
 			query.setFirstResult(offset);
 			if(offset < 0) offset = 0;
@@ -72,18 +72,20 @@ public class MKRepositoryImpl implements MKRepository {
 		return insertId;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public MK findById(UUID idMK) {
 		// TODO Auto-generated method stub
-		List<MK> queryResult = sessionFactory.getCurrentSession().createQuery("select mk from MK mk join mk.kurikulum kur join mk.rumpunMK rumpunMK WHERE mk.idMK='"+idMK.toString()+"'").list();
+		List<MK> queryResult = sessionFactory.getCurrentSession().createQuery("select mk from MK mk inner join mk.kurikulum kur left join mk.rumpunMK rumpunMK  WHERE mk.idMK='"+idMK.toString()+"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MK> findAll() {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createQuery("from MK where statusMK = true").list();
+		return sessionFactory.getCurrentSession().createQuery("select mk from MK mk inner join mk.kurikulum kur left join mk.rumpunMK rumpunMK  where mk.statusMK = true").list();
 		
 	}
 }

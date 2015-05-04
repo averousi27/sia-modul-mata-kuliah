@@ -37,6 +37,7 @@
 							<li class="dropdown-submenu">
 								<a href="#">Kelola Mata Kuliah</a>
 								<ul class="dropdown-menu">
+									<li><a href="matakuliah/">Kelola Master Mata Kuliah</a></li>
 									<li><a href="matakuliah/rumpun">Kelola Rumpun Mata Kuliah</a></li>
 									<li><a href="matakuliah/satuanmanajemen">Kelola Mata Kuliah Satuan Manajemen</a></li>
 									<li><a href="matakuliah/prasyarat">Kelola Mata Kuliah Prasyarat</a></li>
