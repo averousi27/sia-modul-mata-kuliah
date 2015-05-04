@@ -20,9 +20,9 @@
 		</script>
 		<![endif]-->
 		<script>
-			var context_path = "${pageContext.servletContext.contextPath}/";
+			var context_path = "${pageContext.servletContext.contextPath}";
 		</script>
-		<title>Kelola Capaian Belajar Kurikulum</title>
+		<title>Kelola Capaian Pembelajaran Satuan Manajemen</title>
 	</head>
 	<body style="background:url(${pageContext.servletContext.contextPath}/resources/img/wild_flowers.png) repeat 0 0">
 		<div class="container">
@@ -54,17 +54,28 @@
 								<li class="active">Kelola Tahun Ajaran</li>
 							</ol>
 							
-							<p>Tabel menampilkan satuan manajemen yang memiliki mata kuliah</p>
+							<p>Tabel menampilkan capaian pembelajaran satuan manajemen</p>
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>Status Aktif</label>
-										<select id="filter" name="filter">
-											<option value="false">Aktif</option>
-											<option value="">Semua</option>
+										<label>Tahun Kurikulum</label>
+										<select id="filter" name="filter"> 
+											<option>---Pilih tahun kurikulum---</option>
+											<c:forEach items="${kurikulums}" var="kurikulum"> 
+							        			<option selected="selected" value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.nmKurikulum }</option>
+							        		</c:forEach>
 										</select>
-									</div>  
-								</div>
+									</div>
+									<div class="form-group">
+										<label>Satuan Manajemen</label>
+										<select id="filter1" name="filter1">
+											<option>---Pilih satuan manajemen---</option>
+											<c:forEach items="${satmans}" var="satman"> 
+							        			<option selected="selected" value="${satman.idSatMan}">${satman.nmSatMan}</option>
+							        		</c:forEach>
+										</select>
+									</div>
+								</div> 
 								<div class="col-md-8 masteractions">
 									<div class="btn-action pull-right"> </div>
 								</div> 
@@ -78,10 +89,10 @@
 													<input class="checkbox-all" type="checkbox" id="flat-checkbox-1">
 												</div>
 											</td> 
-											<td>Kode MK</td>  
-											<td>Nama MK</td>  
-											<td>Nama Satuan Manajemen</td> 
-											<td>Status hapus</td>
+											<td>Tahun Kurikulum</td>	
+											<td>Nama Satuan Manajemen</td>
+											<td>Nama Capaian Pembelajaran</td>
+											<td>Deskripsi Capaian Pembelajaran</td> 
 											<td>Aksi</td>
 										</tr>
 									</thead>
@@ -95,26 +106,25 @@
 				<div class="row" id="master-detail" style="display:none;">
 					<div class="container">
 						<div class="col-md-6" style="margin-bottom:10px;">
-							<h4 id="title">Assign Mata Kuliah untuk Satuan Manajemen</h4>
-							<form:form role="form" action="login" commandName="satManMK" class="formdetail"> 
+							<h4 id="title">Capaian Pembelajaran Satuan Manajemen</h4>
+							<form:form role="form" action="login" commandName="satuanmanajemen" class="formdetail">
 								<div class="form-group">
-									<label>Kode dan Nama Mata Kuliah</label>
-									<select id="idMK" name="idMK" class="form-control">
-											<option value="">Pilih kode dan nama mata kuliah</option> 
-										<c:forEach items="${mkList}" var="mk"> 
-											<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
-										</c:forEach> 
-									</select>
-								</div> 
+									<label>Tahun Kurikulum</label>
+									<form:input path="idKurikulum" name="idKurikulum" class="form-control" value="${kurikulum.thnAwal} - ${kurikulum.nmKurikulum}" disabled="true"/> 
+								</div>
 								<div class="form-group">
 									<label>Nama Satuan Manajemen</label>
-									<select id="idSatMan" name="idSatMan" class="form-control"> 
-											<option value="">Pilih nama satuan manajemen</option> 
-											<c:forEach items="${satManList}" var="satman"> 
-												<option value="${satman.idSatMan}">${satman.nmSatMan }</option>
-											</c:forEach> 
-									</select>
-								</div>
+									<form:input path="idSatMan" name="idSatMan" class="form-control" value="${satman.nmSatMan}" disabled="true"/> 
+								</div> 
+								<div class="form-group">
+									<label>Nama Capaian Pembelajaran</label>
+									<form:input path="nmCapPemb" class="form-control" placeholder="Berisi nama capaian pembelajaran" required="true" />
+									<form:hidden path="idCapPemb" class="form-control" />
+								</div> 
+								<div class="form-group">
+									<label>Deskripsi Capaian Pembelajaran</label>
+									<form:input path="deskripsiCapPemb" class="form-control" placeholder="Berisi deskripsi capaian pembelajaran" required="false"/>
+								</div> 
 								<div class="form-group detailcontrol">
 								</div>
 					        </form:form>
@@ -126,14 +136,14 @@
 					$(document).ready(function(){
 						$('#masterpage').masterPage(
 						{
-							detailFocusId: '#idSatManMK',
-							dataUrl: context_path+'matakuliah/satuanmanajemen/json',
-							detailUrl: context_path+'matakuliah/satuanmanajemen/edit',
-							addUrl: context_path+'matakuliah/satuanmanajemen/simpan',
-							editUrl: context_path+'matakuliah/satuanmanajemen/simpan',
-							deleteUrl: context_path+'matakuliah/satuanmanajemen/deletemany',
-							primaryKey: 'idSatManMK',
-					        order: [[1,"asc"]],
+							detailFocusId: '#idCapPemb',
+							dataUrl: context_path+'/capaianbelajar/satman/json',
+							detailUrl: context_path+'/capaianbelajar/satman/edit',
+							addUrl: context_path+'/capaianbelajar/satman/simpan',
+							editUrl: context_path+'/capaianbelajar/satman/simpan',
+							deleteUrl: context_path+'/capaianbelajar/satman/deletemany',
+							primaryKey: 'idCapPemb',
+					        order: [[3,"desc"]],
 							editOnClick: false,
 							editOnClickRow: true,
 							cols: [
@@ -142,21 +152,23 @@
 									"bVisible":    true,
 									bSortable: false,
 									mRender: function(data,type,full){
-										return '<div class="checkbox-data"><input type="checkbox" name="idSatManMK[]" value="'+data+'"></div>';
+										return '<div class="checkbox-data"><input type="checkbox" name="idKurikulum[]" value="'+data+'"></div>';
 									}
 								},
-								/* kode mata kuliah */
-								{ "bVisible":    true }, 
-								/* Nama mata kuliah */
-								{ "bVisible":    true }, 
-								/* nama satuan manajamen */
+								/* Nama kurikulum */
 								{ "bVisible":    true },
-								/*status hapus*/
+								/*Satuan manajemen*/
+								{ "bVisible":    true },
+								/* tahun mulai kurikulum */
+								{ "bVisible":    true },
+								/* tahun akhir kurikulum */
+								{ "bVisible":    true },
+								/*status kurikulum*/
 								{ 
 									"bVisible":    false, 
 									mRender: function(data,type,full){
-										if(full[4]=='false') return "Aktif";
-										return "Terhapus";
+										if(full[4] == 'true') return "Terhapus";
+										else return "Aktif";
 									}
 								},
 								/* Aksi */
@@ -165,17 +177,19 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[4]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
+										if(full[4]!='true') action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>'
 										return action;
 									}
 								}
 							],
-							validationRules: {idMK:{required: true}, idSatMan:{required: true}},
-							filters: [{id:'#filter', name:'statusHapusSatManMK'}],
-							callOnFillForm : function(response,options){ 
-								$("#idSatManMK").val(response.data.idMK);
-								$("#idMK").val(response.data.mk.idMK);
+							validationRules: {idKurikulum:{required: false},nmKurikulum:{required: false}, SatMan:{required: true},thnMulai:{required: true, digits:true},thnAkhir:{required: true, digits: true}},
+							filters: [{id:'#filter', name:'aStatusKurikulum'}]
+							callOnFillForm : function(response,options){
+								/* console.log(response.data);
+								console.log(response.data.satMan);
+								console.log(response.data.satMan.idSatMan); */
 								$("#idSatMan").val(response.data.satMan.idSatMan);
+								$("#idKurikulum").val(response.data.kurikulum.idKurikulum);
 							}
 						});
 					});
