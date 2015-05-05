@@ -29,7 +29,7 @@ import com.AIS.Modul.MataKuliah.Service.KurikulumService;
 import com.AIS.Modul.MataKuliah.Service.SatManService;
 
 @Controller
-@RequestMapping(value="/capaianbelajar")
+@RequestMapping(value="/capaianbelajar/satuanmanajemen")
 public class CapPembController {
 		
 	@Autowired
@@ -43,14 +43,30 @@ public class CapPembController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CapPembController.class);
 	
-	@RequestMapping(value="/satman", method=RequestMethod.GET)
-	public ModelAndView showCapPembSatMan(){
+	/*@RequestMapping(value="/", method=RequestMethod.GET)
+	public ModelAndView showCapPembSatMan(@RequestParam ("idSatMan") UUID idSatMan) {
 		ModelAndView mav = new ModelAndView(); 
 		List<Kurikulum> kurikulumList = kurikulumServ.findAll();
 		List<SatMan> satManList	= satManServ.findAll();
+		UUID idSatManNew = satManServ.findById(idSatMan).getIdSatMan();
+		List<CapPemb> capPembList = capPembServ.findBySatMan(idSatManNew);
 		mav.addObject("kurikulums", kurikulumList);
 		mav.addObject("satmans", satManList);
-		mav.setViewName("CapPembSatMan");
+		mav.addObject("capPembList", capPembList);
+		mav.setViewName("ViewCapaianSatMan");
+		return mav;
+	}*/
+	
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public ModelAndView showCapPembSatMan() {
+		ModelAndView mav = new ModelAndView(); 
+		List<Kurikulum> kurikulumList = kurikulumServ.findAll();
+		List<SatMan> satManList	= satManServ.findAll(); 
+		CapPemb capPemb = new CapPemb();
+		mav.addObject("kurikulumList", kurikulumList);
+		mav.addObject("satManList", satManList);
+		mav.addObject("capPemb", capPemb);
+		mav.setViewName("ViewCapaianSatMan");
 		return mav;
 	}
 	
@@ -62,19 +78,22 @@ public class CapPembController {
             @RequestParam("sSortDir_0") String sSortDir_0,
             @RequestParam("sSearch") String sSearch,
 			@RequestParam("iDisplayStart") int iDisplayStart,
-			@RequestParam("aStatusKurikulum") String aStatusKurikulum
+			@RequestParam("statusHapusCapPemb") String statusHapusCapPemb
             ) {
-		String filter = "CAST( k.aStatusKurikulum as string) LIKE '%"+aStatusKurikulum+"%'";
-		Datatable kurikulumDatatable = kurikulumServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
-		return kurikulumDatatable;
+		String filter = "CAST( cp.statusHapusCapPemb as string) LIKE '%"+statusHapusCapPemb+"%'";
+		Datatable capPembDatatable = capPembServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
+		return capPembDatatable;
 	}	
+	
 	@RequestMapping(value = "/simpan", method = RequestMethod.POST)
-    public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("kurikulum") Kurikulum kurikulum, 
-    		@RequestParam ("idSatMan") UUID idSatMan, BindingResult result, Map<String, Object> model) {
+    public @ResponseBody AjaxResponse simpan(@Valid @ModelAttribute("capPemb") CapPemb capPemb, 
+    		@RequestParam ("idKurikulum") UUID idKurikulum, @RequestParam ("idSatMan") UUID idSatMan, 
+    		BindingResult result, Map<String, Object> model) {
 		AjaxResponse response = new AjaxResponse();
-		SatMan satManObj = satManServ.findById(idSatMan);
-		logger.info(String.valueOf(kurikulum.getThnMulai()));
-		kurikulum.setSatMan(satManObj);
+		SatMan satManObj = satManServ.findById(idSatMan); 
+		Kurikulum kur = kurikulumServ.findById(idKurikulum);
+		capPemb.setSatMan(satManObj);
+		capPemb.setKurikulum(kur);
         if (result.hasErrors()) {
         	response.setStatus("error");
         	List<FieldError> fieldError = result.getFieldErrors();
@@ -90,30 +109,30 @@ public class CapPembController {
         	response.setData(fieldError);
             return response;
         }
-        response.setData(kurikulumServ.save(kurikulum));
+        response.setData(capPembServ.save(capPemb));
         if(response.getData()!=null) response.setMessage("Data berhasil disimpan");
         else 
         {
         	response.setStatus("error");
-        	response.setMessage("Kurikulum sudah ada");
+        	response.setMessage("Capaian Pembelajaran sudah ada");
         }
         return response;
     }
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public @ResponseBody AjaxResponse edit(@RequestParam("idKurikulum") UUID idKurikulum) {
+    public @ResponseBody AjaxResponse edit(@RequestParam("idCapPemb") UUID idCapPemb) {
 		AjaxResponse response;
-		Kurikulum kurikulum = kurikulumServ.findById(idKurikulum);
-		if(kurikulum == null) response = new AjaxResponse("error","Data tidak ditemukan",null);
-		else response = new AjaxResponse("ok","Data ditemukan",kurikulum);
+		CapPemb capPemb = capPembServ.findById(idCapPemb);
+		if(capPemb == null) response = new AjaxResponse("error","Data tidak ditemukan",null);
+		else response = new AjaxResponse("ok","Data ditemukan",capPemb);
         return response;
     }
 	
 	@RequestMapping(value = "/deletemany", method = RequestMethod.POST)
-    public @ResponseBody AjaxResponse deleteMany(@RequestParam("idKurikulum[]") UUID[] idKurikulum) {
+    public @ResponseBody AjaxResponse deleteMany(@RequestParam("idCapPemb[]") UUID[] idCapPemb) {
 		AjaxResponse response;
-		for (UUID uuid : idKurikulum) {
-			kurikulumServ.delete(uuid);
+		for (UUID uuid : idCapPemb) {
+			capPembServ.delete(uuid);
 		}
 		response = new AjaxResponse("ok","Data dihapus",null);
         return response;

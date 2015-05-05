@@ -16,12 +16,79 @@ public class CapPembServiceImpl implements CapPembService {
 	@Autowired
 	private CapPembRepository capPembRepo;
 	
+	private String [] column = {"cp.idCapPemb","kur.thnMulai", "kur.namaKurikulum", "satman.nmSatMan", 
+			"satman.nmSatMan", "cp.namaCapPemb", "cp.deskripsiCapPemb", "cp.statusHapusCapPemb"};
+	private Boolean[] searchable = {false,true,true,true,true,true,true,false};
+
 	@Override
-	public List<CapPemb> findAll() {
+	public List<CapPemb> findBySatMan(UUID idSatMan) {
 		// TODO Auto-generated method stub
-		return capPembRepo.findAll();
+		return capPembRepo.findBySatMan(idSatMan);
+	}
+	@Override
+	public Datatable getdatatable(String sEcho, int iDisplayLength,
+			int iDisplayStart, int iSortCol_0, String sSortDir_0,
+			String sSearch, String filter) {
+		// TODO Auto-generated method stub
+		DatatableExtractParams parameter = new DatatableExtractParams(sSearch, this.column, this.searchable, iSortCol_0, sSortDir_0);
+		Datatable capPembDatatable= new Datatable();
+		capPembDatatable.setsEcho(sEcho);
+		String dbFilter = "";
+		if(filter != null && !filter.equals("")) dbFilter+=" AND "+filter; 
+		List<CapPemb> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
+		List<String[]> aData = new ArrayList<String[]>();
+		for (CapPemb capPemb : queryResult) {
+			String[] capPembString = new String[9];
+			capPembString[0] = capPemb.getIdCapPemb().toString();
+			capPembString[1] = String.valueOf(capPemb.getKurikulum().getThnMulai());
+			capPembString[2] = String.valueOf(capPemb.getKurikulum().getNamaKurikulum());
+			capPembString[3] = String.valueOf(capPemb.getSatMan().getNmSatMan());
+			capPembString[4] = String.valueOf(capPemb.getSatMan().getNmSatMan());//disini harusnya capaian induk
+			capPembString[5] = String.valueOf(capPemb.getNamaCapPemb());
+			capPembString[6] = String.valueOf(capPemb.getDeskripsiCapPemb());
+			capPembString[7] = String.valueOf(capPemb.isStatusHapusCapPemb());
+			capPembString[8] = String.valueOf(capPemb.isStatusHapusCapPemb());
+			aData.add(capPembString);
+		}
+		capPembDatatable.setAaData(aData);
+		capPembDatatable.setiTotalRecords(capPembRepo.count(""));
+		capPembDatatable.setiTotalDisplayRecords(capPembRepo.count("("+parameter.getWhere()+") AND "+filter));
+
+		return capPembDatatable;
+	}
+	@Override
+	public List<CapPemb> get() {
+		return get("");
 	}
 
+	@Override
+	public List<CapPemb> get(String where) {
+		return get(where,"");
+	}
+
+	@Override
+	public List<CapPemb> get(String where, String order) {
+		return get(where,order,-1,-1);
+	}
+
+	@Override
+	public List<CapPemb> get(String where, String order, int limit, int offset) {
+		return capPembRepo.get(where, order, limit, offset);
+	}
+	@Override
+	public String save(CapPemb capPemb) {
+		if(capPemb.getIdCapPemb() != null)
+		{
+			//update
+			capPembRepo.update(capPemb);
+			return capPemb.getIdCapPemb().toString();
+		}
+		else
+		{
+			//insert
+			return capPembRepo.insert(capPemb).toString();
+		}
+	}
 	@Override
 	public CapPemb findById(UUID idCapPemb) {
 		// TODO Auto-generated method stub
@@ -29,55 +96,14 @@ public class CapPembServiceImpl implements CapPembService {
 	}
 
 	@Override
-	public void addCapPemb(CapPemb capPemb) {
+	public String delete(UUID idCapPemb) {
 		// TODO Auto-generated method stub
-		capPembRepo.addCapPemb(capPemb);
-	}
-
-	@Override
-	public void editCapPemb(CapPemb capPemb, UUID idCapPemb) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<CapPemb> findListByTahunAndSatMan(UUID idKurikulum, UUID idSatMan) {
-		// TODO Auto-generated method stub
-		/*List<CapPemb> capPembAll = findAll();
-		List<CapPemb> capPembTemp = new ArrayList<CapPemb>();
-		for(CapPemb cp : capPembAll){
-			if(cp.getKurikulum().getIdKurikulum().equals(idKurikulum) && (cp.getSatMan().getIdSatMan().equals(idSatMan))){
-					capPembTemp.add(cp);
-				}
+		CapPemb capPemb = capPembRepo.findById(idCapPemb);
+		if(capPemb==null) return null;
+		else{
+			capPemb.setStatusHapusCapPemb(true); 
+			capPembRepo.update(capPemb);
+			return "Ok";
 		}
-		/*for(CapPemb cpt : capPembTemp){
-			System.out.println(cpt.getNmCapPemb() + "" + cpt.getDeskripsiCapPemb());
-		}*/
-		//return capPembTemp;
-		return capPembRepo.findListByTahunSatMan(idKurikulum, idSatMan);
 	}
-
-	@Override
-	public UUID convertToUUID(String source) {
-		// TODO Auto-generated method stub
-		return UUID.fromString(source);
-	}
-
-	@Override
-	public CapPemb findObjByTahunAndSatMan(UUID idKurikulum, UUID idSatMan) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*@Override
-	public CapPemb findObjByTahunAndSatMan(UUID idKurikulum, UUID idSatMan) {
-		List<CapPemb> capPembAll = findAll();
-		for(CapPemb cp : capPembAll){
-			if(cp.getKurikulum().getIdKurikulum().equals(idKurikulum) && (cp.getSatMan().getIdSatMan().equals(idSatMan))){
-					return cp;
-				}
-		}
-		return null;
-	}*/
-
 }

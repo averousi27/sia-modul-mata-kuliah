@@ -8,9 +8,18 @@ import org.springframework.stereotype.Repository;
 import com.sia.main.domain.*;
 
 public interface CapPembRepository {
-	public List<CapPemb> findAll();
+	 
+	public List<CapPemb> findBySatMan(UUID idSatMan);
+	
+	public long count(String where);
+
+	public List<CapPemb> get(String where, String order, int limit, int offset);
+
+	public void update(CapPemb capPemb);
+
+	public UUID insert(CapPemb capPemb);
+
 	public CapPemb findById(UUID idCapPemb);
-	public void addCapPemb(CapPemb capPemb);
-	public void editCapPemb(CapPemb capPemb, UUID idCapPemb);
-	public List<CapPemb> findListByTahunSatMan(UUID idKurikulum, UUID idSatMan);
+
+	public List<CapPemb> findAll();
 }

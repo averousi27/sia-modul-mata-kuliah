@@ -5,13 +5,24 @@ import java.util.UUID;
 
 import com.sia.main.domain.*;
 
-public interface CapPembService {
-	public List<CapPemb> findAll();
-    public CapPemb findById(UUID idCapPemb);
- 
-    public void addCapPemb(CapPemb CapPemb);
-    public void editCapPemb(CapPemb capPemb, UUID idCapPemb);
-    public List<CapPemb> findListByTahunAndSatMan(UUID idKurikulum, UUID idSatMan);
-    public CapPemb findObjByTahunAndSatMan(UUID idKurikulum, UUID idSatMan);
-    public UUID convertToUUID(String source);
+public interface CapPembService { 
+	public List<CapPemb> findBySatMan(UUID idSatMan);
+
+	public Datatable getdatatable(String sEcho, int iDisplayLength,
+			int iDisplayStart, int iSortCol_0, String sSortDir_0,
+			String sSearch, String filter);
+
+	public List<CapPemb> get(String where, String order, int limit, int offset);
+
+	public List<CapPemb> get(String where, String order);
+
+	public List<CapPemb> get(String where);
+
+	public List<CapPemb> get();
+
+	public String save(CapPemb capPemb);
+
+	public CapPemb findById(UUID idCapPemb);
+
+	public String delete(UUID idCapPemb);
 }

@@ -1,0 +1,35 @@
+package com.AIS.Modul.MataKuliah.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.AIS.Modul.MataKuliah.Repository.CapPembRepository;
+import com.sia.main.domain.*;
+
+@Service
+public class CapPembServiceImpl implements CapPembService {
+
+	@Autowired
+	private CapPembRepository capPembRepo;
+	
+	private String [] column = {"kur.thnMulai", "kur.namaKurikulum", "satman.nmSatMan", "scp.Pemb"};
+	private Boolean[] searchable = {false,true,true,true,true,false};
+
+	@Override
+	public List<CapPemb> findBySatMan(UUID idSatMan) {
+		// TODO Auto-generated method stub
+		return capPembRepo.findBySatMan(idSatMan);
+	}
+	@Override
+	public Datatable getdatatable(String sEcho, int iDisplayLength,
+			int iDisplayStart, int iSortCol_0, String sSortDir_0,
+			String sSearch, String filter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+ 
+}
