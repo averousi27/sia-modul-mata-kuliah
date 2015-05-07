@@ -36,11 +36,12 @@ public class CapPembRepositoryImpl implements CapPembRepository{
 	public long count(String where) {
 		// TODO Auto-generated method stub
 		String dbWhere ="";
-		if(where != "") dbWhere = " WHERE " +where;
+		if(where != "") dbWhere = " WHERE cp.idCapPemb = scp.idCapPemb AND"+where;
 		Query query = sessionFactory.getCurrentSession().createQuery(
 		        "select count(*) from CapPemb cp "
 		        + "join cp.kurikulum kur "
-		        + "join cp.satMan satman "  +dbWhere);
+		        + "join cp.satMan satman "
+		        + "join cp.subCapPemb scp " +dbWhere);
 		Long count = (Long)query.uniqueResult();
 		return count;
 	}
@@ -51,13 +52,13 @@ public class CapPembRepositoryImpl implements CapPembRepository{
 		// TODO Auto-generated method stub
 		String dbWhere ="";
 		String dbOrder ="";
-		if(where != "") dbWhere = " WHERE "+where;
+		if(where != "") dbWhere = " WHERE cp.idCapPemb = scp.idCapPemb AND"+where;
 		if(order != "") dbOrder = " ORDER BY "+order;
 		 
 		Query query = sessionFactory.getCurrentSession().createQuery("select cp from CapPemb cp "
-				+ "join cp.subCapPemb scp"
-				+ "join cp.satMan satman "
-				+ "join cp.kurikulum kur" +dbWhere+dbOrder);
+				+ "join cp.kurikulum kur "
+				+ "join cp.satMan satman "  
+		        + "join cp.subCapPemb scp "+dbWhere+dbOrder);
 		if(limit != -1 && limit>0) {
 			query.setFirstResult(offset);
 			if(offset < 0) offset = 0;
@@ -96,7 +97,8 @@ public class CapPembRepositoryImpl implements CapPembRepository{
 		// TODO Auto-generated method stub
 		List<CapPemb> queryResult = sessionFactory.getCurrentSession().createQuery("select cp from CapPemb cp "
 				+ "join cp.kurikulum kur "
-				+ "join cp.satMan satman  WHERE  cp.idCapPemb='"+idCapPemb.toString()+"'").list();
+				+ "join cp.satMan satman "
+				+ "join cp.subCapPemb scp WHERE cp.idCapPemb = scp.idCapPemb AND cp.idCapPemb='"+idCapPemb.toString()+"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);
 	} 

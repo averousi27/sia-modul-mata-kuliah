@@ -55,7 +55,7 @@ public class CapPembRepositoryImpl implements CapPembRepository{
 		if(order != "") dbOrder = " ORDER BY "+order;
 		 
 		Query query = sessionFactory.getCurrentSession().createQuery("select cp from CapPemb cp "
-				+ "join cp.subCapPemb scp"
+				+ "join subCapPemb scp"
 				+ "join cp.satMan satman "
 				+ "join cp.kurikulum kur" +dbWhere+dbOrder);
 		if(limit != -1 && limit>0) {
