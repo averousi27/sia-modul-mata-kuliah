@@ -136,5 +136,21 @@ public class CapPembController {
 		}
 		response = new AjaxResponse("ok","Data dihapus",null);
         return response;
-    } 
+    }
+	/* 
+	@RequestMapping(value="/satuanmanajemen/view/{idKurikulum}/{idSatMan}", method=RequestMethod.GET)
+	public @ResponseBody List<CapPemb> showCapPemb(@PathVariable String idKurikulum, @PathVariable String idSatMan){
+		//ModelAndView mav = new ModelAndView();
+		System.out.println(idSatMan);
+		List<CapPemb> capPembList = new ArrayList<CapPemb>();
+		capPembList = capPembServ.findListByTahunAndSatMan(capPembServ.convertToUUID(idKurikulum), capPembServ.convertToUUID(idSatMan));
+		//System.out.println(capPembList.);
+		for(CapPemb cpt : capPembList){
+			System.out.println("k" + cpt.getKurikulum().getIdKurikulum() + "sm" + cpt.getSatMan().getIdSatMan()
+						+ cpt.getNmCapPemb() + "" + cpt.getDeskripsiCapPemb());
+		}
+		//mav.addObject("cappembs", capPembList);
+		//mav.setViewName("redirect:/capaianbelajar/satuanmanajemen"); 
+		return capPembList;
+	}*/
 }

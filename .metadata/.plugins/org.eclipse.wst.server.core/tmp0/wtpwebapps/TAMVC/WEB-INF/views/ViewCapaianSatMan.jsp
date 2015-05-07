@@ -118,16 +118,16 @@
 											</c:forEach> 
 									</select>
 								</div>
-								<div class="form-group">
-<!-- 								list disini muncul setelah dia milih satuan manajemennya turunan dari apa, isi dropdown langsung generate capaian belajar satuan manajemen itu 
-									<label>Nama Capaian Belajar Induk</label>
-									<select id="idCapPembInduk" name="idCapPembInduk" class="form-control"> 
-											<option value="">Pilih nama capaian belajar induk dari satuan manajemen yang dipilih</option> 
-											<c:forEach items="${capPembList}" var="capPemb"> 
-												<option value="${capPemb.idCapPemb}">${capPemb.namaCapPemb}</option>
-											</c:forEach> 
-									</select>
-								</div>
+<!-- 								<div class="form-group"> -->
+<!-- <!-- 								list disini muncul setelah dia milih satuan manajemennya turunan dari apa, isi dropdown langsung generate capaian belajar satuan manajemen itu --> -->
+<!-- 									<label>Nama Capaian Belajar Induk</label> -->
+<!-- 									<select id="idCapPembInduk" name="idCapPembInduk" class="form-control">  -->
+<!-- 											<option value="">Pilih nama capaian belajar induk dari satuan manajemen yang dipilih</option>  -->
+<%-- 											<c:forEach items="${capPembList}" var="capPemb">  --%>
+<%-- 												<option value="${capPemb.idCapPemb}">${capPemb.namaCapPemb}</option> --%>
+<%-- 											</c:forEach>  --%>
+<!-- 									</select> -->
+<!-- 								</div> -->
 								<div class="form-group">
 									<label>Nama Capaian Belajar Utama</label>
 									<form:input path="namaCapPemb" class="form-control" placeholder="Berisi nama capaian pembelajaran" required="true" />
@@ -148,11 +148,11 @@
 						$('#masterpage').masterPage(
 						{
 							detailFocusId: '#idCapPemb',
-							dataUrl: context_path+'capaian/satuanmanajemen/json',
-							detailUrl: context_path+'capaian/satuanmanajemen/edit',
-							addUrl: context_path+'capaian/satuanmanajemen/simpan',
-							editUrl: context_path+'capaian/satuanmanajemen/simpan',
-							deleteUrl: context_path+'capaian/satuanmanajemen/deletemany',
+							dataUrl: context_path+'capaianbelajar/satuanmanajemen/json',
+							detailUrl: context_path+'capaianbelajar/satuanmanajemen/edit',
+							addUrl: context_path+'capaianbelajar/satuanmanajemen/simpan',
+							editUrl: context_path+'capaianbelajar/satuanmanajemen/simpan',
+							deleteUrl: context_path+'capaianbelajar/satuanmanajemen/deletemany',
 							primaryKey: 'idCapPemb',
 					        order: [[1,"asc"]],
 							editOnClick: false,
