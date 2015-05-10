@@ -25,8 +25,7 @@ public class CapPembRepositoryImpl implements CapPembRepository{
 		// TODO Auto-generated method stub
 		List<CapPemb> queryResult = sessionFactory.getCurrentSession().createQuery("select cp from CapPemb cp "
 				+ "join cp.satMan satman "
-				+ "join cp.kurikulum kur "
-				+ "join cp.subCapPemb scp " 
+				+ "join cp.kurikulum kur " 
 				+ "where satman.idSatMan ='"+idSatMan.toString()+"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult;
@@ -54,8 +53,7 @@ public class CapPembRepositoryImpl implements CapPembRepository{
 		if(where != "") dbWhere = " WHERE "+where;
 		if(order != "") dbOrder = " ORDER BY "+order;
 		 
-		Query query = sessionFactory.getCurrentSession().createQuery("select cp from CapPemb cp "
-				+ "join cp.subCapPemb scp"
+		Query query = sessionFactory.getCurrentSession().createQuery("select cp from CapPemb cp " 
 				+ "join cp.satMan satman "
 				+ "join cp.kurikulum kur" +dbWhere+dbOrder);
 		if(limit != -1 && limit>0) {
@@ -94,9 +92,7 @@ public class CapPembRepositoryImpl implements CapPembRepository{
 	@Override
 	public CapPemb findById(UUID idCapPemb) {
 		// TODO Auto-generated method stub
-		List<CapPemb> queryResult = sessionFactory.getCurrentSession().createQuery("select cp from CapPemb cp "
-				+ "join cp.kurikulum kur "
-				+ "join cp.satMan satman  WHERE  cp.idCapPemb='"+idCapPemb.toString()+"'").list();
+		List<CapPemb> queryResult = sessionFactory.getCurrentSession().createQuery("select cp from CapPemb cp WHERE  cp.idCapPemb='"+idCapPemb.toString()+"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);
 	} 

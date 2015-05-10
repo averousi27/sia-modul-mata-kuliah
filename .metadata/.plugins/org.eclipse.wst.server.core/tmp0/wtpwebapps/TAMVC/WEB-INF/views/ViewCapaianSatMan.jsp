@@ -66,7 +66,7 @@
 									</div>  
 								</div> 
 								<div class="col-md-8 masteractions">
-									<div class="btn-action pull-right"> </div>
+									<div class="btn-action pull-right"> </div> 
 								</div> 
 							</div>
 							<form class="tableform">
@@ -85,12 +85,28 @@
 											<td>Nama Capaian Utama</td> 
 											<td>Deskripsi Capaian</td>
 											<td>Status Hapus</td>
+											<td>Aksi</td>
 										</tr>
 									</thead>
 									<tbody>
 									</tbody>
 								</table>
 							</form>
+							<div class="row">
+								<div class="col-md-8 masteractions">
+									<div class="pull-right">  
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/'">
+											  Selanjutnya >>
+										</button>
+									</div>
+									&nbsp;
+									<div class="pull-right"> 
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/kurikulum/'">
+											 << Kembali
+										</button>
+									</div>
+								</div> 
+							</div>
 						</div>
 					</div>
 				</div>
@@ -98,10 +114,10 @@
 					<div class="container">
 						<div class="col-md-6" style="margin-bottom:10px;">
 							<h4 id="title">Capaian Belajar untuk Satuan Manajemen</h4>
-							<form:form role="form" action="login" commandName="capPemb" class="formdetail"> 
+							<form:form role="form" commandName="capPemb" class="formdetail"> 
 								<div class="form-group">
 									<label>Tahun Kurikulum</label>
-									<select id="idKurikulum	" name="idKurikulum" class="form-control">
+									<select id="idKurikulum" name="idKurikulum" class="form-control">
 											<option value="">Pilih tahun dan nama kurikulum</option> 
 										<c:forEach items="${kurikulumList}" var="kurikulum"> 
 											<option value="${kurikulum.idKurikulum}">${kurikulum.thnMulai} - ${kurikulum.namaKurikulum}</option>
@@ -117,33 +133,69 @@
 												<option value="${satman.idSatMan}">${satman.nmSatMan }</option>
 											</c:forEach> 
 									</select>
-								</div>
-<!-- 								<div class="form-group"> -->
-<!-- <!-- 								list disini muncul setelah dia milih satuan manajemennya turunan dari apa, isi dropdown langsung generate capaian belajar satuan manajemen itu --> -->
-<!-- 									<label>Nama Capaian Belajar Induk</label> -->
-<!-- 									<select id="idCapPembInduk" name="idCapPembInduk" class="form-control">  -->
-<!-- 											<option value="">Pilih nama capaian belajar induk dari satuan manajemen yang dipilih</option>  -->
-<%-- 											<c:forEach items="${capPembList}" var="capPemb">  --%>
-<%-- 												<option value="${capPemb.idCapPemb}">${capPemb.namaCapPemb}</option> --%>
-<%-- 											</c:forEach>  --%>
-<!-- 									</select> -->
-<!-- 								</div> -->
+								</div> 
 								<div class="form-group">
-									<label>Nama Capaian Belajar Utama</label>
+									<label>Induk Capaian Pembelajaran</label> 
+									<br />
+									<button class="btn btn-primary" onclick="showModal()">Tambah induk capaian pembelajaran</button>
+								</div> 
+								 <div id="parentCapPemb"> 
+								 	<input type="hidden" name="idIndukCapPemb[]" ></input>
+								 </div> 
+								<div class="form-group">
+									<label>Nama Capaian Belajar</label>
 									<form:input path="namaCapPemb" class="form-control" placeholder="Berisi nama capaian pembelajaran" required="true" />
-								</div>
+									<form:hidden path="idCapPemb" class="form-control" />
+								</div> 
 								<div class="form-group">
-									<label>Deskripsi Capaian Belajar Utama</label>
+									<label>Deskripsi Capaian Belajar</label>
 									<form:input path="deskripsiCapPemb" class="form-control" placeholder="Berisi deskripsi capaian pembelajaran" />
 								</div>
+								
 								<div class="form-group detailcontrol">
 								</div>
 					        </form:form>
 						</div>
 					</div>
 				</div> 
+				<div id="myModal" class="modal fade">
+				  <div class="modal-dialog modal-lg">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title">Induk Capaian Pembelajaran</h4>
+				      </div>
+				      <div class="modal-body">
+				      	<div id="masterpageCapPemb" class ="col-md-12"> 
+							<form class="tableform">
+								<table class="table table-striped table-bordered table-hover table-checkable table-colvis datatable" style="width:100%">
+									<thead>
+										<tr>
+											<td>
+												#
+											</td>
+											<td>Tahun Kurikulum</td>
+											<td>Nama Kurikulum</td>
+											<td>Nama Satuan Manajemen</td>
+											<td>Nama Capaian</td>
+											<td>Deskripsi Capaian</td>  
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</form>
+						</div>
+				      </div>
+				      <div class="modal-footer">
+				      </div>
+				    </div><!-- /.modal-content -->
+				  </div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+									
 				<!-- Script Custom pada halaman. Kamu bisa memisah script pada file terpisah dengan menaruhnya di resource/js/namamodul/namafile.js -->
 				<script>
+					var showModal;
 					$(document).ready(function(){
 						$('#masterpage').masterPage(
 						{
@@ -154,7 +206,7 @@
 							editUrl: context_path+'capaianbelajar/satuanmanajemen/simpan',
 							deleteUrl: context_path+'capaianbelajar/satuanmanajemen/deletemany',
 							primaryKey: 'idCapPemb',
-					        order: [[1,"asc"]],
+					        order: [[3,"asc"]],
 							editOnClick: false,
 							editOnClickRow: true,
 							cols: [
@@ -167,11 +219,11 @@
 									}
 								},
 								/* tahun kurikulum */
-								{ "bVisible":    true }, 
+								{ "bVisible":    false }, 
 								/* nama kurikulum */
 								{ "bVisible":    true }, 
 								/* Nama satuan manajemen */
-								{ "bVisible":    true }, 
+								{ "bVisible":    false }, 
 								/* nama capaian induk */
 								{ "bVisible":    true },
 								/* nama capaian utama */
@@ -201,8 +253,60 @@
 							filters: [{id:'#filter', name:'statusHapusCapPemb'}],
 							callOnFillForm : function(response,options){ 
 								$("#idCapPemb").val(response.data.idCapPemb);
-								$("#idKurikulum	").val(response.data.kurikulum.idKurikulum);
+								$("#idKurikulum").val(response.data.kurikulum.idKurikulum);
 								$("#idSatMan").val(response.data.satMan.idSatMan); 
+							}
+							
+						});
+						showModal = function (){
+							$('#myModal').modal('show');
+						}
+						$('#myModal').on('shown.bs.modal', function (e) {
+							$("#masterpageCapPemb").find('.dataTables_length select').change();
+							  //if (!data) return e.preventDefault() // stops modal from being shown
+						})
+						$('#masterpageCapPemb').masterPage(
+						{
+							detailFocusId: '#idIndukCapPemb',
+							dataUrl: context_path+'capaianbelajar/satuanmanajemen/subcapaian/json',
+							detailUrl: context_path+'capaianbelajar/satuanmanajemen/subcapaian/edit',
+							primaryKey: 'idCapPemb',
+					        order: [[3,"asc"]],
+							editOnClick: false,
+							dialogDetail: '',
+							editOnClickRow: true,
+							cols: [
+								/* id capaian pembelajaran */
+								{ 
+									"bVisible":    true,
+									bSortable: false,
+									bSearchable: false,
+									mRender: function(data,type,full){
+										return '<button type="button" class="btn btn-primary">Pilih</button>';
+									}
+								},
+								/* tahun kurikulum */
+								{ "bVisible":    false },
+								/* nama kurikulum  */
+								{ "bVisible":    true },
+								/* nama satuan manajemen */
+								{ "bVisible":    false },
+								/* nama capaian */
+								{ "bVisible":    true }, 
+								/* deskripsi */
+								{ "bVisible":    false }, 
+							],
+							callOnSelect:function(aData, options){
+// 								$("#parentCapPemb").html(aData[4]);  
+								$("#parentCapPemb").html(
+										"<div class='alert alert-warning alert-dismissable'>"
+											+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>x</button>"
+											+"<p>"+aData[4]+"<p>"
+										+"</div>" 
+// 										+"<input type='hidden' name='idIndukCapPemb[]' value='"+ aData[0] +"' />"
+										);
+								$("#idIndukCapPemb[]").val(aData[0]);
+								$('#myModal').modal('toggle');
 							}
 						});
 					});

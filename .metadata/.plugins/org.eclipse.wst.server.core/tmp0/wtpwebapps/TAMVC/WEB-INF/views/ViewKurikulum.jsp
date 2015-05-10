@@ -65,16 +65,10 @@
 										</select>
 									</div>
 								</div>
-								<div class="col-md-8 masteractions"> 
-									<div class="btn-action pull-right"> <button type="button" class="btn btn-primary btn-block">
-												Tambah Capaian Pembelajaran
-										</button>
-										<button type="button" class="btn btn-primary btn-block">
-											<a href="matakuliah/">
-												Tambah Mata Kuliah
-											</a>
-										</button></div>
+								<div class="col-md-8 masteractions">
+									<div class="btn-action pull-right"> </div> 
 								</div> 
+								  
 							</div>
 							<form class="tableform">
 								<table class="table table-striped table-bordered table-hover table-checkable table-colvis datatable">
@@ -97,9 +91,18 @@
 									</tbody>
 								</table>
 							</form>
+							<div class="row">
+								<div class="col-md-8 masteractions">
+									<div class="pull-right">  
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/capaianbelajar/satuanmanajemen/'">
+											  Selanjutnya >>
+										</button>
+									</div> 
+								</div> 
+							</div>
 						</div>
 					</div>
-				</div>
+				</div> 
 				<div class="row" id="master-detail" style="display:none;">
 					<div class="container">
 						<div class="col-md-6" style="margin-bottom:10px;">

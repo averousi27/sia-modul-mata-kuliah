@@ -25,4 +25,10 @@ public interface CapPembService {
 	public CapPemb findById(UUID idCapPemb);
 
 	public String delete(UUID idCapPemb);
+
+	public List<CapPemb> findAll();
+
+	public Datatable getdatatable1(String sEcho, int iDisplayLength,
+			int iDisplayStart, int iSortCol_0, String sSortDir_0,
+			String sSearch);
 }

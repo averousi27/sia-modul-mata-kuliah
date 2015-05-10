@@ -16,11 +16,8 @@
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.EkuivalensiMKService"/>
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.KurikulumService"/>
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Repository.SatManMKRepository"/>
-<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 <fullyQualifiedTypeName name="org.hibernate.SessionFactory"/>
-<fullyQualifiedTypeName name="java.util.UUID"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
-<fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
 <fullyQualifiedTypeName name="javax.persistence.Entity"/>
 <fullyQualifiedTypeName name="javax.persistence.Table"/>
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.SatManMKService"/>
@@ -28,4 +25,10 @@
 <fullyQualifiedTypeName name="com.sia.main.domain.Kurikulum"/>
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.SatManService"/>
 <fullyQualifiedTypeName name="com.sia.main.domain.SatMan"/>
+<fullyQualifiedTypeName name="com.sia.main.domain.SubCapPemb"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Repository.SubCapPembRepository"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+<fullyQualifiedTypeName name="java.util.UUID"/>
+<fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.SubCapPembService"/>
 </qualifiedTypeNameHistroy>

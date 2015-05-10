@@ -90,6 +90,21 @@
 									</tbody>
 								</table>
 							</form>
+							<div class="row">
+								<div class="col-md-8 masteractions">
+									<div class="pull-right">  
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/ekuivalensi/'">
+											  Selanjutnya >>
+										</button>
+									</div>
+									&nbsp;
+									<div class="pull-right"> 
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/'">
+											 << Kembali
+										</button>
+									</div>
+								</div> 
+							</div>
 						</div>
 					</div>
 				</div>
