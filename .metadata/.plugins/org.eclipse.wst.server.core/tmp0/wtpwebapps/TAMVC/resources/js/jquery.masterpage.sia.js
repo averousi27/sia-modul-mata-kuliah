@@ -1,17 +1,13 @@
 function show_message(title, message, is_error){
-	var class_name = "";
-	$.gritter.add({
-		title: title,
-		text: message,
-		class_name: 'gritter-blue'
-	});
+	if(is_error == true) toastr.error(title, message);
+	else toastr.success(title, message);
 }
 
 
 function blockUI(el, centerY) {
 	var el = jQuery(el); 
 	el.block({
-			message: '<img src="' + context_path + 'resources/img/loading.gif" align="">',
+			message: '<img src="' + context_path + 'resources/images/loading.gif" align="">',
 			centerY: centerY != undefined ? centerY : true,
 			css: {
 				top: '10%',
@@ -50,6 +46,9 @@ $(document).ready(function(){
 		{ for(i = 0; i < notFormInput.length; i++){ $('#' + notFormInput[i] ).html(''); } }
 
 		$('.validation_error').remove();
+		$('.form-group',form).each(function(){
+			$(this).removeClass("has-error");
+		});
 		$('input:not([type=submit], [type=button], [type=reset], [type=radio], [type=checkbox]), textarea', form).each(function(){
 			if(typeof notSelector != 'undefined')
 				if($(this).is(notSelector)) return;
@@ -131,10 +130,10 @@ $(document).ready(function(){
 						errorClass: 'error text-danger',
 						validClass: 'valid',
 						highlight: function(element) {
-							$(element).closest('div').addClass("f_error");
+							$(element).closest('div').addClass("has-error");
 						},
 						unhighlight: function(element) {
-							$(element).closest('div').removeClass("f_error");
+							$(element).closest('div').removeClass("has-error");
 						},
 						errorPlacement: function(error, element) {
 							$(element).closest('div').append(error);
@@ -142,7 +141,7 @@ $(document).ready(function(){
 						rules: rules,
 						invalidHandler: function(form, validator) {
 							if(showMessage)
-								show_message('Error Input', 'Salah satu input yang Anda masukkan salah');
+								show_message('Error Input', 'Salah satu input yang Anda masukkan salah',true);
 						}
 					});
 		return vResult;
@@ -204,14 +203,20 @@ $(document).ready(function(){
 				}
 			}
 			
-			$(base.options.tableForm+' .checkbox-all').on('ifChecked ifUnchecked', function(event) {
-		        if (event.type == 'ifChecked') {
-		        	$(base.options.tableForm+' .checkbox-data input').iCheck('check');
+			$(base.options.tableForm+' .checkbox-all').change(function(){
+		        if ($(this).prop("checked") == true) {
+					$(base.options.tableForm+' .checkbox-data').each(function(){
+						$(this).prop("checked",true);
+			            $(this).uniform();
+					});
 		        } else {
-		        	$(base.options.tableForm+' .checkbox-data input').iCheck('uncheck');
+		        	$(base.options.tableForm+' .checkbox-data').each(function(){
+						$(this).prop("checked",false);
+			            $(this).uniform();
+					});
 		        }
 		    });
-			
+						
 			//init datatable
 			var masterDT = $('.datatable', base.options.appSelector).dataTable({
 								//"bStateSave": true,
@@ -221,7 +226,7 @@ $(document).ready(function(){
 								"order": base.options.order,
 								"sDom": "<'row'<'dataTables_header clearfix'<'col-md-3'<l>><'col-md-9'f<'pull-right'CT>>r>>t<'row-fluid'<'dataTables_footer clearfix'<'col-md-6'i><'col-md-6'p>>>",
 								tableTools: {
-									"sSwfPath": context_path+"resources/jquery.datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
+									"sSwfPath": context_path+"resources/plugins/jquery.datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
 								},
 								"bRetrieve" :true,
 								"bAutoWidth": false,
@@ -261,13 +266,21 @@ $(document).ready(function(){
 									"sSwfPath": context_path+"assets/assets/datatables/tabletools/swf/copy_csv_xls_pdf.swf"
 								},
 								// set the initial value
-								"sScrollX": "100%",
-								"sScrollXInner": "100%",
+								//"sScrollX": "100%",
+								//"sScrollXInner": "100%",
 								"bScrollCollapse": true,
 								fnDrawCallback: function () {
 									if ($.fn.uniform) {
+										var checkBox = $(base.options.tableForm+" tbody").find("input[type=checkbox]:not(.switchery), input[type=radio]:not(.no-uniform)");
+									    if (checkBox.size() > 0) {
+									        checkBox.each(function() {
+									            $(this).uniform();
+									        });
+									    };
 									}
 									
+									//var thead = $(base.options.appSelector+" .dataTables_scrollBody thead");
+									//console.log(thead.hide());
 									
 									if($(base.options.tableForm+" .editrow")) {
 										//fitur edit per row
@@ -313,8 +326,8 @@ $(document).ready(function(){
 										responsiveHelper.respond();
 									}*/
 
-									$(base.options.tableForm+' .checkbox-data input').iCheck({checkboxClass:"icheckbox_flat",increaseArea:"20%"});
-									$(base.options.tableForm+' .radio-data input').iCheck({radioClass:"iradio_flat",increaseArea:"20%"});
+									//$(base.options.tableForm+' .checkbox-data input').iCheck({checkboxClass:"icheckbox_flat",increaseArea:"20%"});
+									//$(base.options.tableForm+' .radio-data input').iCheck({radioClass:"iradio_flat",increaseArea:"20%"});
 
 								}
 								
@@ -337,7 +350,7 @@ $(document).ready(function(){
 			});
 			
 			//refresh button
-			$('.dataTables_filter', base.$el).prepend('<button type="button" class="btn btn-sm dt-refresh-bt"><i class="icon-refresh">r</i></button>');
+			$('.dataTables_filter', base.$el).prepend('<button type="button" class="btn btn-sm dt-refresh-bt"><i class="icon-refresh"></i></button>');
 			$('.dataTables_filter .dt-refresh-bt', base.$el).click(base.refresh);
 
 			// FILTER
@@ -461,10 +474,11 @@ $(document).ready(function(){
 						{ document.location=data.message; }
 						else
 						{ 
-							show_message('Error', data.message);
+							show_message('Error', data.message,true);
 							if(data.data!=null)
 	                			for(i=0;i<data.data.length;i++)
                 				{
+                					$('#'+data.data[i].field).parent().addClass("has-error");
 	                				if($('#'+data.data[i].field).parent().find('.error').length>0)
 	                				{
 	                					if(data.data[i].bindingFailure) $('#'+data.data[i].field).parent().find('.error').text("input tidak valid");

@@ -1,9 +1,0 @@
-package com.AIS.Modul.MataKuliah.Repository;
-
-import com.sia.main.domain.SatManMK;
-
-public interface SatManMKRepository {
-
-	public void update(SatManMK satManMK);
-
-}
