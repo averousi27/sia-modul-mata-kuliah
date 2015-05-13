@@ -91,7 +91,7 @@ public class SubCapPembRepositoryImpl implements SubCapPembRepository {
 	@Override
 	public List<SubCapPemb> findAll() {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createQuery("select scp from SubCapPemb scp WHERE scp.statusHapusSubCapPemb = false").list();
+		return sessionFactory.getCurrentSession().createQuery("select scp from SubCapPemb scp WHERE scp.statusSubCapPemb = false").list();
 
 	}
 	
@@ -105,15 +105,8 @@ public class SubCapPembRepositoryImpl implements SubCapPembRepository {
 		return queryResult.get(0);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public CapPemb findParent(UUID idCapPemb) {
-//		// TODO Auto-generated method stub
-//		List<SubCapPemb> queryResult = (List<SubCapPemb>) sessionFactory.getCurrentSession().createQuery("select scp from SubCapPemb scp "
-//				+ "join scp.childCapPemb child "
-//				+ "join scp.parentCapPemb parent  WHERE scp.idCapPemb = '"+ idCapPemb.toString()+"'");
-//		if(queryResult.size()==0) return null;
-//		return queryResult.get(0);
+	public CapPemb findParent(UUID idCapPemb) { 
 		List<SubCapPemb> scpList = findAll();
 		for (SubCapPemb scp : scpList) {
 			if( scp.getChildCapPemb().getIdCapPemb().equals(idCapPemb)){

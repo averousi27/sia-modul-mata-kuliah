@@ -7,11 +7,9 @@
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.AjaxResponse"/>
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.RumpunMKService"/>
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Repository.RumpunMKRepository"/>
-<fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.MKService"/>
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Model.RumpunMK"/>
 <fullyQualifiedTypeName name="com.sia.main.domain.PrasyaratMK"/>
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Repository.PrasyaratMKRepository"/>
-<fullyQualifiedTypeName name="com.sia.main.domain.MK"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Controller"/>
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.EkuivalensiMKService"/>
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.KurikulumService"/>
@@ -31,4 +29,9 @@
 <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
 <fullyQualifiedTypeName name="java.util.UUID"/>
 <fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.SubCapPembService"/>
+<fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.MKService"/>
+<fullyQualifiedTypeName name="com.sia.main.domain.MK"/>
+<fullyQualifiedTypeName name="com.AIS.Modul.MataKuliah.Service.CapPembService"/>
+<fullyQualifiedTypeName name="com.sia.main.domain.SubCapPembMK"/>
+<fullyQualifiedTypeName name="com.sia.main.domain.CapPembMK"/>
 </qualifiedTypeNameHistroy>

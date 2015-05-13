@@ -20,7 +20,7 @@ public class CapPembServiceImpl implements CapPembService {
 	private SubCapPembService subCapPembServ;
 	
 	private String [] column = {"cp.idCapPemb","kur.thnMulai", "kur.namaKurikulum", "satman.nmSatMan", 
-			"cp.namaCapPemb", "cp.namaCapPemb", "cp.deskripsiCapPemb", "cp.statusHapusCapPemb"};
+			"cp.namaCapPemb", "cp.namaCapPemb", "cp.deskripsiCapPemb", "cp.statusCapPemb"};
 	private Boolean[] searchable = {false,true,true,true,false,true,true,false};
 
 	@Override
@@ -53,8 +53,8 @@ public class CapPembServiceImpl implements CapPembService {
 				capPembString[5] = String.valueOf(parentCapPemb.getNamaCapPemb());//disini harusnya capaian induk
 			}
 			capPembString[6] = String.valueOf(capPemb.getDeskripsiCapPemb());
-			capPembString[7] = String.valueOf(capPemb.isStatusHapusCapPemb());
-			capPembString[8] = String.valueOf(capPemb.isStatusHapusCapPemb());
+			capPembString[7] = String.valueOf(capPemb.isStatusCapPemb());
+			capPembString[8] = String.valueOf(capPemb.isStatusCapPemb());
 			aData.add(capPembString);
 		}
 		capPembDatatable.setAaData(aData);
@@ -108,7 +108,7 @@ public class CapPembServiceImpl implements CapPembService {
 		CapPemb capPemb = capPembRepo.findById(idCapPemb);
 		if(capPemb==null) return null;
 		else{
-			capPemb.setStatusHapusCapPemb(true); 
+			capPemb.setStatusCapPemb(true); 
 			capPembRepo.update(capPemb);
 			return "Ok";
 		}
@@ -132,7 +132,7 @@ public class CapPembServiceImpl implements CapPembService {
 		DatatableExtractParams parameter = new DatatableExtractParams(sSearch, this.column1, this.searchable1, iSortCol_0, sSortDir_0);
 		Datatable capPembDatatable= new Datatable();
 		capPembDatatable.setsEcho(sEcho);
-		String dbFilter = "AND cp.statusHapusCapPemb=false";
+		String dbFilter = "AND cp.statusCapPemb=false";
 //		if(filter != null && !filter.equals("")) dbFilter+=" AND "+filter; 
 		List<CapPemb> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
 		List<String[]> aData = new ArrayList<String[]>();
@@ -151,5 +151,5 @@ public class CapPembServiceImpl implements CapPembService {
 		capPembDatatable.setiTotalDisplayRecords(capPembRepo.count(parameter.getWhere()));
 
 		return capPembDatatable;
-	}
+	} 
 }

@@ -1,0 +1,13 @@
+package com.AIS.Modul.MataKuliah.Repository;
+
+import java.util.List;
+
+import com.sia.main.domain.SubCapPembMK;
+
+public interface CapPembMKRepository {
+
+	public long count(String where);
+
+	List<SubCapPembMK> get(String where, String order, int limit, int offset);
+
+}

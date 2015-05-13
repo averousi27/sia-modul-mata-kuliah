@@ -10,7 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="shortcut icon"
 		href="${pageContext.servletContext.contextPath}/resources/favicon_16.ico">
-	<title>Modern | Layouts - Horizontal Menu</title>
+	<title>Kelola Rumpun Mata Kuliah</title>
 	
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<meta charset="UTF-8">
@@ -368,7 +368,7 @@
 											</button>
 										</div> 
 										<div class="pull-right"> 
-											<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/rumpun/'">
+											<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/capaianbelajar/satuanmanajemen/'">
 												 << Kembali
 											</button>
 										</div>

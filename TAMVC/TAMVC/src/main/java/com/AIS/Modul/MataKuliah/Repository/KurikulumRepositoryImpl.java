@@ -23,7 +23,7 @@ public class KurikulumRepositoryImpl implements KurikulumRepository {
 	@Override
 	@Transactional
 	public List<Kurikulum> findAll() {
-		 return sessionFactory.getCurrentSession().createQuery("from Kurikulum k where k.statusKurikulum = true order by k.thnMulai asc").list();
+		 return sessionFactory.getCurrentSession().createQuery("from Kurikulum k where k.statusKurikulum = false order by k.thnMulai asc").list();
 	}
 	
 	@Override

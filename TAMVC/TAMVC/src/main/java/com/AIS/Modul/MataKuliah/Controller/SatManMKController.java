@@ -74,9 +74,9 @@ public class SatManMKController {
             @RequestParam("sSortDir_0") String sSortDir_0,
             @RequestParam("sSearch") String sSearch,
 			@RequestParam("iDisplayStart") int iDisplayStart,
-			@RequestParam("statusHapusSatManMK") String statusHapusSatManMK) 
+			@RequestParam("statusSatManMK") String statusSatManMK) 
 	{
-		String filter = "CAST(sMMK.statusHapusSatManMK as string) LIKE '%"+statusHapusSatManMK+"%' ";
+		String filter = "CAST(sMMK.statusSatManMK as string) LIKE '%"+statusSatManMK+"%' ";
 		Datatable satManMKDatatable = satManMKServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
 		
 		return satManMKDatatable;

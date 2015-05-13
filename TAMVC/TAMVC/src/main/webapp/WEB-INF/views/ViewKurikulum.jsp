@@ -10,7 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="shortcut icon"
 		href="${pageContext.servletContext.contextPath}/resources/favicon_16.ico">
-	<title>Modern | Layouts - Horizontal Menu</title>
+	<title>Kelola Kurikulum</title>
 	
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<meta charset="UTF-8">
@@ -332,7 +332,7 @@
 											<div class="form-group">
 												<label>Status Aktif</label>
 												<select id="filter" name="filter">
-													<option value="true">Aktif</option>
+													<option value="false">Aktif</option>
 													<option value="">Semua</option>
 												</select>
 											</div>
@@ -353,7 +353,7 @@
 														<td>Satuan Manajemen</td>
 														<td>Tahun Mulai</td>
 														<td>Tahun Akhir</td>
-														<td>Status aktif</td>
+														<td>Status Aktif</td>
 														<td>Aksi</td>
 													</tr>
 												</thead>
@@ -410,8 +410,8 @@
 												<label>Status Aktif Kurikulum</label>
 												<select id="statusKurikulum" name="statusKurikulum" class="form-control">
 														<option value="">Pilih status keaktifan kurikulum</option>  
-														<option value="true">Aktif</option>  
-														<option value="false">Non-Aktif</option>  
+														<option value="false">Aktif</option>  
+														<option value="true">Non-Aktif</option>  
 												</select> 
 											</div>
 											<div class="form-group detailcontrol">
@@ -457,7 +457,7 @@
 								{ 
 									"bVisible":    false, 
 									mRender: function(data,type,full){
-										if(full[5] == 'true') return "Aktif";
+										if(full[5] == 'false') return "Aktif";
 										else return "Non Aktif";
 									}
 								},
@@ -467,7 +467,7 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[5]=='true') action += ' <button type="button" class="btn btn-danger deleterow">Non-Aktif</button>'
+										if(full[5]=='false') action += ' <button type="button" class="btn btn-danger deleterow">Non-Aktif</button>'
 										return action;
 									}
 								}

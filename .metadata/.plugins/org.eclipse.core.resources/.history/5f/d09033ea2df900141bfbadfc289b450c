@@ -1,0 +1,20 @@
+package com.AIS.Modul.MataKuliah.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.AIS.Modul.MataKuliah.Repository.CapPembMKRepository;
+
+@Service
+public class CapPembMKServiceImpl implements CapPembMKService {
+	
+	@Autowired
+	private CapPembMKRepository capPembMKRepo;
+	
+	@Autowired
+	private SubCapPembMKService subCapPembMKServ;
+	
+	private String [] column = {"cp.idCapPemb","kur.thnMulai", "kur.namaKurikulum", "satman.nmSatMan", 
+			"cp.namaCapPemb", "cp.namaCapPemb", "cp.deskripsiCapPemb", "cp.statusHapusCapPemb"};
+	private Boolean[] searchable = {false,true,true,true,false,true,true,false};
+}

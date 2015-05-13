@@ -10,7 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="shortcut icon"
 		href="${pageContext.servletContext.contextPath}/resources/favicon_16.ico">
-	<title>Modern | Layouts - Horizontal Menu</title>
+	<title>Kelola Mata Kuliah untuk Satuan Manajemen</title>
 	
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<meta charset="UTF-8">
@@ -327,6 +327,8 @@
 									<h4 class="panel-title">Mata Kuliah</h4>
 								</div>
 								<div class="panel-body">  
+								<p>Tabel menampilkan mata kuliah untuk satuan manajemen</p>
+										
 									<div class="row">
 										<div class="col-md-4">
 											<div class="form-group">
@@ -354,7 +356,7 @@
 											<td>Kode MK</td>  
 											<td>Nama MK</td>  
 											<td>Nama Satuan Manajemen</td> 
-											<td>Status hapus</td>
+											<td>Status Aktif</td>
 											<td>Aksi</td>
 										</tr>
 									</thead>
@@ -362,11 +364,7 @@
 									</tbody>
 								</table>
 								</div>
-							</form>
-							</div>
-						</div>
-					</div>
-				</div>
+							</form> 
 				<div class="row">
 						<div class="col-md-8 masteractions">
 							<div class="pull-right">  
@@ -379,9 +377,13 @@
 								<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/'">
 									 << Kembali
 								</button>
+										</div>
+									</div>
+								</div> 
 							</div>
-						</div> 
-					</div> 
+						</div>
+					</div>
+				</div>
 				<div class="row" id="master-detail" style="display:none;"> 
 						<div class="col-md-6 col-md-offset-3">
 							<div class="panel panel-white">
@@ -389,7 +391,7 @@
 									<h4 class="panel-title">Mata Kuliah</h4>
 								</div>
 							<div class="panel-body">
-									<h4 id="title">Assign satuan manajemen untuk mata kuliah satuan manajemen</h4>
+									<h4 id="title">Assign mata kuliah untuk satuan manajemen</h4>
 									<form:form role="form" action="login" commandName="satManMK" class="formdetail"> 
 										<div class="form-group">
 											<label>Kode dan Nama Mata Kuliah</label>
@@ -466,7 +468,7 @@
 								}
 							],
 							validationRules: {idMK:{required: true}, idSatMan:{required: true}},
-							filters: [{id:'#filter', name:'statusHapusSatManMK'}],
+							filters: [{id:'#filter', name:'statusSatManMK'}],
 							callOnFillForm : function(response,options){ 
 								$("#idSatManMK").val(response.data.idMK);
 								$("#idMK").val(response.data.mk.idMK);

@@ -117,7 +117,7 @@ public class KurikulumServiceImpl implements KurikulumService {
 		Kurikulum kurikulum = kurikulumRepo.findById(idKurikulum);
 		if(kurikulum==null) return null;
 		else{
-			kurikulum.setStatusKurikulum(false);
+			kurikulum.setStatusKurikulum(true);
 			kurikulumRepo.update(kurikulum);
 			return "Ok";
 		}

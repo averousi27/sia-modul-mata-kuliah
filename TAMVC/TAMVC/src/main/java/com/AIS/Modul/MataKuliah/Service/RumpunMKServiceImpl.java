@@ -78,7 +78,6 @@ public class RumpunMKServiceImpl implements RumpunMKService {
 		else
 		{
 			//insert
-	        rumpunMK.setStatusRumpunMK(true);
 			return rumpunMKRepo.insert(rumpunMK).toString();
 		}
 	}
@@ -95,7 +94,7 @@ public class RumpunMKServiceImpl implements RumpunMKService {
 		RumpunMK rumpunMK = rumpunMKRepo.findById(idRumpunMK);
 		if(rumpunMK==null) return null;
 		else{
-			rumpunMK.setStatusRumpunMK(false);
+			rumpunMK.setStatusRumpunMK(true);
 			rumpunMKRepo.update(rumpunMK);
 			return "Ok";
 		}

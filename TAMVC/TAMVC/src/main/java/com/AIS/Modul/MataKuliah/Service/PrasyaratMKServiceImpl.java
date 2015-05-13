@@ -17,7 +17,7 @@ public class PrasyaratMKServiceImpl implements PrasyaratMKService {
 	@Autowired
 	private PrasyaratMKRepository prasyaratMKRepo;
 	
-	private String [] column = {"pMK.idPrasyaratMK","child.kodeMK", "child.namaMK", "parent.kodeMK", "parent.namaMK", "pMK.statusHapusPrasyarat"};
+	private String [] column = {"pMK.idPrasyaratMK","child.kodeMK", "child.namaMK", "parent.kodeMK", "parent.namaMK", "pMK.statusPrasyarat"};
 	private Boolean[] searchable = {false,true,true,true,true,false};
 	
 	@Override
@@ -38,8 +38,8 @@ public class PrasyaratMKServiceImpl implements PrasyaratMKService {
 			prasyaratMKString[2] = String.valueOf(prasyaratMK.getChildMK().getNamaMK());
 			prasyaratMKString[3] = String.valueOf(prasyaratMK.getParentMK().getKodeMK());
 			prasyaratMKString[4] = String.valueOf(prasyaratMK.getParentMK().getNamaMK());
-			prasyaratMKString[5] = String.valueOf(prasyaratMK.getStatusHapusPrasyarat());
-			prasyaratMKString[6] = String.valueOf(prasyaratMK.getStatusHapusPrasyarat());
+			prasyaratMKString[5] = String.valueOf(prasyaratMK.getStatusPrasyarat());
+			prasyaratMKString[6] = String.valueOf(prasyaratMK.getStatusPrasyarat());
 			aData.add(prasyaratMKString);
 		}
 		prasyaratMKDatatable.setAaData(aData);
@@ -97,7 +97,7 @@ public class PrasyaratMKServiceImpl implements PrasyaratMKService {
 		PrasyaratMK prasyaratMK = prasyaratMKRepo.findById(idPrasyaratMK);
 		if(prasyaratMK==null) return null;
 		else{
-			prasyaratMK.setStatusHapusPrasyarat(true);
+			prasyaratMK.setStatusPrasyarat(true);
 			prasyaratMKRepo.update(prasyaratMK);
 			return "Ok";
 		}

@@ -26,7 +26,7 @@ public class SatManMKServiceImpl implements SatManMKService {
 	@Autowired
 	private SatManMKRepository satManMKRepo;
 
-	private String [] column = {"sMMK.idSatManMK", "mk.kodeMK", "mk.namaMK", "satman.nmSatMan", "sMMK.statusHapusSatManMK"};
+	private String [] column = {"sMMK.idSatManMK", "mk.kodeMK", "mk.namaMK", "satman.nmSatMan", "sMMK.statusSatManMK"};
 	private Boolean[] searchable = {false,true,true,true,false};
 	
 	@Override
@@ -41,8 +41,7 @@ public class SatManMKServiceImpl implements SatManMKService {
 		}
 		else
 		{
-			//insert
-//	        kurikulum.setaStatusKurikulum(true);
+			//insert 
 			return satManMKRepo.insert(satManMK).toString();
 		}
 	}
@@ -59,7 +58,7 @@ public class SatManMKServiceImpl implements SatManMKService {
 		SatManMK satManMK = satManMKRepo.findById(idSatManMK);
 		if(satManMK==null) return null;
 		else{
-			satManMK.setStatusHapusSatManMK(true);
+			satManMK.setStatusSatManMK(true);
 			satManMKRepo.update(satManMK);
 			return "Ok";
 		}
@@ -83,8 +82,8 @@ public class SatManMKServiceImpl implements SatManMKService {
 			satManMKString[1] = String.valueOf(satManMK.getMk().getKodeMK());
 			satManMKString[2] = String.valueOf(satManMK.getMk().getNamaMK()); 
 			satManMKString[3] = String.valueOf(satManMK.getSatMan().getNmSatMan());
-			satManMKString[4] = String.valueOf(satManMK.isStatusHapusSatManMK());
-			satManMKString[5] = String.valueOf(satManMK.isStatusHapusSatManMK()); 
+			satManMKString[4] = String.valueOf(satManMK.isStatusSatManMK());
+			satManMKString[5] = String.valueOf(satManMK.isStatusSatManMK()); 
 			aData.add(satManMKString);
 		}
 		satManMKDatatable.setAaData(aData);

@@ -61,10 +61,10 @@ public class PrasyaratMKController {
             @RequestParam("sSortDir_0") String sSortDir_0,
             @RequestParam("sSearch") String sSearch,
 			@RequestParam("iDisplayStart") int iDisplayStart,
-			@RequestParam("statusHapusPrasyarat") String statusHapusPrasyarat
+			@RequestParam("statusPrasyarat") String statusPrasyarat
             ) 
 	{
-		String filter = "CAST(pMK.statusHapusPrasyarat as string) LIKE '%"+statusHapusPrasyarat+"%'";
+		String filter = "CAST(pMK.statusPrasyarat as string) LIKE '%"+statusPrasyarat+"%'";
 		Datatable prasyaratMKDatatable = prasyaratMKServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
 		return prasyaratMKDatatable;
 	}

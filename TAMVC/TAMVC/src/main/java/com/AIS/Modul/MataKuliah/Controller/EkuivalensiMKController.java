@@ -64,10 +64,10 @@ public class EkuivalensiMKController {
             @RequestParam("sSortDir_0") String sSortDir_0,
             @RequestParam("sSearch") String sSearch,
 			@RequestParam("iDisplayStart") int iDisplayStart,
-			@RequestParam("statusHapusEkuivalensi") String statusHapusEkuivalensi
+			@RequestParam("statusEkuivalensi") String statusEkuivalensi
             ) 
 	{
-		String filter = "CAST(ekMK.statusHapusEkuivalensi as string) LIKE '%"+statusHapusEkuivalensi+"%'";
+		String filter = "CAST(ekMK.statusEkuivalensi as string) LIKE '%"+statusEkuivalensi+"%'";
 		Datatable prasyaratMKDatatable = ekuivalensiMKServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
 		return prasyaratMKDatatable;
 	}

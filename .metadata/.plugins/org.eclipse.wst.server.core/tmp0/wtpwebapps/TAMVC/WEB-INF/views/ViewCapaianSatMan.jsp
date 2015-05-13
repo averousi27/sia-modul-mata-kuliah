@@ -10,7 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="shortcut icon"
 		href="${pageContext.servletContext.contextPath}/resources/favicon_16.ico">
-	<title>Modern | Layouts - Horizontal Menu</title>
+	<title>Kelola Capaian Belajar untuk Satuan Manajemen</title>
 	
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<meta charset="UTF-8">
@@ -326,7 +326,7 @@
 									<h4 class="panel-title">Mata Kuliah</h4>
 								</div>
 								<div class="panel-body">  
-									<p>Tabel menampilkan capaian pembelajaran</p>
+									<p>Tabel menampilkan capaian pembelajaran satuan manajemen</p>
 									<div class="row">
 										<div class="col-md-4">
 											<div class="form-group">
@@ -370,8 +370,7 @@
 										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/rumpun/'">
 											  Selanjutnya >>
 										</button>
-									</div>
-									&nbsp;
+									</div> 
 									<div class="pull-right"> 
 										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/kurikulum/'">
 											 << Kembali
@@ -417,7 +416,6 @@
 											<button type="button" class="btn btn-primary" onclick="showModal()">Tambah induk capaian pembelajaran</button>
 										</div> 
 										 <div id="parentCapPemb"> 
-										 	<input type="hidden" name="idIndukCapPemb[]" ></input>
 										 </div> 
 										<div class="form-group">
 											<label>Nama Capaian Belajar</label>
@@ -444,7 +442,7 @@
 				        <h4 class="modal-title">Induk Capaian Pembelajaran</h4>
 				      </div>
 				      <div class="modal-body">
-				      	<div id="masterpageCapPemb" class ="col-md-12"> 
+				      	<div id="masterpageCapPemb"> 
 							<form class="tableform">
 								<table class="table table-striped table-bordered table-hover table-checkable table-colvis datatable" style="width:100%">
 									<thead>
@@ -528,8 +526,9 @@
 								}
 							],
 							validationRules: {idKurikulum:{required: true}, idSatMan:{required: true}, namaCapPemb:{required: true}},
-							filters: [{id:'#filter', name:'statusHapusCapPemb'}],
+							filters: [{id:'#filter', name:'statusCapPemb'}],
 							callOnFillForm : function(response,options){ 
+								$("#parentCapPemb").html("");
 								$("#idCapPemb").val(response.data.idCapPemb);
 								$("#idKurikulum").val(response.data.kurikulum.idKurikulum);
 								$("#idSatMan").val(response.data.satMan.idSatMan); 
@@ -552,7 +551,7 @@
 					        order: [[3,"asc"]],
 							editOnClick: false,
 							dialogDetail: '',
-							editOnClickRow: true,
+							editOnClickRow: false,
 							cols: [
 								/* id capaian pembelajaran */
 								{ 
@@ -574,16 +573,17 @@
 								/* deskripsi */
 								{ "bVisible":    false }, 
 							],
-							callOnSelect:function(aData, options){
+							callOnSelect : function(aData, options){
+								console.log(aData);
 // 								$("#parentCapPemb").html(aData[4]);  
-								$("#parentCapPemb").html(
+								$("#parentCapPemb").append(
 										"<div class='alert alert-warning alert-dismissable'>"
 											+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>x</button>"
 											+"<p>"+aData[4]+"<p>"
 										+"</div>" 
-// 										+"<input type='hidden' name='idIndukCapPemb[]' value='"+ aData[0] +"' />"
+ 										+"<input type='hidden' name='idIndukCapPemb[]' value='"+ aData[0] +"' />"
 										);
-								$("#idIndukCapPemb[]").val(aData[0]);
+								//$("#idIndukCapPemb[]").val(aData[0]);
 								$('#myModal').modal('toggle');
 							}
 						});

@@ -10,7 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="shortcut icon"
 		href="${pageContext.servletContext.contextPath}/resources/favicon_16.ico">
-	<title>Modern | Layouts - Horizontal Menu</title>
+	<title>Kelola Prasyarat Mata Kuliah</title>
 	
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<meta charset="UTF-8">
@@ -326,6 +326,8 @@
 									<h4 class="panel-title">Mata Kuliah</h4>
 								</div>
 								<div class="panel-body">  
+								<p>Tabel menampilkan prasyarat mata kuliah</p>
+										
 									<div class="row">
 										<div class="col-md-4">
 											<div class="form-group">
@@ -362,10 +364,6 @@
 										</table>
 										</div>
 									</form>
-								</div>
-							</div>
-						</div>
-					</div>
 					<div class="row">
 						<div class="col-md-8 masteractions">
 							<div class="pull-right">  
@@ -375,12 +373,16 @@
 							</div>
 							&nbsp;
 							<div class="pull-right"> 
-								<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/'">
+								<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/satuanmanajemen/'">
 									 << Kembali
 								</button>
 							</div>
 						</div> 
 					</div> 
+								</div>
+							</div>
+						</div>
+					</div>
 				<div class="row" id="master-detail" style="display:none;"> 
 						<div class="col-md-6 col-md-offset-3">
 							<div class="panel panel-white">
@@ -467,11 +469,11 @@
 								}
 							],
 							validationRules: {idMK:{required: true}, mkIdMK:{required: true}},
-							filters: [{id:'#filter', name:'statusHapusPrasyarat'}],
+							filters: [{id:'#filter', name:'statusPrasyarat'}],
 							callOnFillForm : function(response,options){ 
 								$("#idPrasyaratMK").val(response.data.idPrasyaratMK); 
-								$("#idMK").val(response.data.mk.idMK);
-								$("#mkIdMK").val(response.data.mk.idMK);
+								$("#idMK").val(response.data.childMK.idMK);
+								$("#mkIdMK").val(response.data.parentMK.idMK);
 							}
 						});
 					});

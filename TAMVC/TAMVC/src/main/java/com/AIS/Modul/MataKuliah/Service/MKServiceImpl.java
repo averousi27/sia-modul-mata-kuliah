@@ -90,7 +90,6 @@ public class MKServiceImpl implements MKService{
 		else
 		{
 			//insert
-	        mk.setStatusMK(true);
 			return mkRepo.insert(mk).toString();
 		}
 	}
@@ -107,7 +106,7 @@ public class MKServiceImpl implements MKService{
 		MK mk = mkRepo.findById(idMK);
 		if(mk==null) return null;
 		else{
-			mk.setStatusMK(false);
+			mk.setStatusMK(true);
 			mkRepo.update(mk);
 			return "Ok";
 		}

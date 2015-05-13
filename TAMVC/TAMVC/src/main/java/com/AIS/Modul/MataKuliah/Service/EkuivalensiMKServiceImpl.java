@@ -17,7 +17,7 @@ public class EkuivalensiMKServiceImpl implements EkuivalensiMKService {
 	@Autowired
 	private EkuivalensiMKRepository ekuivalensiMKRepo;
 	
-	private String [] column = {"ekMK.idEkuivalensiMK","child.kodeMK", "child.namaMK", "parent.kodeMK", "parent.namaMK", "ekMK.statusHapusEkuivalensi"};
+	private String [] column = {"ekMK.idEkuivalensiMK","child.kodeMK", "child.namaMK", "parent.kodeMK", "parent.namaMK", "ekMK.statusEkuivalensi"};
 	private Boolean[] searchable = {false,true,true,true,true,false};
 	
 	@Override
@@ -38,8 +38,8 @@ public class EkuivalensiMKServiceImpl implements EkuivalensiMKService {
 			ekuivalensiMKString[2] = String.valueOf(ekuivalensiMK.getChildMK().getNamaMK());
 			ekuivalensiMKString[3] = String.valueOf(ekuivalensiMK.getParentMK().getKodeMK());
 			ekuivalensiMKString[4] = String.valueOf(ekuivalensiMK.getParentMK().getNamaMK());
-			ekuivalensiMKString[5] = String.valueOf(ekuivalensiMK.getStatusHapusEkuivalensi());
-			ekuivalensiMKString[6] = String.valueOf(ekuivalensiMK.getStatusHapusEkuivalensi());
+			ekuivalensiMKString[5] = String.valueOf(ekuivalensiMK.getStatusEkuivalensi());
+			ekuivalensiMKString[6] = String.valueOf(ekuivalensiMK.getStatusEkuivalensi());
 			aData.add(ekuivalensiMKString);
 		}
 		ekuivalensiMKDatatable.setAaData(aData);
@@ -97,7 +97,7 @@ public class EkuivalensiMKServiceImpl implements EkuivalensiMKService {
 		EkuivalensiMK ekuivalensiMK = ekuivalensiMKRepo.findById(idEkuivalensiMK);
 		if(ekuivalensiMK==null) return null;
 		else{
-			ekuivalensiMK.setStatusHapusEkuivalensi(true);
+			ekuivalensiMK.setStatusEkuivalensi(true);
 			ekuivalensiMKRepo.update(ekuivalensiMK);
 			return "Ok";
 		}

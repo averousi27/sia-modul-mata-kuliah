@@ -83,9 +83,9 @@ public class CapPembController {
             @RequestParam("sSortDir_0") String sSortDir_0,
             @RequestParam("sSearch") String sSearch,
 			@RequestParam("iDisplayStart") int iDisplayStart,
-			@RequestParam("statusHapusCapPemb") String statusHapusCapPemb
+			@RequestParam("statusCapPemb") String statusCapPemb
             ) {
-		String filter = "CAST( cp.statusHapusCapPemb as string) LIKE '%"+statusHapusCapPemb+"%'";
+		String filter = "CAST( cp.statusCapPemb as string) LIKE '%"+statusCapPemb+"%'";
 		Datatable capPembDatatable = capPembServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
 		return capPembDatatable;
 	}	
@@ -116,7 +116,7 @@ public class CapPembController {
             return response;
         }
         response.setData(capPembServ.save(capPemb)); 
-        if(idIndukCapPemb.length > 1){ 
+        if(idIndukCapPemb!=null){ 
 	        for (UUID idCapPemb : idIndukCapPemb) { 
 	            CapPemb parentCapPemb = capPembServ.findById(idCapPemb);
 	            SubCapPemb subCapPembNew = new SubCapPemb();

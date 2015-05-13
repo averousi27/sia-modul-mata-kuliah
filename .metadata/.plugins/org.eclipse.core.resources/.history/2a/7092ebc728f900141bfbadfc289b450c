@@ -1,0 +1,17 @@
+package com.AIS.Modul.MataKuliah.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.AIS.Modul.MataKuliah.Repository.SubCapPembMKRepository;
+import com.sia.main.domain.CapPembMK;
+
+@Service
+public class SubCapPembMKServiceImpl implements SubCapPembMKService {
+	
+	@Autowired
+	private CapPembMK capPembMKServ;
+	
+	@Autowired
+	private SubCapPembMKRepository subCapPembMKRepo;
+}

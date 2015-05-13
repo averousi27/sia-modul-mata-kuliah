@@ -100,7 +100,7 @@ public class CapPembRepositoryImpl implements CapPembRepository{
 	@Override
 	public List<CapPemb> findAll() {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createQuery("select cp from CapPemb cp WHERE cp.statusHapusCapPemb = false").list();
+		return sessionFactory.getCurrentSession().createQuery("select cp from CapPemb cp WHERE cp.statusCapPemb = false").list();
 
 	}
 

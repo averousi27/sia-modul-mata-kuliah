@@ -1,0 +1,60 @@
+package com.AIS.Modul.MataKuliah.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.AIS.Modul.MataKuliah.Repository.CapPembMKRepository;
+import com.sia.main.domain.CapPemb;
+
+@Service
+public class CapPembMKServiceImpl implements CapPembMKService {
+	
+	@Autowired
+	private CapPembMKRepository capPembMKRepo;
+	
+	@Autowired
+	private SubCapPembMKService subCapPembMKServ;
+	
+	private String [] column = {"cpmk.idCapPemb","cpmk.namaCapPembMK", "mk.namaMK", "satman.nmSatMan", 
+			"cp.namaCapPemb",  "cpmk.statusHapusCapPemb"};
+	private Boolean[] searchable = {false,true,true,true,false,true,true,false};
+	
+	@Override
+	public Datatable getdatatable(String sEcho, int iDisplayLength,
+			int iDisplayStart, int iSortCol_0, String sSortDir_0,
+			String sSearch, String filter) {
+		// TODO Auto-generated method stub
+		DatatableExtractParams parameter = new DatatableExtractParams(sSearch, this.column, this.searchable, iSortCol_0, sSortDir_0);
+		Datatable capPembDatatable= new Datatable();
+		capPembDatatable.setsEcho(sEcho);
+		String dbFilter = "";
+		if(filter != null && !filter.equals("")) dbFilter+=" AND "+filter; 
+		List<CapPemb> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
+		List<String[]> aData = new ArrayList<String[]>();
+		for (CapPemb capPemb : queryResult) {
+			String[] capPembString = new String[9];
+			CapPemb parentCapPemb = subCapPembServ.findParent(capPemb);
+			capPembString[0] = capPemb.getIdCapPemb().toString();
+			capPembString[1] = String.valueOf(capPemb.getKurikulum().getThnMulai());
+			capPembString[2] = String.valueOf(capPemb.getKurikulum().getNamaKurikulum());
+			capPembString[3] = String.valueOf(capPemb.getSatMan().getNmSatMan());
+			
+			capPembString[4] = String.valueOf(capPemb.getNamaCapPemb());
+			if(parentCapPemb!=null){ 
+				capPembString[5] = String.valueOf(parentCapPemb.getNamaCapPemb());//disini harusnya capaian induk
+			}
+			capPembString[6] = String.valueOf(capPemb.getDeskripsiCapPemb());
+			capPembString[7] = String.valueOf(capPemb.isStatusHapusCapPemb());
+			capPembString[8] = String.valueOf(capPemb.isStatusHapusCapPemb());
+			aData.add(capPembString);
+		}
+		capPembDatatable.setAaData(aData);
+		capPembDatatable.setiTotalRecords(capPembRepo.count(""));
+		capPembDatatable.setiTotalDisplayRecords(capPembRepo.count("("+parameter.getWhere()+") AND "+filter));
+
+		return capPembDatatable;
+	}
+}

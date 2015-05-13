@@ -1,0 +1,7 @@
+package com.AIS.Modul.MataKuliah.Repository;
+
+public interface CapPembMKRepository {
+
+	public long count(String where);
+
+}

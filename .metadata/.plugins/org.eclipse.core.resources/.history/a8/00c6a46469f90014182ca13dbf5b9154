@@ -1,0 +1,74 @@
+package com.sia.main.domain;
+
+import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.NotEmpty;
+
+@Entity
+@Table(name="ekuivalensi_mk")
+public class EkuivalensiMK {
+
+	@Id
+	@GeneratedValue(generator="uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	@org.hibernate.annotations.Type(type="pg-uuid")
+	@Column(name="id_ekuivalensi_mk")
+	private UUID idEkuivalensiMK;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="id_mk")
+	private MK childMK;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="mk_id_mk")
+	private MK parentMK;
+
+	@Column(name="a_status_hapus_ekuivalensi_mk")
+	private boolean statusEkuivalensi;
+	
+	public boolean getStatusEkuivalensi() {
+		return statusEkuivalensi;
+	}
+
+	public void setStatusHapusEkuivalensi(boolean statusHapusEkuivalensi) {
+		this.statusEkuivalensi = statusHapusEkuivalensi;
+	}
+
+	public UUID getIdEkuivalensiMK() {
+		return idEkuivalensiMK;
+	}
+
+	public void setIdEkuivalensiMK(UUID idEkuivalensiMK) {
+		this.idEkuivalensiMK = idEkuivalensiMK;
+	}
+
+	public MK getChildMK() {
+		return childMK;
+	}
+
+	public void setChildMK(MK childMK) {
+		this.childMK = childMK;
+	}
+
+	public MK getParentMK() {
+		return parentMK;
+	}
+
+	public void setParentMK(MK parentMK) {
+		this.parentMK = parentMK;
+	}
+	
+	
+}

@@ -10,7 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="shortcut icon"
 		href="${pageContext.servletContext.contextPath}/resources/favicon_16.ico">
-	<title>Modern | Layouts - Horizontal Menu</title>
+	<title>Kelola Ekuivalensi Mata Kuliah</title>
 	
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<meta charset="UTF-8">
@@ -354,7 +354,7 @@
 												<td>Nama MK Utama</td> 
 												<td>Kode MK Ekuivalensi</td> 
 												<td>Nama MK Ekuivalensi </td> 
-												<td>Status hapus</td>
+												<td>Status Aktif</td>
 												<td>Aksi</td>
 											</tr>
 										</thead>
@@ -468,11 +468,11 @@
 								}
 							],
 							validationRules: {idMK:{required: true}, mkIdMK:{required: true}},
-							filters: [{id:'#filter', name:'statusHapusEkuivalensi'}],
+							filters: [{id:'#filter', name:'statusEkuivalensi'}],
 							callOnFillForm : function(response,options){ 
 								$("#idEkuivalensiMK").val(response.data.idEkuivalensiMK); 
-								$("#idMK").val(response.data.mk.idMK);
-								$("#mkIdMK").val(response.data.mk.idMK);
+								$("#idMK").val(response.data.childMK.idMK);
+								$("#mkIdMK").val(response.data.parentMK.idMK);
 							}
 						});
 					});
