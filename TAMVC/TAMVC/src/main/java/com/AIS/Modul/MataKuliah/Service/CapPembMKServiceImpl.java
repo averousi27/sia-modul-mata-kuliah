@@ -2,6 +2,7 @@ package com.AIS.Modul.MataKuliah.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,5 +64,32 @@ public class CapPembMKServiceImpl implements CapPembMKService {
 			int limit, int iDisplayStart) {
 		// TODO Auto-generated method stub
 		return capPembMKRepo.get(where, order, limit, iDisplayStart);
+	}
+	
+	@Override
+	public String save(CapPembMK capPembMK) {
+		if(capPembMK.getIdCapPembMK() != null)
+		{
+			//update
+			capPembMKRepo.update(capPembMK);
+			return capPembMK.getIdCapPembMK().toString();
+		}
+		else
+		{
+			//insert
+			return capPembMKRepo.insert(capPembMK).toString();
+		}
+	}
+
+	@Override
+	public CapPembMK findById(UUID idCapPembMK) {
+		// TODO Auto-generated method stub
+		return capPembMKRepo.findById(idCapPembMK);
+	}
+
+	@Override
+	public List<CapPemb> findParent(CapPembMK capPembMK) {
+		// TODO Auto-generated method stub 
+		return capPembMKRepo.findParent(capPembMK);
 	}
 }

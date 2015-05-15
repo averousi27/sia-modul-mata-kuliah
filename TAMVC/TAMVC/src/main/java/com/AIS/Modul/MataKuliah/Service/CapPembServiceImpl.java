@@ -18,11 +18,7 @@ public class CapPembServiceImpl implements CapPembService {
 	
 	@Autowired
 	private SubCapPembService subCapPembServ;
-	
-	private String [] column = {"cp.idCapPemb","kur.thnMulai", "kur.namaKurikulum", "satman.nmSatMan", 
-			"cp.namaCapPemb", "cp.namaCapPemb", "cp.deskripsiCapPemb", "cp.statusCapPemb"};
-	private Boolean[] searchable = {false,true,true,true,false,true,true,false};
-
+	 
 	@Override
 	public List<CapPemb> findBySatMan(UUID idSatMan) {
 		// TODO Auto-generated method stub
@@ -31,37 +27,8 @@ public class CapPembServiceImpl implements CapPembService {
 	@Override
 	public Datatable getdatatable(String sEcho, int iDisplayLength,
 			int iDisplayStart, int iSortCol_0, String sSortDir_0,
-			String sSearch, String filter) {
-		// TODO Auto-generated method stub
-		DatatableExtractParams parameter = new DatatableExtractParams(sSearch, this.column, this.searchable, iSortCol_0, sSortDir_0);
-		Datatable capPembDatatable= new Datatable();
-		capPembDatatable.setsEcho(sEcho);
-		String dbFilter = "";
-		if(filter != null && !filter.equals("")) dbFilter+=" AND "+filter; 
-		List<CapPemb> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
-		List<String[]> aData = new ArrayList<String[]>();
-		for (CapPemb capPemb : queryResult) {
-			String[] capPembString = new String[9];
-			CapPemb parentCapPemb = subCapPembServ.findParent(capPemb);
-			capPembString[0] = capPemb.getIdCapPemb().toString();
-			capPembString[1] = String.valueOf(capPemb.getKurikulum().getThnMulai());
-			capPembString[2] = String.valueOf(capPemb.getKurikulum().getNamaKurikulum());
-			capPembString[3] = String.valueOf(capPemb.getSatMan().getNmSatMan());
-			
-			capPembString[4] = String.valueOf(capPemb.getNamaCapPemb());
-			if(parentCapPemb!=null){ 
-				capPembString[5] = String.valueOf(parentCapPemb.getNamaCapPemb());//disini harusnya capaian induk
-			}
-			capPembString[6] = String.valueOf(capPemb.getDeskripsiCapPemb());
-			capPembString[7] = String.valueOf(capPemb.isStatusCapPemb());
-			capPembString[8] = String.valueOf(capPemb.isStatusCapPemb());
-			aData.add(capPembString);
-		}
-		capPembDatatable.setAaData(aData);
-		capPembDatatable.setiTotalRecords(capPembRepo.count(""));
-		capPembDatatable.setiTotalDisplayRecords(capPembRepo.count("("+parameter.getWhere()+") AND "+filter));
-
-		return capPembDatatable;
+			String sSearch, String filter) { 
+		return null;
 	}
 	@Override
 	public List<CapPemb> get() {

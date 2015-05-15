@@ -1,0 +1,89 @@
+package com.AIS.Modul.MataKuliah.Repository;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.sia.main.domain.CapPemb;
+import com.sia.main.domain.SubCapPemb;
+import com.sia.main.domain.SubCapPembMK;
+
+@Repository
+public class SubCapPembMKRepositoryImpl implements SubCapPembMKRepository {
+	
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SubCapPembMK> get(String where, String order, int limit, int offset) {
+		// TODO Auto-generated method stub
+		String dbWhere ="";
+		String dbOrder ="";
+		if(where != "") dbWhere = " WHERE "+where;
+		if(order != "") dbOrder = " ORDER BY "+order;
+		 
+		Query query = sessionFactory.getCurrentSession().createQuery("select scp from SubCapPembMK scpmk " 
+				+ "join scpmk.capPemb cp "
+				+ "join cp.satMan satman"
+				+ "join cp.kurikulum kur"
+		        + "join scpmk.capPembMK cpmk "
+				+ "join cpmk.mk"
+		        +dbWhere+dbOrder);
+		if(limit != -1 && limit>0) {
+			query.setFirstResult(offset);
+			if(offset < 0) offset = 0;
+			query.setMaxResults(limit);
+		}
+		
+		return query.list();
+	}
+	
+	@Override
+	public void update(SubCapPembMK subCapPembMK) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.update(subCapPembMK);
+		tx.commit();
+		session.flush();
+		session.close();
+	}
+
+	@Override
+	public UUID insert(SubCapPembMK subCapPembMK) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		UUID insertId= (UUID)session.save(subCapPembMK);
+		tx.commit();
+		session.flush();
+		session.close();
+		return insertId;
+	}
+
+	@Override
+	public CapPemb findByCapPembMK(UUID idCapPembMK) {
+		// TODO Auto-generated method stub
+		List<SubCapPembMK> scpMKList = findAll();
+		for (SubCapPembMK scpmk : scpMKList) {
+			if( scpmk.getCapPembMK().getIdCapPembMK().equals(idCapPembMK)){
+				return scpmk.getCapPemb();
+			}
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<SubCapPembMK> findAll() {
+		// TODO Auto-generated method stub
+		return sessionFactory.getCurrentSession().createQuery("select scpmk from SubCapPembMK scpmk WHERE scpmk.statusSubCapPembMK = false").list();
+
+	} 
+}

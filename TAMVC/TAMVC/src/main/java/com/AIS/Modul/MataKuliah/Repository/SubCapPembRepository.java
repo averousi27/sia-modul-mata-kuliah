@@ -23,5 +23,5 @@ public interface SubCapPembRepository {
 
 	public SubCapPemb findParent(CapPemb childSubCapPemb);
 
-	public CapPemb findParent(UUID idCapPemb);
+	public List<SubCapPemb> findParent(UUID idCapPemb);
 }

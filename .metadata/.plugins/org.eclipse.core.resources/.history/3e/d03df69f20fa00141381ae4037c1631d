@@ -1,0 +1,84 @@
+package com.AIS.Modul.MataKuliah.Controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.AIS.Modul.MataKuliah.Service.CapPembMKService;
+import com.AIS.Modul.MataKuliah.Service.CapPembService;
+import com.AIS.Modul.MataKuliah.Service.Datatable;
+import com.AIS.Modul.MataKuliah.Service.KurikulumService;
+import com.AIS.Modul.MataKuliah.Service.MKService;
+import com.AIS.Modul.MataKuliah.Service.SubCapPembMKService;
+import com.sia.main.domain.CapPemb;
+import com.sia.main.domain.CapPembMK;
+import com.sia.main.domain.Kurikulum;
+import com.sia.main.domain.MK;
+import com.sia.main.domain.SatMan;
+import com.sia.main.domain.SubCapPemb;
+import com.sia.main.domain.SubCapPembMK;
+
+@Controller
+@RequestMapping(value="/matakuliah/capaianbelajar")
+public class CapPembMKController {
+
+	@Autowired
+	private MKService mkServ;
+	
+	@Autowired
+	private SubCapPembMKService subCapPembMKServ;
+	
+	@Autowired
+	private CapPembService capPembServ;
+	
+	private static final Logger logger = LoggerFactory.getLogger(CapPembMKController.class); 
+	
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public ModelAndView showCapPembMK() {
+		ModelAndView mav = new ModelAndView(); 
+		List<MK> mkList = mkServ.findAll();
+		CapPembMK capPembMK = new CapPembMK(); 
+		mav.addObject("mkList", mkList); 
+		mav.addObject("capPembMK", capPembMK);
+		mav.setViewName("ViewCapaianMK");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/json", method = RequestMethod.POST)
+	public @ResponseBody Datatable json(
+			@RequestParam("sEcho") String sEcho, 
+			@RequestParam("iDisplayLength") int iDisplayLength,
+            @RequestParam("iSortCol_0") int iSortCol_0,
+            @RequestParam("sSortDir_0") String sSortDir_0,
+            @RequestParam("sSearch") String sSearch,
+			@RequestParam("iDisplayStart") int iDisplayStart,
+			@RequestParam("statusCapPembMK") String statusCapPembMK
+            ) {
+		String filter = "CAST( cpmk.statusCapPembMK as string) LIKE '%"+statusCapPembMK+"%'";
+		Datatable capPembMKDatatable = subCapPembMKServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
+		return capPembMKDatatable;
+	}	
+	
+	@RequestMapping(value="/subcapaian/json", method=RequestMethod.POST)
+	public @ResponseBody Datatable json1(
+			@RequestParam("sEcho") String sEcho, 
+			@RequestParam("iDisplayLength") int iDisplayLength,
+            @RequestParam("iSortCol_0") int iSortCol_0,
+            @RequestParam("sSortDir_0") String sSortDir_0,
+            @RequestParam("sSearch") String sSearch,
+			@RequestParam("iDisplayStart") int iDisplayStart
+            ) {
+		Datatable capPembDatatable = capPembServ.getdatatable1(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch);
+		return capPembDatatable;
+	}	
+	
+}

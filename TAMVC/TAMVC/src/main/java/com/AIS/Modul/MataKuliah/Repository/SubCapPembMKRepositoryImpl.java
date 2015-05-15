@@ -29,12 +29,12 @@ public class SubCapPembMKRepositoryImpl implements SubCapPembMKRepository {
 		if(where != "") dbWhere = " WHERE "+where;
 		if(order != "") dbOrder = " ORDER BY "+order;
 		 
-		Query query = sessionFactory.getCurrentSession().createQuery("select scp from SubCapPembMK scpmk " 
+		Query query = sessionFactory.getCurrentSession().createQuery("select scpmk from SubCapPembMK scpmk " 
 				+ "join scpmk.capPemb cp "
-				+ "join cp.satMan satman"
-				+ "join cp.kurikulum kur"
-		        + "join scpmk.capPembMK cpmk "
-				+ "join cpmk.mk"
+				+ "join scpmk.capPembMK cpmk "
+				+ "join cpmk.mk mk "
+		        + "join cp.kurikulum kur "
+		        + "join cp.satMan satman " 
 		        +dbWhere+dbOrder);
 		if(limit != -1 && limit>0) {
 			query.setFirstResult(offset);
@@ -85,5 +85,21 @@ public class SubCapPembMKRepositoryImpl implements SubCapPembMKRepository {
 		// TODO Auto-generated method stub
 		return sessionFactory.getCurrentSession().createQuery("select scpmk from SubCapPembMK scpmk WHERE scpmk.statusSubCapPembMK = false").list();
 
+	}
+
+	@Override
+	public long count(String where) {
+		// TODO Auto-generated method stub
+		String dbWhere ="";
+		if(where != "") dbWhere = " WHERE " +where;
+		Query query = sessionFactory.getCurrentSession().createQuery(
+		        "select count(*) from SubCapPembMK scpmk "
+				+ "join scpmk.capPemb cp "
+				+ "join scpmk.capPembMK cpmk "
+				+ "join cpmk.mk mk "
+		        + "join cp.kurikulum kur "
+		        + "join cp.satMan satman "  +dbWhere);
+		Long count = (Long)query.uniqueResult();
+		return count;
 	} 
 }

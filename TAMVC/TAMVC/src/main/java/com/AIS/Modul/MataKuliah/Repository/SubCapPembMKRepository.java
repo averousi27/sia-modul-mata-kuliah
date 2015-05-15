@@ -16,4 +16,7 @@ public interface SubCapPembMKRepository {
 
 	public CapPemb findByCapPembMK(UUID idCapPembMK);
 
+	public long count(String string);
+ 
+
 }

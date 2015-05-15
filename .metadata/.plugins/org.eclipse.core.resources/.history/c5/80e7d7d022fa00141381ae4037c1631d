@@ -1,0 +1,67 @@
+package com.AIS.Modul.MataKuliah.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.AIS.Modul.MataKuliah.Repository.CapPembMKRepository;
+import com.sia.main.domain.CapPemb;
+import com.sia.main.domain.CapPembMK;
+
+@Service
+public class CapPembMKServiceImpl implements CapPembMKService {
+	
+	@Autowired
+	private CapPembMKRepository capPembMKRepo;
+	
+	@Autowired
+	private SubCapPembMKService subCapPembMKServ;
+	
+	@Autowired
+	private CapPembService capPembServ;
+	
+	private String [] column = {"cpmk.idCapPembMK","cpmk.namaCapPembMK", "mk.namaMK", 
+			"cp.namaCapPemb", "satman.nmSatMan",  "cpmk.statusCapPembMK"};
+	private Boolean[] searchable = {false,true,true,true,true,false};
+	
+	@Override
+	public Datatable getdatatable(String sEcho, int iDisplayLength,
+			int iDisplayStart, int iSortCol_0, String sSortDir_0,
+			String sSearch, String filter) {
+		// TODO Auto-generated method stub
+		DatatableExtractParams parameter = new DatatableExtractParams(sSearch, this.column, this.searchable, iSortCol_0, sSortDir_0);
+		Datatable capPembMKDatatable= new Datatable();
+		capPembMKDatatable.setsEcho(sEcho);
+		String dbFilter = "";
+		if(filter != null && !filter.equals("")) dbFilter+=" AND "+filter; 
+		List<CapPembMK> queryResult = get("("+parameter.getWhere()+")"+dbFilter, parameter.getOrder(), iDisplayLength, iDisplayStart);
+		List<String[]> aData = new ArrayList<String[]>();
+		for (CapPembMK capPembMK : queryResult) {
+			String[] capPembMKString = new String[9];
+			CapPemb capPembSatMan = subCapPembMKServ.findByCapPembMK(capPembMK);
+			capPembMKString[0] = capPembMK.getIdCapPembMK().toString();
+			capPembMKString[1] = String.valueOf(capPembMK.getNamaCapPembMK());
+			capPembMKString[2] = String.valueOf(capPembMK.getMk().getNamaMK()); 
+			if(capPembSatMan!=null){ 
+				capPembMKString[3] = String.valueOf(capPembSatMan.getNamaCapPemb()); 
+				capPembMKString[4] = String.valueOf(capPembSatMan.getSatMan().getNmSatMan()); 
+			} 
+			capPembMKString[5] = String.valueOf(capPembMK.isStatusCapPembMK());
+			capPembMKString[6] = String.valueOf(capPembMK.isStatusCapPembMK());
+			aData.add(capPembMKString);
+		}
+		capPembMKDatatable.setAaData(aData);
+		capPembMKDatatable.setiTotalRecords(capPembMKRepo.count(""));
+		capPembMKDatatable.setiTotalDisplayRecords(capPembMKRepo.count("("+parameter.getWhere()+") AND "+filter));
+
+		return capPembMKDatatable;
+	}
+
+	private List<CapPembMK> get(String where, String order,
+			int limit, int iDisplayStart) {
+		// TODO Auto-generated method stub
+		return capPembMKRepo.get(where, order, limit, iDisplayStart);
+	}
+}

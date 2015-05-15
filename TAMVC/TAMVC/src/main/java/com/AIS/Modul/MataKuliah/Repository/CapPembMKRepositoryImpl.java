@@ -87,9 +87,9 @@ public class CapPembMKRepositoryImpl implements CapPembMKRepository{
  
 	@SuppressWarnings("unchecked")
 	@Override
-	public CapPemb findById(UUID idCapPembMK) {
+	public CapPembMK findById(UUID idCapPembMK) {
 		// TODO Auto-generated method stub
-		List<CapPemb> queryResult = sessionFactory.getCurrentSession().createQuery("select cpmk from CapPembMK cpmk WHERE  cpmk.idCapPembMK='"+idCapPembMK.toString()+"'").list();
+		List<CapPembMK> queryResult = sessionFactory.getCurrentSession().createQuery("select cpmk from CapPembMK cpmk WHERE  cpmk.idCapPembMK='"+idCapPembMK.toString()+"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);
 	} 
@@ -98,6 +98,15 @@ public class CapPembMKRepositoryImpl implements CapPembMKRepository{
 	public List<CapPemb> findAll() {
 		// TODO Auto-generated method stub
 		return sessionFactory.getCurrentSession().createQuery("select cpmk from CapPembMK cpmk WHERE cpmk.statusCapPembMK = false").list();
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CapPemb> findParent(CapPembMK capPembMK) {
+		// TODO Auto-generated method stub
+		List<CapPemb> cpList = sessionFactory.getCurrentSession().createQuery("select scpmk.capPemb from SubCapPembMK scpmk WHERE scpmk.capPembMK = '"+capPembMK+"'").list();
+		return cpList;
 
 	}
 

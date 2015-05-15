@@ -15,11 +15,13 @@ public interface CapPembMKRepository {
 
 	public List<CapPemb> findAll();
 
-	public CapPemb findById(UUID idCapPembMK);
+	public CapPembMK findById(UUID idCapPembMK);
 
 	public UUID insert(CapPembMK capPembMK);
 
 	public void update(CapPembMK capPembMK);
+
+	public List<CapPemb> findParent(CapPembMK capPembMK);
 
 
 }

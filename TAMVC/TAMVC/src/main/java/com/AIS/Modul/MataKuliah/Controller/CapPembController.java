@@ -52,12 +52,10 @@ public class CapPembController {
 		ModelAndView mav = new ModelAndView(); 
 		List<Kurikulum> kurikulumList = kurikulumServ.findAll();
 		List<SatMan> satManList	= satManServ.findAll(); 
-		CapPemb capPemb = new CapPemb();
-		List<SubCapPemb> subCapPembList = new ArrayList<SubCapPemb>();
+		CapPemb capPemb = new CapPemb(); 
 		mav.addObject("kurikulumList", kurikulumList);
 		mav.addObject("satManList", satManList);
-		mav.addObject("capPemb", capPemb);
-		mav.addObject("subCapPembList", subCapPembList);
+		mav.addObject("capPemb", capPemb); 
 		mav.setViewName("ViewCapaianSatMan");
 		return mav;
 	}
@@ -85,9 +83,10 @@ public class CapPembController {
 			@RequestParam("iDisplayStart") int iDisplayStart,
 			@RequestParam("statusCapPemb") String statusCapPemb
             ) {
-		String filter = "CAST( cp.statusCapPemb as string) LIKE '%"+statusCapPemb+"%'";
-		Datatable capPembDatatable = capPembServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
-		return capPembDatatable;
+		String filter = "CAST( child.statusCapPemb as string) LIKE '%"+statusCapPemb+"%'"; 
+		Datatable subCapPembDatatable = subCapPembServ.getdatatable(sEcho, iDisplayLength, iDisplayStart, iSortCol_0, sSortDir_0, sSearch,filter);
+//		return capPembDatatable;
+		return subCapPembDatatable;
 	}	
 	
 	@RequestMapping(value = "/simpan", method = RequestMethod.POST)
@@ -114,23 +113,26 @@ public class CapPembController {
         	response.setMessage(message);
         	response.setData(fieldError);
             return response;
+        } 
+        response.setData(capPembServ.save(capPemb));   
+        if(idIndukCapPemb.length>1){
+        	for (UUID uuid : idIndukCapPemb) {
+	        	if(uuid!=null){ 
+	        		CapPemb parentCapPemb = capPembServ.findById(uuid);
+		        	SubCapPemb subCapPembNew = new SubCapPemb();
+		            subCapPembNew.setParentCapPemb(parentCapPemb);
+		            subCapPembNew.setChildCapPemb(capPemb);
+		            response.setData(subCapPembServ.save(subCapPembNew)); 
+	        	}
+        	}	  
         }
-        response.setData(capPembServ.save(capPemb)); 
-        if(idIndukCapPemb!=null){ 
-	        for (UUID idCapPemb : idIndukCapPemb) { 
-	            CapPemb parentCapPemb = capPembServ.findById(idCapPemb);
-	            SubCapPemb subCapPembNew = new SubCapPemb();
-	            subCapPembNew.setParentCapPemb(parentCapPemb);
-	            subCapPembNew.setChildCapPemb(capPemb);
-	            response.setData(subCapPembServ.save(subCapPembNew));
-			}	
-        }
-        else{
+    	else{
         	SubCapPemb subCapPembNew = new SubCapPemb();
             subCapPembNew.setParentCapPemb(null);
             subCapPembNew.setChildCapPemb(capPemb);
             response.setData(subCapPembServ.save(subCapPembNew));
         }
+        
         if(response.getData()!=null) response.setMessage("Data berhasil disimpan");
         else 
         {
@@ -141,11 +143,10 @@ public class CapPembController {
     }
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public @ResponseBody AjaxResponse edit(@RequestParam("idCapPemb") UUID idCapPemb) {
-		AjaxResponse response;
-		System.out.println(idCapPemb.toString());
-		CapPemb capPemb = capPembServ.findById(idCapPemb);
-		System.out.println(capPemb.getIdCapPemb().toString());
+    public @ResponseBody AjaxResponse edit(@RequestParam("idCapPemb") UUID idCapPemb ) {
+		AjaxResponse response; 
+		CapPemb capPemb = capPembServ.findById(idCapPemb); 
+		
 		if(capPemb == null) response = new AjaxResponse("error","Data tidak ditemukan",null);
 		else response = new AjaxResponse("ok","Data ditemukan",capPemb);
         return response;
@@ -161,4 +162,16 @@ public class CapPembController {
 		response = new AjaxResponse("ok","Data dihapus",null);
         return response;
     } 
+	
+	@RequestMapping(value="/getparentlist", method = RequestMethod.GET)
+	public @ResponseBody UUID[] getParentList(@RequestParam("idCapPemb") UUID idCapPemb,
+			@RequestParam("idIndukCapPemb[]") UUID[] idIndukCapPemb){ 
+		List<SubCapPemb> scpList = subCapPembServ.findParent(idCapPemb); 
+		int i = 1;
+		for(SubCapPemb scp : scpList){ 
+			idIndukCapPemb[i] = scp.getParentCapPemb().getIdCapPemb();
+			i++;
+		} 
+		return idIndukCapPemb;
+	}
 }

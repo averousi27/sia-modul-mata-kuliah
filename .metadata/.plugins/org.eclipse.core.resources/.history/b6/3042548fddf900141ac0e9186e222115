@@ -1,0 +1,54 @@
+package com.AIS.Modul.MataKuliah.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.AIS.Modul.MataKuliah.Repository.SubCapPembRepository;
+import com.sia.main.domain.CapPemb;
+import com.sia.main.domain.SubCapPemb;
+
+@Service
+public class SubCapPembServiceImpl implements SubCapPembService {
+
+	@Autowired
+	private SubCapPembRepository subCapPembRepo;
+	
+	@Override
+	public CapPemb findParent(CapPemb childSubCapPemb) {
+		// TODO Auto-generated method stub
+		UUID idCapPemb = childSubCapPemb.getIdCapPemb();
+		return subCapPembRepo.findParent(idCapPemb);
+	}
+
+	@Override
+	public String save(SubCapPemb subCapPembNew) {
+		// TODO Auto-generated method stub
+		if(subCapPembNew.getIdSubCapPemb() != null)
+		{
+			//update
+			subCapPembRepo.update(subCapPembNew);
+			return subCapPembNew.getIdSubCapPemb().toString();
+		}
+		else
+		{
+			//insert 
+			return subCapPembRepo.insert(subCapPembNew).toString();
+		}
+	}
+	
+	private String [] column = {"child.idCapPemb","kur.thnMulai", "kur.namaKurikulum", "satman.nmSatMan", 
+			"child.namaCapPemb", "parent.namaCapPemb", "child.deskripsiCapPemb", "child.statusCapPemb"};
+	private Boolean[] searchable = {false,true,true,true,true,true,true,false};
+	@Override
+	public Datatable getdatatable(String sEcho, int iDisplayLength,
+			int iDisplayStart, int iSortCol_0, String sSortDir_0,
+			String sSearch, String filter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+ 
+}

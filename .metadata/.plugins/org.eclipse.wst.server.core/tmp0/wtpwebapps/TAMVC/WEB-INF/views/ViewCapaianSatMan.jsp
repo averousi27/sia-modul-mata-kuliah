@@ -352,8 +352,8 @@
 												<td>Tahun Kurikulum</td>   
 												<td>Nama Kurikulum</td> 
 												<td>Nama Satuan Manajemen</td> 
-												<td>Nama Capaian Induk</td>
 												<td>Nama Capaian Utama</td> 
+												<td>Nama Capaian Induk</td>
 												<td>Deskripsi Capaian</td>
 												<td>Status Hapus</td>
 												<td>Aksi</td>
@@ -412,11 +412,12 @@
 										</div> 
 										<div class="form-group">
 											<label>Induk Capaian Pembelajaran</label> 
-											<br />
+											<br />  
 											<button type="button" class="btn btn-primary" onclick="showModal()">Tambah induk capaian pembelajaran</button>
-										</div> 
-										 <div id="parentCapPemb"> 
-										 </div> 
+										</div>  
+										 <div id="parentCapPemb">   
+										  <input type='hidden' name='idIndukCapPemb[]' value=null />
+										 </div>  
 										<div class="form-group">
 											<label>Nama Capaian Belajar</label>
 											<form:input path="namaCapPemb" class="form-control" placeholder="Berisi nama capaian pembelajaran" required="true" />
@@ -458,6 +459,7 @@
 										</tr>
 									</thead>
 									<tbody>
+											 
 									</tbody>
 								</table>
 							</form>
@@ -527,14 +529,28 @@
 							],
 							validationRules: {idKurikulum:{required: true}, idSatMan:{required: true}, namaCapPemb:{required: true}},
 							filters: [{id:'#filter', name:'statusCapPemb'}],
-							callOnFillForm : function(response,options){ 
-								$("#parentCapPemb").html("");
+							callOnFillForm : function(response,options){    
 								$("#idCapPemb").val(response.data.idCapPemb);
 								$("#idKurikulum").val(response.data.kurikulum.idKurikulum);
-								$("#idSatMan").val(response.data.satMan.idSatMan); 
-							}
+								$("#idSatMan").val(response.data.satMan.idSatMan);  
+								$("#parentCapPemb").val(function () {
+									$.ajax({
+										type: 'get',
+										url : context_path+'capaianbelajar/satuanmanajemen/getparentlist',
+										data : { idIndukCapPemb : id},
+										contentType : 'application/json; charset=utf-8', 
+										success : function(data){
+											alert(data.message);
+										},
+										error: function(e){
+											alert(e.message);
+										}
+									}) 
+								});
+							} 
 							
 						});
+						
 						showModal = function (){
 							$('#myModal').modal('show');
 						}
@@ -574,16 +590,14 @@
 								{ "bVisible":    false }, 
 							],
 							callOnSelect : function(aData, options){
-								console.log(aData);
-// 								$("#parentCapPemb").html(aData[4]);  
+								console.log(aData);  
 								$("#parentCapPemb").append(
 										"<div class='alert alert-warning alert-dismissable'>"
 											+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>x</button>"
 											+"<p>"+aData[4]+"<p>"
 										+"</div>" 
  										+"<input type='hidden' name='idIndukCapPemb[]' value='"+ aData[0] +"' />"
-										);
-								//$("#idIndukCapPemb[]").val(aData[0]);
+										);  
 								$('#myModal').modal('toggle');
 							}
 						});

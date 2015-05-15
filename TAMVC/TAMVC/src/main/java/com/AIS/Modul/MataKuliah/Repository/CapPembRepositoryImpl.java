@@ -21,14 +21,8 @@ public class CapPembRepositoryImpl implements CapPembRepository{
 	 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CapPemb> findBySatMan(UUID idSatMan) {
-		// TODO Auto-generated method stub
-		List<CapPemb> queryResult = sessionFactory.getCurrentSession().createQuery("select cp from CapPemb cp "
-				+ "join cp.satMan satman "
-				+ "join cp.kurikulum kur " 
-				+ "where satman.idSatMan ='"+idSatMan.toString()+"'").list();
-		if(queryResult.size()==0) return null;
-		return queryResult;
+	public List<CapPemb> findBySatMan(UUID idSatMan) { 
+		return null;
 	}
 
 	@Override

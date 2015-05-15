@@ -26,9 +26,11 @@ public class SubCapPembRepositoryImpl implements SubCapPembRepository {
 		String dbWhere ="";
 		if(where != "") dbWhere = " WHERE " +where;
 		Query query = sessionFactory.getCurrentSession().createQuery(
-		        "select count(*) from SubCapPemb scp "
-		        + "join scp.capPemb child "
-		        + "join scp.capPemb parent " +dbWhere);
+		        "select count(*) from SubCapPemb scp " 
+				+ "inner join scp.childCapPemb child "
+		        + "left join scp.parentCapPemb parent "
+				+ "inner join child.kurikulum kur "
+		        + "inner join child.satMan satman " +dbWhere);
 		Long count = (Long)query.uniqueResult();
 		return count;
 	}
@@ -43,8 +45,11 @@ public class SubCapPembRepositoryImpl implements SubCapPembRepository {
 		if(order != "") dbOrder = " ORDER BY "+order;
 		 
 		Query query = sessionFactory.getCurrentSession().createQuery("select scp from SubCapPemb scp " 
-				+ "join scp.capPemb child "
-		        + "join scp.capPemb parent "+dbWhere+dbOrder);
+				+ "inner join scp.childCapPemb child "
+		        + "left join scp.parentCapPemb parent "
+				+ "inner join child.kurikulum kur "
+		        + "inner join child.satMan satman "
+		        +dbWhere+dbOrder);
 		if(limit != -1 && limit>0) {
 			query.setFirstResult(offset);
 			if(offset < 0) offset = 0;
@@ -82,8 +87,10 @@ public class SubCapPembRepositoryImpl implements SubCapPembRepository {
 	public SubCapPemb findById(UUID idSubCapPemb) {
 		// TODO Auto-generated method stub
 		List<SubCapPemb> queryResult = sessionFactory.getCurrentSession().createQuery("select scp from SubCapPemb scp "
-				+ "join scp.capPemb child "
-				+ "join scp.capPemb parent  WHERE  scp.idSubCapPemb='"+idSubCapPemb.toString()+"'").list();
+				+ "join scp.childCapPemb child "
+		        + "join scp.parentCapPemb parent "
+				+ "join child.kurikulum kur "
+		        + "join child.satMan satman WHERE  scp.idSubCapPemb='"+idSubCapPemb.toString()+"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);
 	} 
@@ -96,23 +103,29 @@ public class SubCapPembRepositoryImpl implements SubCapPembRepository {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public SubCapPemb findParent(CapPemb childSubCapPemb) {
+	public List<SubCapPemb> findParent(UUID idCapPemb) {
 		// TODO Auto-generated method stub
 		List<SubCapPemb> queryResult = (List<SubCapPemb>) sessionFactory.getCurrentSession().createQuery("select scp from SubCapPemb scp "
 				+ "join scp.childCapPemb child "
-				+ "join scp.parentCapPemb parent  WHERE scp.childCapPemb = '"+ childSubCapPemb+"'");
+				+ "join scp.parentCapPemb parent  WHERE child.idCapPemb = '"+ idCapPemb.toString()+"'");
 		if(queryResult.size()==0) return null;
-		return queryResult.get(0);
+		return queryResult;
 	}
 
 	@Override
-	public CapPemb findParent(UUID idCapPemb) { 
-		List<SubCapPemb> scpList = findAll();
-		for (SubCapPemb scp : scpList) {
-			if( scp.getChildCapPemb().getIdCapPemb().equals(idCapPemb)){
-				return scp.getParentCapPemb();
-			}
-		}
+	public SubCapPemb findParent(CapPemb childSubCapPemb) {
+		// TODO Auto-generated method stub
 		return null;
-	} 
+	}
+
+//	@Override
+//	public CapPemb findParent(UUID idCapPemb) { 
+//		List<SubCapPemb> scpList = findAll();
+//		for (SubCapPemb scp : scpList) {
+//			if( scp.getChildCapPemb().getIdCapPemb().equals(idCapPemb)){
+//				return scp.getParentCapPemb();
+//			}
+//		}
+//		return null;
+//	} 
 }

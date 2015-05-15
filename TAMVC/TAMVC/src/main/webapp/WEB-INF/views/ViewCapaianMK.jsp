@@ -10,7 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="shortcut icon"
 		href="${pageContext.servletContext.contextPath}/resources/favicon_16.ico">
-	<title>Kelola Capaian Mata Kuliah</title>
+	<title>Kelola Capaian Belajar untuk Mata Kuliah</title>
 	
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<meta charset="UTF-8">
@@ -323,10 +323,10 @@
 						<div class="col-md-12" style="margin-bottom:10px;">
 						 	<div class="panel panel-white">
 								<div class="panel-heading clearfix">
-									<h4 class="panel-title">Capaian Pembelajaran Mata Kuliah</h4>
+									<h4 class="panel-title">Mata Kuliah</h4>
 								</div>
 								<div class="panel-body">  
-									<p>Tabel menampilkan capaian pembelajaran mata kuliah</p>
+									<p>Tabel menampilkan capaian pembelajaran untuk mata kuliah</p>
 									<div class="row">
 										<div class="col-md-4">
 											<div class="form-group">
@@ -348,13 +348,13 @@
 											<tr>
 												<td> 
 														<input class="checkbox-all" type="checkbox" id="flat-checkbox-1"> 
-												</td>    
-												<td>Capaian MK</td> 
-												<td>Nama MK</td>
+												</td>   
+												<td>Mata Kuliah</td>
+												<td>Nama Capaian Utama</td> 
+												<td>Satuan Manajemen</td>
+												<td>Nama Capaian Induk</td>
 												<td>Deskripsi Capaian</td>
-												<td>Satuan Manajemen</td> 
-												<td>Capaian Satuan Manajemen</td>
-												<td>Status Aktif</td>
+												<td>Status Hapus</td>
 												<td>Aksi</td>
 											</tr>
 										</thead>
@@ -366,12 +366,12 @@
 							<div class="row">
 								<div class="col-md-8 masteractions">
 									<div class="pull-right">  
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/rencanapembelajaran/'">
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/rumpun/'">
 											  Selanjutnya >>
 										</button>
 									</div> 
 									<div class="pull-right"> 
-										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/matakuliah/ekuivalensi/'">
+										<button type="button" class="btn btn-primary btn-block" onclick="location.href='/modul/kurikulum/'">
 											 << Kembali
 										</button>
 										</div>
@@ -388,32 +388,35 @@
 									<h4 class="panel-title">Capaian Belajar</h4>
 								</div>
 								<div class="panel-body">
-									<h4 id="title">Kelola capaian belajar mata kuliah</h4>
+									<h4 id="title">Kelola capaian belajar untuk mata kuliah</h4>
 									<form:form role="form" commandName="capPembMK" class="formdetail"> 
+									<form:hidden path="idCapPembMK" class="form-control" />
 										<div class="form-group">
-											<label>Kode dan Nama Mata Kuliah</label>
+											<label>Mata Kuliah</label>
 											<select id="idMK" name="idMK" class="form-control">
-													<option value="">Pilih kode dan nama mata kuliah</option> 
+													<option value="">Pilih kode dan nama kurikulum</option> 
 												<c:forEach items="${mkList}" var="mk"> 
 													<option value="${mk.idMK}">${mk.kodeMK} - ${mk.namaMK}</option>
 												</c:forEach> 
 											</select>
-										</div>  
+										</div>   
 										<div class="form-group">
-											<label>Capaian Pembelajaran Satuan Manajemen</label> 
-											<br />
+											<label>Capaian Pembelajaran dari Satuan Manajemen</label> 
+											<br />  
+											
 											<button type="button" class="btn btn-primary" onclick="showModal()">Tambah capaian pembelajaran satuan manajemen</button>
-										</div> 
-										 <div id="capPembSatMan">  
+										</div>  
+										 <div id="parentCapPemb">   
+										 <input type='hidden' name='idIndukCapPembMK[]' value="" />
 										 </div> 
 										<div class="form-group">
-											<label>Nama Capaian Mata Kuliah</label>
-											<form:input path="namaCapPembMK" class="form-control" placeholder="Berisi nama capaian pembelajaran mata kuliah" required="true" />
-											<form:hidden path="idCapPembMK" class="form-control" />
+											<label>Nama Capaian Belajar Mata Kuliah</label>
+											<form:input path="namaCapPembMK" class="form-control" placeholder="Berisi nama capaian pembelajaran untuk mata kuliah" required="true" />
+											
 										</div> 
 										<div class="form-group">
-											<label>Deskripsi Capaian Belajar</label>
-											<form:input path="deskripsiCapPembMK" class="form-control" placeholder="Berisi deskripsi capaian pembelajaran mata kuliah" />
+											<label>Deskripsi Capaian Belajar Mata Kuliah</label>
+											<form:input path="deskripsiCapPembMK" class="form-control" placeholder="Berisi deskripsi capaian pembelajaran untuk mata kuliah" />
 										</div>
 										
 										<div class="form-group detailcontrol">
@@ -428,10 +431,10 @@
 				    <div class="modal-content">
 				      <div class="modal-header">
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				        <h4 class="modal-title">Capaian Pembelajaran Satuan Manajemen</h4>
+				        <h4 class="modal-title">Capaian Pembelajaran dari Satuan Manajemen</h4>
 				      </div>
 				      <div class="modal-body">
-				      	<div id="masterpageCapPembMK" class ="col-md-12"> 
+				      	<div id="masterpageCapPembMK"> 
 							<form class="tableform">
 								<table class="table table-striped table-bordered table-hover table-checkable table-colvis datatable" style="width:100%">
 									<thead>
@@ -447,6 +450,7 @@
 										</tr>
 									</thead>
 									<tbody>
+											 
 									</tbody>
 								</table>
 							</form>
@@ -470,7 +474,7 @@
 							addUrl: context_path+'matakuliah/capaianbelajar/simpan',
 							editUrl: context_path+'matakuliah/capaianbelajar/simpan',
 							deleteUrl: context_path+'matakuliah/capaianbelajar/deletemany',
-							primaryKey: 'idCapPemMK',
+							primaryKey: 'idCapPembMK',
 					        order: [[3,"asc"]],
 							editOnClick: false,
 							editOnClickRow: true,
@@ -483,21 +487,21 @@
 										return '<input type="checkbox" class="checkbox-data" name="idCapPembMK[]" value="'+data+'">';
 									}
 								},
-								/* capaian mk */
+								/* mata kuliah */
 								{ "bVisible":    true }, 
-								/* nama mk */
+								/* nama capaian utama */
+								{ "bVisible":    true }, 
+								/* Nama satuan manajemen */
+								{ "bVisible":    true }, 
+								/* nama capaian induk */
 								{ "bVisible":    true }, 
 								/* deskripsi capaian */
-								{ "bVisible":    false }, 
-								/* nama satuan manajemen */
-								{ "bVisible":    true },
-								/* nama capaian satuan manajemen */
-								{ "bVisible":    true }, 
+								{ "bVisible":    false },
 								/*status hapus*/
 								{ 
 									"bVisible":    false, 
-									mRender: function(data,type,full){x
-										if(full[7]=='false') return "Aktif";
+									mRender: function(data,type,full){
+										if(full[5]=='false') return "Aktif";
 										return "Terhapus";
 									}
 								},
@@ -507,7 +511,7 @@
 									bSortable: false,
 									mRender: function(data,type,full){
 										var action = '<button type="button" class="btn btn-primary editrow">Edit</button>';
-										if(full[7]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
+										if(full[5]=='false') return action += ' <button type="button" class="btn btn-danger deleterow">Hapus</button>';
 										return action;
 									}
 								}
@@ -515,10 +519,10 @@
 							validationRules: {idMK:{required: true}, namaCapPembMK:{required: true}},
 							filters: [{id:'#filter', name:'statusCapPembMK'}],
 							callOnFillForm : function(response,options){ 
-								$("#capPembSatMan").html("");
+								$("#parentCapPemb").html("");
 								$("#idCapPembMK").val(response.data.idCapPembMK);
-								$("#idMK").val(response.data.mk.idMK); 
-							}
+								$("#idMK").val(response.data.mk.idMK);
+							} 
 							
 						});
 						showModal = function (){
@@ -530,14 +534,14 @@
 						})
 						$('#masterpageCapPembMK').masterPage(
 						{
-							detailFocusId: '#idCapPemb',
+							detailFocusId: '#idIndukCapPemb',
 							dataUrl: context_path+'matakuliah/capaianbelajar/subcapaian/json',
 							detailUrl: context_path+'matakuliah/capaianbelajar/subcapaian/edit',
 							primaryKey: 'idCapPemb',
 					        order: [[3,"asc"]],
 							editOnClick: false,
 							dialogDetail: '',
-							editOnClickRow: true,
+							editOnClickRow: false,
 							cols: [
 								/* id capaian pembelajaran */
 								{ 
@@ -559,16 +563,15 @@
 								/* deskripsi */
 								{ "bVisible":    false }, 
 							],
-							callOnSelect:function(aData, options){
-// 								$("#parentCapPemb").html(aData[4]);  
-								$("#capPembSatMan").append(
+							callOnSelect : function(aData, options){
+								console.log(aData);  
+								$("#parentCapPemb").append(
 										"<div class='alert alert-warning alert-dismissable'>"
 											+"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>x</button>"
 											+"<p>"+aData[4]+"<p>"
 										+"</div>" 
-										+"<input type='hidden' name='idCapPembSatMan[]' value='"+ aData[0] +"' />"
-										);
-// 								$("#idCapPemb[]").val(aData[0]);
+ 										+"<input type='hidden' name='idIndukCapPembMK[]' value='"+ aData[0] +"' />"
+										);  
 								$('#myModal').modal('toggle');
 							}
 						});
