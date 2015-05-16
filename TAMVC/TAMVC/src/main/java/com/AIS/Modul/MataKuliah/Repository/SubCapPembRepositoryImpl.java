@@ -86,11 +86,11 @@ public class SubCapPembRepositoryImpl implements SubCapPembRepository {
 	@Override
 	public SubCapPemb findById(UUID idSubCapPemb) {
 		// TODO Auto-generated method stub
-		List<SubCapPemb> queryResult = sessionFactory.getCurrentSession().createQuery("select scp from SubCapPemb scp "
-				+ "join scp.childCapPemb child "
-		        + "join scp.parentCapPemb parent "
-				+ "join child.kurikulum kur "
-		        + "join child.satMan satman WHERE  scp.idSubCapPemb='"+idSubCapPemb.toString()+"'").list();
+		List<SubCapPemb> queryResult = sessionFactory.getCurrentSession().createQuery("select scp from SubCapPemb scp " 
+				+ "inner join scp.childCapPemb child "
+		        + "left join scp.parentCapPemb parent "
+				+ "inner join child.kurikulum kur "
+		        + "inner join child.satMan satman  WHERE  scp.idSubCapPemb='"+idSubCapPemb.toString()+"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult.get(0);
 	} 
@@ -103,29 +103,26 @@ public class SubCapPembRepositoryImpl implements SubCapPembRepository {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<SubCapPemb> findParent(UUID idCapPemb) {
+	public List<SubCapPemb> findParent(String idCapPemb) {
 		// TODO Auto-generated method stub
-		List<SubCapPemb> queryResult = (List<SubCapPemb>) sessionFactory.getCurrentSession().createQuery("select scp from SubCapPemb scp "
-				+ "join scp.childCapPemb child "
-				+ "join scp.parentCapPemb parent  WHERE child.idCapPemb = '"+ idCapPemb.toString()+"'");
+		List<SubCapPemb> queryResult = sessionFactory.getCurrentSession().createQuery("select scp from SubCapPemb scp " 
+				+ "inner join scp.childCapPemb child "
+		        + "left join scp.parentCapPemb parent "
+				+ "inner join child.kurikulum kur "
+		        + "inner join child.satMan satman  WHERE child.idCapPemb = '"+ idCapPemb.toString()+"'").list();
 		if(queryResult.size()==0) return null;
 		return queryResult;
 	}
+ 
 
 	@Override
-	public SubCapPemb findParent(CapPemb childSubCapPemb) {
+	public void delete(UUID idSubCapPemb) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-//	@Override
-//	public CapPemb findParent(UUID idCapPemb) { 
-//		List<SubCapPemb> scpList = findAll();
-//		for (SubCapPemb scp : scpList) {
-//			if( scp.getChildCapPemb().getIdCapPemb().equals(idCapPemb)){
-//				return scp.getParentCapPemb();
-//			}
-//		}
-//		return null;
-//	} 
+		SubCapPemb scpObj = findById(idSubCapPemb);
+		if(scpObj!=null){ 
+			sessionFactory.getCurrentSession().delete(scpObj);
+        	sessionFactory.getCurrentSession().flush();
+		} 
+        System.out.println("data sudah terhapus");
+	} 
 }

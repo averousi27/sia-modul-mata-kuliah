@@ -95,10 +95,8 @@ public class CapPembController {
     		@RequestParam ("idIndukCapPemb[]") UUID[] idIndukCapPemb,
     		BindingResult result, Map<String, Object> model) {
 		AjaxResponse response = new AjaxResponse();  
-		SatMan satManObj = satManServ.findById(idSatMan); 
-		Kurikulum kur = kurikulumServ.findById(idKurikulum);
-		capPemb.setSatMan(satManObj);
-		capPemb.setKurikulum(kur);
+ 
+        System.out.println("ulala");
         if (result.hasErrors()) {
         	response.setStatus("error");
         	List<FieldError> fieldError = result.getFieldErrors();
@@ -114,9 +112,22 @@ public class CapPembController {
         	response.setData(fieldError);
             return response;
         } 
-        response.setData(capPembServ.save(capPemb));   
+        //save
+    	SatMan satManObj = satManServ.findById(idSatMan); 
+		Kurikulum kur = kurikulumServ.findById(idKurikulum);
+		capPemb.setSatMan(satManObj);
+		capPemb.setKurikulum(kur);
+        response.setData(capPembServ.save(capPemb));  
+
+        //edit parent cappemb
+        List<SubCapPemb> scpList = subCapPembServ.findParent(capPemb.getIdCapPemb().toString()); 
+        	for(SubCapPemb scp : scpList){
+        		subCapPembServ.delete(scp.getIdSubCapPemb()); 
+        } 
+        
         if(idIndukCapPemb.length>1){
         	for (UUID uuid : idIndukCapPemb) {
+        		System.out.println(uuid);
 	        	if(uuid!=null){ 
 	        		CapPemb parentCapPemb = capPembServ.findById(uuid);
 		        	SubCapPemb subCapPembNew = new SubCapPemb();
@@ -146,7 +157,6 @@ public class CapPembController {
     public @ResponseBody AjaxResponse edit(@RequestParam("idCapPemb") UUID idCapPemb ) {
 		AjaxResponse response; 
 		CapPemb capPemb = capPembServ.findById(idCapPemb); 
-		
 		if(capPemb == null) response = new AjaxResponse("error","Data tidak ditemukan",null);
 		else response = new AjaxResponse("ok","Data ditemukan",capPemb);
         return response;
@@ -164,14 +174,21 @@ public class CapPembController {
     } 
 	
 	@RequestMapping(value="/getparentlist", method = RequestMethod.GET)
-	public @ResponseBody UUID[] getParentList(@RequestParam("idCapPemb") UUID idCapPemb,
-			@RequestParam("idIndukCapPemb[]") UUID[] idIndukCapPemb){ 
+	public @ResponseBody AjaxResponse getParentList(@RequestParam("idCapPemb") String idCapPemb) {
+		AjaxResponse respongan = null;
+		List<UUID> idIndukCapPemb = new ArrayList<UUID>();  
 		List<SubCapPemb> scpList = subCapPembServ.findParent(idCapPemb); 
-		int i = 1;
-		for(SubCapPemb scp : scpList){ 
-			idIndukCapPemb[i] = scp.getParentCapPemb().getIdCapPemb();
-			i++;
-		} 
-		return idIndukCapPemb;
+		if(scpList!=null){
+			for(SubCapPemb scp : scpList){ 
+				if(scp.getParentCapPemb().getIdCapPemb()!=null){ 
+					idIndukCapPemb.add(scp.getParentCapPemb().getIdCapPemb()); 
+				} 
+			} 
+			respongan = new AjaxResponse("ok","Success",scpList); 
+		}
+		else if(scpList==null){ 
+			respongan = new AjaxResponse("ok","parent tidak ada",null); 
+		}
+		return respongan;
 	}
 }

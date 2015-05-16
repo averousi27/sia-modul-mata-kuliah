@@ -8,7 +8,7 @@ import com.sia.main.domain.SubCapPemb;
 
 public interface SubCapPembService {
 
-	public List<SubCapPemb> findParent(UUID idSubCapPemb);
+	public List<SubCapPemb> findParent(String idSubCapPemb);
 
 	public String save(SubCapPemb scpNew);
 
@@ -18,6 +18,8 @@ public interface SubCapPembService {
 
 	public List<SubCapPemb> get(String string, String order,
 			int iDisplayLength, int iDisplayStart);
+
+	public void delete(UUID idSubCapPemb);
 
 	
 }

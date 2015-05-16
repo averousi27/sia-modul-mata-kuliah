@@ -16,13 +16,7 @@ public class SubCapPembServiceImpl implements SubCapPembService {
 
 	@Autowired
 	private SubCapPembRepository subCapPembRepo;
-	
-//	@Override
-//	public CapPemb findParent(CapPemb childSubCapPemb) {
-//		// TODO Auto-generated method stub
-//		UUID idCapPemb = childSubCapPemb.getIdCapPemb();
-//		return subCapPembRepo.findParent(idCapPemb);
-//	}
+	 
 
 	@Override
 	public String save(SubCapPemb subCapPembNew) {
@@ -85,9 +79,15 @@ public class SubCapPembServiceImpl implements SubCapPembService {
 	}
 
 	@Override
-	public List<SubCapPemb> findParent(UUID idCapPemb) {
+	public List<SubCapPemb> findParent(String idCapPemb) {
 		// TODO Auto-generated method stub
 		return subCapPembRepo.findParent(idCapPemb);
+	}
+	
+	@Override
+	public void delete(UUID idSubCapPemb) {
+		// TODO Auto-generated method stub 
+		 subCapPembRepo.delete(idSubCapPemb);
 	}
  
  

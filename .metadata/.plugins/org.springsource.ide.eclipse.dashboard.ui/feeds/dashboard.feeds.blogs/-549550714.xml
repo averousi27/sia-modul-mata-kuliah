@@ -5,7 +5,18 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2015-05-14T14:23:38Z</updated>
+  <updated>2015-05-15T15:03:03Z</updated>
+  <entry>
+    <title>Spring Social 1.1.1 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2015/05/15/spring-social-1-1-1-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Craig Walls</name>
+    </author>
+    <id>tag:spring.io,2015-05-15:2124</id>
+    <updated>2015-05-15T15:03:03Z</updated>
+    <content type="html">&lt;p&gt;Dear Spring Community,&lt;/p&gt;&lt;p&gt;I&amp;rsquo;m pleased to announce the availability of Spring Social 1.1.1.RELEASE. This is a maintenance release, addressing a handful of bugs and introducing a few minor improvements. View the &lt;a href="https://jira.spring.io/jira/secure/ReleaseNote.jspa?projectId=10481&amp;version=14658"&gt;release notes&lt;/a&gt; for full details.&lt;/p&gt;&lt;p&gt;Compatibility note: In order to fix a &lt;a href="https://jira.spring.io/browse/SOCIAL-467"&gt;serialization issue&lt;/a&gt; when using ProviderSignInUtils, a minor breaking change was necessary. ProviderSignInAttempt no longer carries its own ConnectionFactoryLocator and UsersConnectionRepository. Those must now be passed in as parameters when instantiating ProviderSignInUtils.&lt;/p&gt;&lt;p&gt;&lt;a href="http://projects.spring.io/spring-social/core.html"&gt;Project Site&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-social/docs/1.1.1.RELEASE/reference/htmlsingle/"&gt;Reference&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-social/docs/1.1.1.RELEASE/apidocs/"&gt;JavaDoc&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Spring Test HtmlUnit 1.0.0 RC1 Released</title>
     <link rel="alternate" href="https://spring.io/blog/2015/05/14/spring-test-htmlunit-1-0-0-rc1-released" />
@@ -630,18 +641,6 @@ The project was completed just in 6 months starting from scratch. The solution w
 &lt;p&gt;&#xD;
   &lt;iframe width="560" height="315" src="https://www.youtube.com/embed/jE5sN79lZic" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;&#xD;
 &lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Webinar: Improving your (legacy) Application with Spring</title>
-    <link rel="alternate" href="https://spring.io/blog/2015/05/05/webinar-improving-your-legacy-application-with-spring" />
-    <category term="news" label="News and Events" />
-    <author>
-      <name>Pieter Humphrey</name>
-    </author>
-    <id>tag:spring.io,2015-05-05:2107</id>
-    <updated>2015-05-05T06:46:00Z</updated>
-    <content type="html">&lt;p&gt;Speakers: Marten Deinum&lt;/p&gt;
-&lt;p&gt;Spring has been around since the release of “J2EE Design and Development” in 2002. Spring and Java have evolved quite a bit since that time. In those years a lot of applications have been developed. All those &amp;quot;legacy&amp;quot; applications that are around have proven their value and that is why they lasted. In this session we will explore how we can improve our legacy applications by doing some refactoring or redesign (component based development) but also by introducing (newer) Spring IO technologies.&lt;/p&gt;&lt;p&gt;Tuesday, May 12th, 2015 2:00PM GMT (London GMT) &lt;a href="http://connect.pivotal.io/OSS_Webinar_7AMImprovingyourlegacyApplicationwithSpring_Register.html"&gt;Register&lt;/a&gt;&lt;br/&gt;&lt;p&gt;Tuesday, May 12th, 2015 10:00AM PDT (San Francisco GMT-07:00) &lt;a href="http://connect.pivotal.io/OSS_Webinar_10AMImprovingyourlegacyApplicationwithSpring_Register.html"&gt;Register&lt;/a&gt;&lt;/p&gt;&lt;br/&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/p&gt;</content>
   </entry>
 </feed>
 

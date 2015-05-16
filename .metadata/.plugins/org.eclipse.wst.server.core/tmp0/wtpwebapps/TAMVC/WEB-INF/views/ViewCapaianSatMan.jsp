@@ -416,7 +416,7 @@
 											<button type="button" class="btn btn-primary" onclick="showModal()">Tambah induk capaian pembelajaran</button>
 										</div>  
 										 <div id="parentCapPemb">   
-										  <input type='hidden' name='idIndukCapPemb[]' value=null />
+										  <input type='hidden' name='idIndukCapPemb[]' id="idInduk" value='' />
 										 </div>  
 										<div class="form-group">
 											<label>Nama Capaian Belajar</label>
@@ -481,7 +481,7 @@
 							dataUrl: context_path+'capaianbelajar/satuanmanajemen/json',
 							detailUrl: context_path+'capaianbelajar/satuanmanajemen/edit',
 							addUrl: context_path+'capaianbelajar/satuanmanajemen/simpan',
-							editUrl: context_path+'capaianbelajar/satuanmanajemen/simpan',
+							editUrl: context_path+'capaianbelajar/satuanmanajemen/simpan', 
 							deleteUrl: context_path+'capaianbelajar/satuanmanajemen/deletemany',
 							primaryKey: 'idCapPemb',
 					        order: [[3,"asc"]],
@@ -529,28 +529,45 @@
 							],
 							validationRules: {idKurikulum:{required: true}, idSatMan:{required: true}, namaCapPemb:{required: true}},
 							filters: [{id:'#filter', name:'statusCapPemb'}],
-							callOnFillForm : function(response,options){    
+							callOnFillForm : function(response,options){  
 								$("#idCapPemb").val(response.data.idCapPemb);
 								$("#idKurikulum").val(response.data.kurikulum.idKurikulum);
-								$("#idSatMan").val(response.data.satMan.idSatMan);  
-								$("#parentCapPemb").val(function () {
+								$("#idSatMan").val(response.data.satMan.idSatMan);   
+								//$("#idInduk").val(function () {   
 									$.ajax({
 										type: 'get',
-										url : context_path+'capaianbelajar/satuanmanajemen/getparentlist',
-										data : { idIndukCapPemb : id},
+										url : context_path+'capaianbelajar/satuanmanajemen/getparentlist', 
+										dataType : 'json',
+										data : {'idCapPemb' : $("#idCapPemb").val()},
 										contentType : 'application/json; charset=utf-8', 
-										success : function(data){
-											alert(data.message);
+										traditional : true, 
+										success : function(data){ 
+											$("#parentCapPemb").html("");
+											if(data.data!=null){
+												var i;
+												console.log(data); 
+												$("#parentCapPemb").html("");
+												for(i=0; i<data.data.length; ++i){
+													console.log(data.data[i].parentCapPemb.namaCapPemb);
+													$("#parentCapPemb").append(
+															"<div class='alert alert-warning alert-dismissable'>"
+																+"<button type='button' class='cloxse' data-dismiss='alert' aria-hidden='true'>x</button>"
+																+"<p>"+data.data[i].parentCapPemb.namaCapPemb+"<p>"
+															+"</div>")
+															//+"<input type='hidden' name='idIndukCapPemb[]' value=null />")
+												} 
+											}
+											else{
+												$("#parentCapPemb").html("<input type='hidden' name='idIndukCapPemb[]' value='' />");
+											}
 										},
 										error: function(e){
-											alert(e.message);
+											alert("Data parent tidak ditemukan");
 										}
-									}) 
-								});
-							} 
-							
+									});
+								//}); 
+							}
 						});
-						
 						showModal = function (){
 							$('#myModal').modal('show');
 						}

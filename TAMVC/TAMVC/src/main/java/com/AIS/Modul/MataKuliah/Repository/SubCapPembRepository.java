@@ -19,9 +19,9 @@ public interface SubCapPembRepository {
 
 	public SubCapPemb findById(UUID idSubCapPemb);
 
-	public List<SubCapPemb> findAll();
+	public List<SubCapPemb> findAll(); 
 
-	public SubCapPemb findParent(CapPemb childSubCapPemb);
+	public List<SubCapPemb> findParent(String idCapPemb);
 
-	public List<SubCapPemb> findParent(UUID idCapPemb);
+	public void delete(UUID idSubCapPemb);
 }
